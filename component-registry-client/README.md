@@ -4,9 +4,9 @@ Component Registry API
 
 - API version: 1.0
 
-- Build date: 2025-01-30T12:42:47.061619+02:00[Europe/Riga]
+- Build date: 2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]
 
-- Generator version: 7.11.0
+- Generator version: 7.14.0
 
 Components and profiles registry for the Component Metadata Infrastructure
 

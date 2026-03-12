@@ -18,7 +18,7 @@ package eu.clarin.cmdi.componentregistry.ui.web.controller;
 
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
-import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsControllerApi;
+import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsApi;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.BaseDescription;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.ComponentSpec;
 import static eu.clarin.cmdi.componentregistry.ui.HtmxUtils.isHtmxRequest;
@@ -49,7 +49,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class ComponentBrowserController {
 
-    private final ItemsControllerApi api;
+    private final ItemsApi api;
 
     public static final String SORT_BY_QUERY_PARAM = "sortBy";
     public static final String SORT_BY_DEFAULT = "name";
@@ -78,7 +78,7 @@ public class ComponentBrowserController {
             "registrationDate");
 
     @Autowired
-    public ComponentBrowserController(ItemsControllerApi api) {
+    public ComponentBrowserController(ItemsApi api) {
         this.api = api;
     }
 

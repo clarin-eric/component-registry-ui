@@ -11,22 +11,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.web.client.RestClient.ResponseSpec;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClient.ResponseSpec;
+import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-30T12:42:47.061619+02:00[Europe/Riga]", comments = "Generator version: 7.11.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
 public class ComponentsAndProfilesApi {
     private ApiClient apiClient;
 
@@ -34,7 +35,6 @@ public class ComponentsAndProfilesApi {
         this(new ApiClient());
     }
 
-    @Autowired
     public ComponentsAndProfilesApi(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
@@ -55,7 +55,7 @@ public class ComponentsAndProfilesApi {
      * @return ComponentDescription
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getComponentItemRequestCreation(String componentId) throws RestClientResponseException {
+    private ResponseSpec getComponentItemRequestCreation(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         Object postBody = null;
         // verify the required parameter 'componentId' is set
         if (componentId == null) {
@@ -92,7 +92,7 @@ public class ComponentsAndProfilesApi {
      * @return ComponentDescription
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ComponentDescription getComponentItem(String componentId) throws RestClientResponseException {
+    public ComponentDescription getComponentItem(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getComponentItemRequestCreation(componentId).body(localVarReturnType);
     }
@@ -105,7 +105,7 @@ public class ComponentsAndProfilesApi {
      * @return ResponseEntity&lt;ComponentDescription&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ComponentDescription> getComponentItemWithHttpInfo(String componentId) throws RestClientResponseException {
+    public ResponseEntity<ComponentDescription> getComponentItemWithHttpInfo(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getComponentItemRequestCreation(componentId).toEntity(localVarReturnType);
     }
@@ -118,7 +118,7 @@ public class ComponentsAndProfilesApi {
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getComponentItemWithResponseSpec(String componentId) throws RestClientResponseException {
+    public ResponseSpec getComponentItemWithResponseSpec(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         return getComponentItemRequestCreation(componentId);
     }
     /**
@@ -131,7 +131,7 @@ public class ComponentsAndProfilesApi {
      * @return ComponentsList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getComponentsRequestCreation(List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    private ResponseSpec getComponentsRequestCreation(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         Object postBody = null;
         // verify the required parameter 'status' is set
         if (status == null) {
@@ -172,7 +172,7 @@ public class ComponentsAndProfilesApi {
      * @return ComponentsList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ComponentsList getComponents(List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public ComponentsList getComponents(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentsList> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getComponentsRequestCreation(status, sortBy, sortDirection).body(localVarReturnType);
     }
@@ -187,7 +187,7 @@ public class ComponentsAndProfilesApi {
      * @return ResponseEntity&lt;ComponentsList&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ComponentsList> getComponentsWithHttpInfo(List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public ResponseEntity<ComponentsList> getComponentsWithHttpInfo(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentsList> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getComponentsRequestCreation(status, sortBy, sortDirection).toEntity(localVarReturnType);
     }
@@ -202,7 +202,7 @@ public class ComponentsAndProfilesApi {
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getComponentsWithResponseSpec(List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public ResponseSpec getComponentsWithResponseSpec(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         return getComponentsRequestCreation(status, sortBy, sortDirection);
     }
     /**
@@ -213,7 +213,7 @@ public class ComponentsAndProfilesApi {
      * @return ProfileDescription
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getProfileItemRequestCreation(String componentId) throws RestClientResponseException {
+    private ResponseSpec getProfileItemRequestCreation(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         Object postBody = null;
         // verify the required parameter 'componentId' is set
         if (componentId == null) {
@@ -250,7 +250,7 @@ public class ComponentsAndProfilesApi {
      * @return ProfileDescription
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ProfileDescription getProfileItem(String componentId) throws RestClientResponseException {
+    public ProfileDescription getProfileItem(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         ParameterizedTypeReference<ProfileDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getProfileItemRequestCreation(componentId).body(localVarReturnType);
     }
@@ -263,7 +263,7 @@ public class ComponentsAndProfilesApi {
      * @return ResponseEntity&lt;ProfileDescription&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProfileDescription> getProfileItemWithHttpInfo(String componentId) throws RestClientResponseException {
+    public ResponseEntity<ProfileDescription> getProfileItemWithHttpInfo(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         ParameterizedTypeReference<ProfileDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getProfileItemRequestCreation(componentId).toEntity(localVarReturnType);
     }
@@ -276,7 +276,7 @@ public class ComponentsAndProfilesApi {
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getProfileItemWithResponseSpec(String componentId) throws RestClientResponseException {
+    public ResponseSpec getProfileItemWithResponseSpec(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         return getProfileItemRequestCreation(componentId);
     }
     /**
@@ -289,7 +289,7 @@ public class ComponentsAndProfilesApi {
      * @return ProfilesList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getProfilesRequestCreation(List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    private ResponseSpec getProfilesRequestCreation(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         Object postBody = null;
         // verify the required parameter 'status' is set
         if (status == null) {
@@ -330,7 +330,7 @@ public class ComponentsAndProfilesApi {
      * @return ProfilesList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ProfilesList getProfiles(List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public ProfilesList getProfiles(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         ParameterizedTypeReference<ProfilesList> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getProfilesRequestCreation(status, sortBy, sortDirection).body(localVarReturnType);
     }
@@ -345,7 +345,7 @@ public class ComponentsAndProfilesApi {
      * @return ResponseEntity&lt;ProfilesList&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProfilesList> getProfilesWithHttpInfo(List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public ResponseEntity<ProfilesList> getProfilesWithHttpInfo(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         ParameterizedTypeReference<ProfilesList> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getProfilesRequestCreation(status, sortBy, sortDirection).toEntity(localVarReturnType);
     }
@@ -360,7 +360,7 @@ public class ComponentsAndProfilesApi {
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getProfilesWithResponseSpec(List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public ResponseSpec getProfilesWithResponseSpec(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         return getProfilesRequestCreation(status, sortBy, sortDirection);
     }
 }

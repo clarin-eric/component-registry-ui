@@ -125,11 +125,11 @@ class ElementTypeTest {
     }
 
     /**
-     * Test the property 'valueSchemeType'
+     * Test the property 'valueSchemeAttribute'
      */
     @Test
-    void valueSchemeTypeTest() {
-        // TODO: test valueSchemeType
+    void valueSchemeAttributeTest() {
+        // TODO: test valueSchemeAttribute
     }
 
 }

@@ -19,7 +19,7 @@ package eu.clarin.cmdi.componentregistry.ui.web.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
-import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsControllerApi;
+import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsApi;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.Attribute;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.BaseDescription;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.ComponentSpec;
@@ -61,14 +61,14 @@ import org.springframework.web.servlet.ModelAndView;
 @Slf4j
 public class EditorController {
     
-    private final ItemsControllerApi api;
+    private final ItemsApi api;
     
     private final ComponentSpecTransformationService specTransformationService;
     private final Converter<String, List<ItemType>> csvToItemsConverter;
     private final Converter<List<ItemType>, String> itemsToCsvConverter;
     
     @Autowired
-    public EditorController(ItemsControllerApi api, ComponentSpecTransformationService specTransformationService, Converter<String, List<ItemType>> csvToItemsConverter, Converter<List<ItemType>, String> itemsToCsvConverter) {
+    public EditorController(ItemsApi api, ComponentSpecTransformationService specTransformationService, Converter<String, List<ItemType>> csvToItemsConverter, Converter<List<ItemType>, String> itemsToCsvConverter) {
         this.api = api;
         this.specTransformationService = specTransformationService;
         this.csvToItemsConverter = csvToItemsConverter;

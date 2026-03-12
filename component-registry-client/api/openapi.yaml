@@ -57,10 +57,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProfilesList'
+                $ref: "#/components/schemas/ProfilesList"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ProfilesList'
+                $ref: "#/components/schemas/ProfilesList"
           description: OK
       tags:
       - Components and profiles
@@ -83,10 +83,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProfileDescription'
+                $ref: "#/components/schemas/ProfileDescription"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ProfileDescription'
+                $ref: "#/components/schemas/ProfileDescription"
           description: OK
       tags:
       - Components and profiles
@@ -145,12 +145,12 @@ paths:
             application/xml:
               schema:
                 items:
-                  $ref: '#/components/schemas/BaseDescription'
+                  $ref: "#/components/schemas/BaseDescription"
                 type: array
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/BaseDescription'
+                  $ref: "#/components/schemas/BaseDescription"
                 type: array
           description: A list of items that meet the filter criteria (if applicable)
       summary: Get a filtered list of descriptions of profiles and/or components
@@ -175,10 +175,10 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/BaseDescription'
+                $ref: "#/components/schemas/BaseDescription"
             application/json:
               schema:
-                $ref: '#/components/schemas/BaseDescription'
+                $ref: "#/components/schemas/BaseDescription"
           description: A description of the identified item
         "404":
           description: Item not found
@@ -211,10 +211,10 @@ paths:
           content:
             application/xml:
               schema:
-                $ref: '#/components/schemas/ComponentSpec'
+                $ref: "#/components/schemas/ComponentSpec"
             application/json:
               schema:
-                $ref: '#/components/schemas/ComponentSpec'
+                $ref: "#/components/schemas/ComponentSpec"
           description: |
             The component specification of the identified item.
             The JSON representation is derived from the primary
@@ -268,10 +268,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComponentsList'
+                $ref: "#/components/schemas/ComponentsList"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ComponentsList'
+                $ref: "#/components/schemas/ComponentsList"
           description: OK
       tags:
       - Components and profiles
@@ -294,10 +294,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ComponentDescription'
+                $ref: "#/components/schemas/ComponentDescription"
             application/xml:
               schema:
-                $ref: '#/components/schemas/ComponentDescription'
+                $ref: "#/components/schemas/ComponentDescription"
           description: OK
       tags:
       - Components and profiles
@@ -410,7 +410,7 @@ components:
       properties:
         components:
           items:
-            $ref: '#/components/schemas/ProfileDescription'
+            $ref: "#/components/schemas/ProfileDescription"
           type: array
     BaseDescription:
       example:
@@ -514,12 +514,12 @@ components:
       properties:
         documentation:
           items:
-            $ref: '#/components/schemas/DocumentationType'
+            $ref: "#/components/schemas/DocumentationType"
           type: array
           xml:
             name: Documentation
         attributeValueScheme:
-          $ref: '#/components/schemas/ValueSchemeType'
+          $ref: "#/components/schemas/ValueSchemeType"
         autoValue:
           items:
             type: string
@@ -635,7 +635,7 @@ components:
       properties:
         attribute:
           items:
-            $ref: '#/components/schemas/Attribute'
+            $ref: "#/components/schemas/Attribute"
           type: array
           xml:
             name: Attribute
@@ -960,16 +960,16 @@ components:
         cmdversion: cmdversion
       properties:
         header:
-          $ref: '#/components/schemas/Header'
+          $ref: "#/components/schemas/Header"
         component:
-          $ref: '#/components/schemas/ComponentType'
+          $ref: "#/components/schemas/ComponentType"
         isProfile:
           type: boolean
           xml:
             attribute: true
-        cmdoriginalVersion:
-          type: string
         cmdversion:
+          type: string
+        cmdoriginalVersion:
           type: string
       required:
       - component
@@ -1284,21 +1284,21 @@ components:
       properties:
         documentation:
           items:
-            $ref: '#/components/schemas/DocumentationType'
+            $ref: "#/components/schemas/DocumentationType"
           type: array
           xml:
             name: Documentation
         attributeList:
-          $ref: '#/components/schemas/AttributeListType'
+          $ref: "#/components/schemas/AttributeListType"
         element:
           items:
-            $ref: '#/components/schemas/ElementType'
+            $ref: "#/components/schemas/ElementType"
           type: array
           xml:
             name: Element
         component:
           items:
-            $ref: '#/components/schemas/ComponentType'
+            $ref: "#/components/schemas/ComponentType"
           type: array
           xml:
             name: Component
@@ -1462,14 +1462,14 @@ components:
       properties:
         documentation:
           items:
-            $ref: '#/components/schemas/DocumentationType'
+            $ref: "#/components/schemas/DocumentationType"
           type: array
           xml:
             name: Documentation
         attributeList:
-          $ref: '#/components/schemas/AttributeListType'
+          $ref: "#/components/schemas/AttributeListType"
         valueScheme:
-          $ref: '#/components/schemas/ValueSchemeType'
+          $ref: "#/components/schemas/ValueSchemeType"
         autoValue:
           items:
             type: string
@@ -1546,7 +1546,7 @@ components:
           type: string
         item:
           items:
-            $ref: '#/components/schemas/ItemType'
+            $ref: "#/components/schemas/ItemType"
           type: array
       required:
       - item
@@ -1639,7 +1639,7 @@ components:
         pattern:
           type: string
         vocabulary:
-          $ref: '#/components/schemas/VocabularyType'
+          $ref: "#/components/schemas/VocabularyType"
     VocabularyType:
       example:
         valueLanguage: valueLanguage
@@ -1660,7 +1660,7 @@ components:
         valueProperty: valueProperty
       properties:
         enumeration:
-          $ref: '#/components/schemas/EnumerationType'
+          $ref: "#/components/schemas/EnumerationType"
         uri:
           type: string
           xml:
@@ -1780,6 +1780,6 @@ components:
       properties:
         components:
           items:
-            $ref: '#/components/schemas/ComponentDescription'
+            $ref: "#/components/schemas/ComponentDescription"
           type: array
 

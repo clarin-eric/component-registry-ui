@@ -9,22 +9,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.web.client.RestClient.ResponseSpec;
-import org.springframework.web.client.RestClientResponseException;
 import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClient.ResponseSpec;
+import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-30T12:42:47.061619+02:00[Europe/Riga]", comments = "Generator version: 7.11.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
 public class ItemsApi {
     private ApiClient apiClient;
 
@@ -32,7 +33,6 @@ public class ItemsApi {
         this(new ApiClient());
     }
 
-    @Autowired
     public ItemsApi(ApiClient apiClient) {
         this.apiClient = apiClient;
     }
@@ -54,7 +54,7 @@ public class ItemsApi {
      * @return BaseDescription
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getItemRequestCreation(String componentId) throws RestClientResponseException {
+    private ResponseSpec getItemRequestCreation(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         Object postBody = null;
         // verify the required parameter 'componentId' is set
         if (componentId == null) {
@@ -92,7 +92,7 @@ public class ItemsApi {
      * @return BaseDescription
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public BaseDescription getItem(String componentId) throws RestClientResponseException {
+    public BaseDescription getItem(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         ParameterizedTypeReference<BaseDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getItemRequestCreation(componentId).body(localVarReturnType);
     }
@@ -106,7 +106,7 @@ public class ItemsApi {
      * @return ResponseEntity&lt;BaseDescription&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<BaseDescription> getItemWithHttpInfo(String componentId) throws RestClientResponseException {
+    public ResponseEntity<BaseDescription> getItemWithHttpInfo(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         ParameterizedTypeReference<BaseDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getItemRequestCreation(componentId).toEntity(localVarReturnType);
     }
@@ -120,7 +120,7 @@ public class ItemsApi {
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getItemWithResponseSpec(String componentId) throws RestClientResponseException {
+    public ResponseSpec getItemWithResponseSpec(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         return getItemRequestCreation(componentId);
     }
     /**
@@ -133,7 +133,7 @@ public class ItemsApi {
      * @return ComponentSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getItemSpecRequestCreation(String componentId, String accept) throws RestClientResponseException {
+    private ResponseSpec getItemSpecRequestCreation(@jakarta.annotation.Nonnull String componentId, @jakarta.annotation.Nullable String accept) throws RestClientResponseException {
         Object postBody = null;
         // verify the required parameter 'componentId' is set
         if (componentId == null) {
@@ -175,7 +175,7 @@ public class ItemsApi {
      * @return ComponentSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ComponentSpec getItemSpec(String componentId, String accept) throws RestClientResponseException {
+    public ComponentSpec getItemSpec(@jakarta.annotation.Nonnull String componentId, @jakarta.annotation.Nullable String accept) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentSpec> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getItemSpecRequestCreation(componentId, accept).body(localVarReturnType);
     }
@@ -190,7 +190,7 @@ public class ItemsApi {
      * @return ResponseEntity&lt;ComponentSpec&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ComponentSpec> getItemSpecWithHttpInfo(String componentId, String accept) throws RestClientResponseException {
+    public ResponseEntity<ComponentSpec> getItemSpecWithHttpInfo(@jakarta.annotation.Nonnull String componentId, @jakarta.annotation.Nullable String accept) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentSpec> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getItemSpecRequestCreation(componentId, accept).toEntity(localVarReturnType);
     }
@@ -205,7 +205,7 @@ public class ItemsApi {
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getItemSpecWithResponseSpec(String componentId, String accept) throws RestClientResponseException {
+    public ResponseSpec getItemSpecWithResponseSpec(@jakarta.annotation.Nonnull String componentId, @jakarta.annotation.Nullable String accept) throws RestClientResponseException {
         return getItemSpecRequestCreation(componentId, accept);
     }
     /**
@@ -219,7 +219,7 @@ public class ItemsApi {
      * @return List&lt;BaseDescription&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getItemsRequestCreation(String type, List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    private ResponseSpec getItemsRequestCreation(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         Object postBody = null;
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
@@ -258,7 +258,7 @@ public class ItemsApi {
      * @return List&lt;BaseDescription&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public List<BaseDescription> getItems(String type, List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public List<BaseDescription> getItems(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         ParameterizedTypeReference<List<BaseDescription>> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getItemsRequestCreation(type, status, sortBy, sortDirection).body(localVarReturnType);
     }
@@ -274,7 +274,7 @@ public class ItemsApi {
      * @return ResponseEntity&lt;List&lt;BaseDescription&gt;&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<BaseDescription>> getItemsWithHttpInfo(String type, List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public ResponseEntity<List<BaseDescription>> getItemsWithHttpInfo(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         ParameterizedTypeReference<List<BaseDescription>> localVarReturnType = new ParameterizedTypeReference<>() {};
         return getItemsRequestCreation(type, status, sortBy, sortDirection).toEntity(localVarReturnType);
     }
@@ -290,7 +290,7 @@ public class ItemsApi {
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getItemsWithResponseSpec(String type, List<String> status, String sortBy, String sortDirection) throws RestClientResponseException {
+    public ResponseSpec getItemsWithResponseSpec(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         return getItemsRequestCreation(type, status, sortBy, sortDirection);
     }
 }

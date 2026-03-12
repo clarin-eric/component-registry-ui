@@ -50,7 +50,7 @@ import io.github.threetenjaxb.core.*;
   ComponentDescription.JSON_PROPERTY_SHOW_IN_EDITOR,
   ComponentDescription.JSON_PROPERTY_IS_PUBLIC
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-01-30T12:42:47.061619+02:00[Europe/Riga]", comments = "Generator version: 7.11.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
 @XmlRootElement(name = "componentDescription")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "componentDescription")
@@ -644,6 +644,7 @@ public class ComponentDescription {
   public void setIsPublic(@jakarta.annotation.Nullable Boolean isPublic) {
     this.isPublic = isPublic;
   }
+
 
   @Override
   public boolean equals(Object o) {

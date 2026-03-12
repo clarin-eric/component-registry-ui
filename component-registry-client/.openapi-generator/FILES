@@ -35,6 +35,8 @@ src/main/AndroidManifest.xml
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/ApiClient.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/JavaTimeFormatter.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/RFC3339DateFormat.java
+src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/RFC3339InstantDeserializer.java
+src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/RFC3339JavaTimeModule.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/ServerConfiguration.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/ServerVariable.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/StringUtil.java

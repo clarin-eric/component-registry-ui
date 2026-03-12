@@ -63,19 +63,19 @@ class ComponentSpecTest {
     }
 
     /**
-     * Test the property 'cmdoriginalVersion'
-     */
-    @Test
-    void cmdoriginalVersionTest() {
-        // TODO: test cmdoriginalVersion
-    }
-
-    /**
      * Test the property 'cmdversion'
      */
     @Test
     void cmdversionTest() {
         // TODO: test cmdversion
+    }
+
+    /**
+     * Test the property 'cmdoriginalVersion'
+     */
+    @Test
+    void cmdoriginalVersionTest() {
+        // TODO: test cmdoriginalVersion
     }
 
 }
