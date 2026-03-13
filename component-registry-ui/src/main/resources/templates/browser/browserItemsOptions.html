@@ -96,6 +96,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                     </th:block>
                     <div id="selected-item-actions" class="pe-2 ms-auto"
+                         hx-swap-oob="true"
                          th:with="
                          selectedItemCount=${selectedItems == null ? 0 : #lists.size(selectedItems)},
                          singleSelectedItem=${selectedItemCount == 1 ? selectedItems[0] : null}">

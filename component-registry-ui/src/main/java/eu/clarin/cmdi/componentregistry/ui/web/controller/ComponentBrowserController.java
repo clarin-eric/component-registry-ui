@@ -130,15 +130,24 @@ public class ComponentBrowserController {
     }
 
     @GetMapping(path = "/item/{id}")
-    public String itemDescription(Model model,
+    public List<ModelAndView> itemDescription(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model,
             @PathVariable String id) {
         //get item description from API
         final BaseDescription item = api.getItem(id);
-
-        //TODO: return item edit controls out-of-band
+        //get spec from API
+        final ComponentSpec itemSpec = api.getItemSpec(id, MediaType.APPLICATION_JSON_VALUE);
         
+        // set model for view
         model.addAttribute("item", item);
-        return "browser/items/itemPreview :: preview";
+        model.addAttribute("spec", itemSpec);
+        
+        // add ID to params for uniform processing of partial response
+        params.add(SELECTED_ITEM_QUERY_PARAM, id);
+
+        // return item preview + item actions
+        return ImmutableList.of(
+                partialResponse(headers, params, model, "browser/browserItemsOptions :: #selected-item-actions"),
+                partialResponse(headers, params, model, "browser/items/itemPreview :: preview"));
     }
 
     @GetMapping(path = "/item/{id}/specification")
