@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2024 CLARIN ERIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Browser item view</title> 
+    </head>
+
+    <body>
+        <main>
+            <div id="browser-item-view" th:fragment="preview(item)">
+                <div class="p-2 border">
+                    <a data-bs-toggle="collapse" 
+                       href="#browser-item-view-content" role="button" aria-expanded="false" aria-controls="browser-item-view-content">
+                        <i class="fa-solid fa-angles-down"></i>
+                    </a>
+                    <div id="browser-item-view-content" class="collapse show" style="max-height: 15em;">
+                        <h3 class="border-bottom" th:text="${item.name}">name</h3>
+                        <div class="row">
+                            <div class="col-md order-lg-last">
+                                <div><strong>Identifier:</strong> <span th:text="${item.id}"></span></div>
+                                <div><strong>Creator:</strong> <span th:text="${item.creatorName}"></span></div>
+                                <div><strong>Registered:</strong> <span th:text="${item.registrationDate}"></span></div>
+                            </div>
+                            <div class="col-md-8 order-lg-first">
+                                <p th:text="${item.description}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>

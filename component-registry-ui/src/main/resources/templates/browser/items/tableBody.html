@@ -43,10 +43,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <span th:case="name">
                                 <a class="item-info" 
                                    th:hx-get="@{|/item/${description.id}|}|"
-                                   hx-select="#item-info"
-                                   hx-target="#item-viewer-content"
-                                   hx-swap="innerHTML"
-                                   @click="new bootstrap.Offcanvas('#item-view').show()">
+                                   hx-select="#browser-item-view"
+                                   hx-target="#browser-item-view-container"
+                                   hx-swap="innerHTML">
                                     <i class="fa-solid fa-circle-info"></i></a>
                                 <span th:text="${description[field]}">link</span>
                             </span>

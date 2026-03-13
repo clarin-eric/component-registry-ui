@@ -135,8 +135,10 @@ public class ComponentBrowserController {
         //get item description from API
         final BaseDescription item = api.getItem(id);
 
+        //TODO: return item edit controls out-of-band
+        
         model.addAttribute("item", item);
-        return "browser/item";
+        return "browser/items/itemPreview :: preview";
     }
 
     @GetMapping(path = "/item/{id}/specification")
