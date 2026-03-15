@@ -60,7 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </nav>
 
                 <main id="browser-main" 
-                      class="d-flex" 
+                      class="mt-1 d-flex" 
                       style="min-height: 90%; max-height: 90%;"
                       x-data="{ selectedItem: '' }">
                     <div class="ps-2 pt-2 me-auto h-100">
@@ -77,6 +77,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div> <!-- END table "panel" -->
                     </div>
                 </main>
+
+                <footer class="row row-cols-1 row-cols-md-3 py-4 mt-2 text-bg-light">
+                    <div class="col mb-3">
+                        <p class="text-body-secondary"><a href="/help">About</a></p>
+                        <p class="text-body-secondary">{version}</p>
+                    </div>
+                    <div class="col mb-3 text-md-center">
+                        <p>Service provided by <a href="https://www.clarin.eu">CLARIN</a></p>
+                        <p class="text-body-secondary">
+                            <span class="text-light footer-hidden-info">
+                                built: TODO; revision: TODO
+                            </span>
+                        </p>
+                    </div>
+                    <div class="col mb-3 text-md-end">
+                        <p><a href="mailto:cmdi@clarin.eu">Contact</a></p>
+                    </div>
+                </footer>
+
             </div>
         </div>
     </body>
