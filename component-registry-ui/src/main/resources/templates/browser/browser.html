@@ -32,9 +32,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <div class="container-fluid px-xl-2 px-xxl-5 vh-100">
             <div class="d-flex flex-column h-100">
-                <h1 class="py-2 overflow-hidden" style="max-height: 10%;">
-                    <span th:text="#{browser.page.title}">{title}</span>
-                </h1>
+                <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="#">
+                            <i th:class="|fa-solid fa-#{application.icon}|"></i>
+                            [[#{application.title}]]</a>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" th:href="@{/}" th:text="#{application.menu.home}">{home}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" th:href="@{/}" th:text="#{application.menu.browser}">{browser}</a>
+                                </li>
+                            </ul>
+                            <form class="d-flex" role="login">
+                                <a href="#" class="btn btn-outline-primary">
+                                    <i class="fa-solid fa-right-to-bracket"></i>
+                                    Log in
+                                </a>
+                            </form>
+                        </div>
+                    </div>
+                </nav>
+
                 <main id="browser-main" 
                       class="d-flex" 
                       style="min-height: 90%; max-height: 90%;"
