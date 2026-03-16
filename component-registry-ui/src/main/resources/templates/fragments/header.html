@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
     <body>
-        <header th:fragment="header">
+        <header th:fragment="header(current, item)">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">
@@ -28,11 +28,27 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" th:href="@{/browser}" th:text="#{application.menu.browser}">{browser}</a>
+
+                            <li th:replace="~{::top-navigation-item('browser','/browser',${current})}">
+                                [Browser]
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" th:href="@{/editor}" th:text="#{application.menu.editor}">{editor}</a>
+
+                            <!--/* not in editor for specific item: new item link */-->
+                            <th:block th:unless="${item}">
+                                <li th:replace="~{::top-navigation-item('editor',|/editor|,${current})}">
+                                    [Editor]
+                                </li>
+                            </th:block>
+
+                            <!--/* in editor with specific item id: link should go to same */-->
+                            <th:block th:if="${item}">
+                                <li th:replace="~{::top-navigation-item('editor',|/editor/${item}|,${current})}">
+                                    [Editor]
+                                </li>
+                            </th:block>
+
+                            <li th:replace="~{::top-navigation-item('help','/help',${current})}">
+                                [Help]
                             </li>
                         </ul>
                         <form class="d-flex" role="login">
@@ -45,5 +61,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
             </nav>
         </header>
+
+        <!-- menu item in the top navigation bar -->
+        <li th:fragment="top-navigation-item(id,link,current)"
+            class="nav-item">
+            <a class="nav-link" 
+               th:classappend="${current == id} ? 'active'"
+               th:aria-current="${current == id} ? 'page' : null" 
+               th:href="@{${link}}" th:text="#{|application.menu.${id}|}">
+                [link text]
+            </a>
+        </li>
     </body>
 </html>

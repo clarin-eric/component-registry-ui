@@ -90,6 +90,7 @@ public class EditorController {
         } else {
             final ComponentSpec spec = api.getItemSpec(itemId, MediaType.APPLICATION_JSON_VALUE);
             
+            model.addAttribute("itemId", itemId);
             model.addAttribute("description", description);
             model.addAttribute("spec", spec);
             
