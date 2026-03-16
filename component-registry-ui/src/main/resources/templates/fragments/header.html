@@ -29,10 +29,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class="nav-link" th:href="@{/}" th:text="#{application.menu.home}">{home}</a>
+                                <a class="nav-link active" aria-current="page" th:href="@{/browser}" th:text="#{application.menu.browser}">{browser}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" th:href="@{/}" th:text="#{application.menu.browser}">{browser}</a>
+                                <a class="nav-link" th:href="@{/editor}" th:text="#{application.menu.editor}">{editor}</a>
                             </li>
                         </ul>
                         <form class="d-flex" role="login">

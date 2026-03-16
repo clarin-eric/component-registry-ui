@@ -82,7 +82,7 @@ public class ComponentBrowserController {
         this.api = api;
     }
 
-    @GetMapping(path = "/")
+    @GetMapping(path = {"/", "/browser"})
     public String browser(@RequestParam MultiValueMap<String, String> params, Model model) {
         setCommonModelAttributes(params, model);
         return "browser/browser";
