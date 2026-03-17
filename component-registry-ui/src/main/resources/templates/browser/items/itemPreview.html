@@ -22,13 +22,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <body>
         <main>
-            <div id="browser-item-view" th:fragment="preview(item)">
+            <div id="browser-item-view" th:fragment="preview">
                 <div class="p-2 border">
                     <a data-bs-toggle="collapse" 
                        href="#browser-item-view-content" role="button" aria-expanded="false" aria-controls="browser-item-view-content">
                         <i class="fa-solid fa-angles-down"></i>
                     </a>
-                    <div id="browser-item-view-content" class="collapse show" style="max-height: 15em;">
+                    <div id="browser-item-view-content" class="collapse show overflow-x-hidden overflow-y-auto" style="max-height: 15em;">
                         <h3 class="border-bottom" th:text="${item.name}">name</h3>
                         <div class="row">
                             <div class="col-md order-lg-last">
@@ -40,6 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <p th:text="${item.description}"></p>
                             </div>
                         </div>
+                        <pre id="item-spec" style="max-width: 80em;" class="overflow-auto" th:text="${spec}"></pre>
                     </div>
                 </div>
             </div>

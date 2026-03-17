@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
               crossorigin="anonymous" />
     </head>
 
-    <body>
+    <body th:with="selectedItem = ${!#lists.isEmpty(selectedItems)}?${selectedItems[0]}:''">
         <div class="container-fluid px-xl-2 px-xxl-5 vh-100">
             <div class="d-flex flex-column h-100">
                 <header th:replace="~{fragments/header :: header('browser', null)}">
@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <main id="browser-main" 
                       class="mt-1 d-flex" 
                       style="min-height: 90%; max-height: 90%;"
-                      x-data="{ selectedItem: '' }">
+                      th:x-data="|{ selectedItem: '${selectedItem}' }|">
                     <div class="ps-2 pt-2 me-auto h-100">
                         <!-- Sidebar -->
                         <div th:replace="~{browser/browserSidebar :: #browser-sidebar}">

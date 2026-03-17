@@ -71,10 +71,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                     </div>
 
+                    <!--/* item preview container, content to be replaced when a selection is active */-->
                     <div id="browser-item-view-container" class="mt-2">
-                        <!--/* placeholder */-->
+                        <!--/* Item selection on load? Lazy loading of details */-->
+                        <th:block th:if="!${#strings.isEmpty(selectedItem)}">
+                            <!--/* some content that we will replace on load */-->
+                            <div id="browser-item-view"
+                                 hx-trigger="load"
+                                 th:hx-get="@{|/item/${selectedItem}|}"
+                                 hx-select="#browser-item-view"
+                                 hx-select-oob="#selected-item-actions"
+                                 hx-swap="outerHTML">
+                                <div id="browser-item-view-content" style="height: 15em;">
+                                    <div class="htmx-indicator">
+                                        <div class="spinner-border" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                        <div class="mt-2 text-secondary">
+                                            Loading [[${selectedItem}]]...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th:block>
                     </div>
-
                 </div>
 
 

@@ -136,18 +136,22 @@ public class ComponentBrowserController {
         final BaseDescription item = api.getItem(id);
         //get spec from API
         final ComponentSpec itemSpec = api.getItemSpec(id, MediaType.APPLICATION_JSON_VALUE);
-        
+
         // set model for view
         model.addAttribute("item", item);
         model.addAttribute("spec", itemSpec);
-        
+
         // add ID to params for uniform processing of partial response
         params.add(SELECTED_ITEM_QUERY_PARAM, id);
 
-        // return item preview + item actions
-        return ImmutableList.of(
-                partialResponse(headers, params, model, "browser/browserItemsOptions :: #selected-item-actions"),
-                partialResponse(headers, params, model, "browser/items/itemPreview :: preview"));
+        if (isHtmxRequest(headers)) {
+            // return item preview + item actions
+            return ImmutableList.of(
+                    partialResponse(headers, params, model, "browser/browserItemsOptions :: #selected-item-actions"),
+                    partialResponse(headers, params, model, "browser/items/itemPreview :: preview"));
+        } else {
+            return ImmutableList.of(partialResponse(headers, params, model, "browser/items/itemPreview :: preview"));
+        }
     }
 
     @GetMapping(path = "/item/{id}/specification")

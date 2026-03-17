@@ -28,11 +28,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <tbody th:fragment="itemsTableBody" 
                    id="items-table-body">
 
-                <tr th:each="description : ${items}"
+                <tr th:id="|table_${description['id']}|"
+                    th:each="description : ${items}"
                     th:x-data="|{itemId: '${description['id']}'}|"
                     :class="{ 'table-active': (selectedItem == itemId) }"
                     @click="selectedItem = itemId"
-                    th:hx-get="@{|/item/${description.id}|}|"
+                    th:hx-get="@{|/item/${description.id}|}"
+                    th:hx-push-url="@{|/#table_${description['id']}|(item=${description.id},type=${type})}"
                     hx-target="#browser-item-view-container"
                     hx-select="#browser-item-view"
                     hx-select-oob="#selected-item-actions"
