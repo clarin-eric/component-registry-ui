@@ -130,7 +130,7 @@ public class ComponentBrowserController {
     }
 
     @GetMapping(path = "/item/{id}")
-    public List<ModelAndView> itemDescription(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model,
+    public List<ModelAndView> itemDetails(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model,
             @PathVariable String id) {
         //get item description from API
         final BaseDescription item = api.getItem(id);
@@ -150,7 +150,7 @@ public class ComponentBrowserController {
                     partialResponse(headers, params, model, "browser/browserItemsOptions :: #selected-item-actions"),
                     partialResponse(headers, params, model, "browser/items/itemPreview :: preview"));
         } else {
-            return ImmutableList.of(partialResponse(headers, params, model, "browser/items/itemPreview :: preview"));
+            return ImmutableList.of(partialResponse(headers, params, model, "browser/items/itemPreview :: preview", true));
         }
     }
 
@@ -175,7 +175,7 @@ public class ComponentBrowserController {
      */
     @GetMapping(path = "/main")
     public ModelAndView main(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model) {
-        return partialResponse(headers, params, model, "browser/browser :: #browser-main");
+        return partialResponse(headers, params, model, "browser/browser :: #browser-main", false);
     }
 
     /**
@@ -204,6 +204,10 @@ public class ComponentBrowserController {
         return partialResponse(headers, params, model, "browser/browserItemsOptions :: #selected-item-actions");
     }
 
+    private ModelAndView partialResponse(Map<String, String> headers, MultiValueMap<String, String> params, Model model, final String fragment) {
+        return partialResponse(headers, params, model, fragment, false);
+    }
+
     /**
      * Prepares a partial response IFF the request was an HTMX request
      *
@@ -211,11 +215,12 @@ public class ComponentBrowserController {
      * @param params
      * @param model
      * @param fragment
+     * @param forcePartial
      * @return
      * @throws RestClientResponseException
      */
-    private ModelAndView partialResponse(Map<String, String> headers, MultiValueMap<String, String> params, Model model, final String fragment) {
-        if (isHtmxRequest(headers)) {
+    private ModelAndView partialResponse(Map<String, String> headers, MultiValueMap<String, String> params, Model model, final String fragment, boolean forcePartial) {
+        if (forcePartial || isHtmxRequest(headers)) {
             setCommonModelAttributes(params, model);
             return new ModelAndView(fragment, model.asMap());
         } else {

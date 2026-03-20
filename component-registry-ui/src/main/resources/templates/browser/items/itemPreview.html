@@ -40,7 +40,80 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 <p th:text="${item.description}"></p>
                             </div>
                         </div>
-                        <pre id="item-spec" style="max-width: 80em;" class="overflow-auto" th:text="${spec}"></pre>
+
+                        <pre id="item-spec" style="max-width: 80em; max-height: 3em; overflow: auto;" class="overflow-auto" th:text="${spec}"></pre>
+                        <div th:replace="~{this :: spec(${spec})}"></div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-spec" th:fragment="spec(spec)">
+                <div th:replace="~{this :: component(${spec.component})}">
+                    [Root component]
+                </div>
+            </div>
+
+            <div class="preview-component mt-2" th:fragment="component(component)"
+                 th:object="${component}">
+                <div class="card">
+                    <div class="card-body">
+                        <span th:unless="*{componentRef}" class="card-title h6">Component: [[*{name}]]</span>
+                        <span th:if="*{componentRef}" class="card-title h6">REF: [[*{componentRef}]]</span>
+                        <p class="card-text">
+                            <div>
+                                Number of occurrences: [[*{cardinalityMin}]] - [[*{cardinalityMax}]]
+                            </div>
+                            <div th:if="*{conceptLink}">
+                                ConceptLink: [[*{conceptLink}]]
+                            </div>
+                        </p>
+                        <!--
+                                                <a href="#" class="card-link">Card link</a>
+                                                <a href="#" class="card-link">Another link</a>
+                        -->
+                    </div>
+                </div>
+
+                <!--/* children */-->
+                <div class="childComponents mx-4" th:if="*{component}">
+                    <!--CHILDREN: [[${#lists.size(component.component)}]] components-->
+                    <th:block th:each="child : *{component}">
+                        <div th:replace="~{this :: component(${child})}">
+                            [Component]
+                        </div>
+                    </th:block>
+                </div>
+                <div class="childElements mx-4" th:if="*{element}">
+                    <!--CHILDREN: [[${#lists.size(component.element)}]] elements-->
+                    <th:block th:each="child : *{element}">
+                        <div th:replace="~{this :: element(${child})}">
+                            [Element]
+                        </div>
+                    </th:block>
+                </div>
+            </div>
+
+            <div class="preview-element mt-2" th:fragment="element(element)"
+                 th:object="${element}">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="card-title h6">Element: [[*{name}]]</span>
+                        <p class="card-text">
+                            <div>
+                                Number of occurrences: [[*{cardinalityMin}]] - [[*{cardinalityMax}]]
+                            </div>
+                            <div th:if="*{conceptLink}">
+                                ConceptLink: [[*{conceptLink}]]
+                            </div>
+                        </p>
+
+
+
+                        <!--
+                                                <a href="#" class="card-link">Card link</a>
+                                                <a href="#" class="card-link">Another link</a>
+                        -->
                     </div>
                 </div>
             </div>
