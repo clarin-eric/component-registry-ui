@@ -76,10 +76,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <!--/* Inline component */-->
             <div class="preview-component-inline mt-2" th:fragment="component-inline(component)"
-                 th:object="${component}">
+                 th:object="${component}"
+                 th:with="localId=${#ids.seq('component')}">
                 <div class="card">
                     <div class="card-body">
-                        <span class="card-title h5">Component: [[*{name}]]</span>
+                        <span class="card-title h5">
+                            <a data-bs-toggle="collapse" th:href="|#children_${localId}|" aria-expanded="false" 
+                               th:aria-controls="|children_${localId}|">Component: [[*{name}]]</a>
+                        </span>
                         <p class="card-text">
                             <div>
                                 Number of occurrences: [[*{cardinalityMin}]] - [[*{cardinalityMax}]]
@@ -92,7 +96,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
 
                 <!--/* children */-->
-                <div class="component-children">
+                <div th:id="|children_${localId}|" class="component-children collapse show">
                     <div class="childComponents mx-4" th:if="*{component}">
                         <th:block th:each="child : *{component}">
                             <div th:replace="~{this :: component(${child})}">
@@ -120,14 +124,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                              hx-select=".itemDescriptionDetails"
                              hx-swap="outerHTML"
                              hx-trigger="intersect once">
-                            <div class="card-title h5">Component: ...</div>
+                            <div class="card-title h5">
+                                Component: ..
+                            </div>
                             <div class="card-subtitle h6 fst-italic">[[${component.componentRef}]]</div>
                             <p class="card-text">
                                 Loading title and description...
                             </p>
                         </div>
                         <div th:if="${item}" class="itemDescriptionDetails">
-                            <div class="card-title h5">Component: [[${item.name}]] </div>
+                            <div class="card-title h5">
+                                <a th:href="@{/item/{id}(id=${item.id})}"
+                                   th:hx-get="@{/item/{id}(id=${item.id})}"
+                                   hx-select=".preview-root-component"
+                                   hx-target="closest .preview-component-ref"
+                                   hx-swap="outerHTML"
+                                   hx-show="none" role="button">Component: [[${item.name}]]</a>
+                            </div>
                             <div class="card-subtitle h6 fst-italic">[[${item.id}]]</div>
                             <p class="card-text fst-italic pt-2">
                                 [[${item.description}]]
@@ -138,12 +151,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 Number of occurrences: [[${component.cardinalityMin}]] - [[${component.cardinalityMax}]]
                             </div>
                         </p>
-                        <a th:href="@{/item/{id}(id=*{componentRef})}"
-                           th:hx-get="@{/item/{id}(id=*{componentRef})}"
-                           hx-select=".preview-root-component"
-                           hx-target="closest .preview-component-ref"
-                           hx-swap="outerHTML"
-                           class="card-link">LOAD</a>
                     </div>
                 </div>
             </div>
