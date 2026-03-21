@@ -54,8 +54,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <!--/* Spec root */-->
             <div class="preview-spec" th:fragment="spec(spec)">
-                <div th:replace="~{this :: component(${spec.component})}">
-                    [Root component]
+                <div class="preview-root-component">
+                    <div th:replace="~{this :: component(${spec.component})}">
+                        [Root component]
+                    </div>
                 </div>
             </div>
 
@@ -68,16 +70,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <div th:replace="~{this :: component-inline(${component})}" />
                 </th:block>
                 <th:block th:if="*{componentRef}">
-                    <div th:replace="~{this :: component-ref(${component})}" />
+                    <div th:replace="~{this :: component-ref(${component}, null)}" />
                 </th:block>
             </div>
 
             <!--/* Inline component */-->
-            <div class="preview-component mt-2" th:fragment="component-inline(component)"
+            <div class="preview-component-inline mt-2" th:fragment="component-inline(component)"
                  th:object="${component}">
                 <div class="card">
                     <div class="card-body">
-                        <span class="card-title h6">Component: [[*{name}]]</span>
+                        <span class="card-title h5">Component: [[*{name}]]</span>
                         <p class="card-text">
                             <div>
                                 Number of occurrences: [[*{cardinalityMin}]] - [[*{cardinalityMax}]]
@@ -90,43 +92,62 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
 
                 <!--/* children */-->
-                <div class="childComponents mx-4" th:if="*{component}">
-                    <!--CHILDREN: [[${#lists.size(component.component)}]] components-->
-                    <th:block th:each="child : *{component}">
-                        <div th:replace="~{this :: component(${child})}">
-                            [Component]
-                        </div>
-                    </th:block>
-                </div>
-                <div class="childElements mx-4" th:if="*{element}">
-                    <!--CHILDREN: [[${#lists.size(component.element)}]] elements-->
-                    <th:block th:each="child : *{element}">
-                        <div th:replace="~{this :: element(${child})}">
-                            [Element]
-                        </div>
-                    </th:block>
+                <div class="component-children">
+                    <div class="childComponents mx-4" th:if="*{component}">
+                        <th:block th:each="child : *{component}">
+                            <div th:replace="~{this :: component(${child})}">
+                                [Component]
+                            </div>
+                        </th:block>
+                    </div>
+                    <div class="childElements mx-4" th:if="*{element}">
+                        <th:block th:each="child : *{element}">
+                            <div th:replace="~{this :: element(${child})}">
+                                [Element]
+                            </div>
+                        </th:block>
+                    </div>
                 </div>
             </div>
 
             <!--/* Referenced component */-->
-            <div class="preview-component mt-2" th:fragment="component-ref(component)"
-                 th:object="${component}">
+            <div class="preview-component-ref mt-2" th:fragment="component-ref(component, item)">
                 <div class="card">
                     <div class="card-body">
-                        <span class="card-title h6">REF: [[*{componentRef}]]</span>
+                        <!--/* Lazy loading details for component ref (title and description from item info) */-->
+                        <div th:unless="${item}" class="itemDescriptionDetails"
+                             th:hx-get="@{/item/{id}/preview(id=*{componentRef})}"
+                             hx-select=".itemDescriptionDetails"
+                             hx-swap="outerHTML"
+                             hx-trigger="intersect once">
+                            <div class="card-title h5">Component: ...</div>
+                            <div class="card-subtitle h6 fst-italic">[[${component.componentRef}]]</div>
+                            <p class="card-text">
+                                Loading title and description...
+                            </p>
+                        </div>
+                        <div th:if="${item}" class="itemDescriptionDetails">
+                            <div class="card-title h5">Component: [[${item.name}]] </div>
+                            <div class="card-subtitle h6 fst-italic">[[${item.id}]]</div>
+                            <p class="card-text fst-italic pt-2">
+                                [[${item.description}]]
+                            </p>
+                        </div>
                         <p class="card-text">
-                            <div>
-                                Number of occurrences: [[*{cardinalityMin}]] - [[*{cardinalityMax}]]
+                            <div th:if="${component}">
+                                Number of occurrences: [[${component.cardinalityMin}]] - [[${component.cardinalityMax}]]
                             </div>
                         </p>
-                        <!--
-                                                <a href="#" class="card-link">Card link</a>
-                                                <a href="#" class="card-link">Another link</a>
-                        -->
+                        <a th:href="@{/item/{id}(id=*{componentRef})}"
+                           th:hx-get="@{/item/{id}(id=*{componentRef})}"
+                           hx-select=".preview-root-component"
+                           hx-target="closest .preview-component-ref"
+                           hx-swap="outerHTML"
+                           class="card-link">LOAD</a>
                     </div>
                 </div>
             </div>
-            
+
             <!--/*******
                 Element 
             *******/-->
@@ -134,7 +155,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                  th:object="${element}">
                 <div class="card">
                     <div class="card-body">
-                        <span class="card-title h6">Element: [[*{name}]]</span>
+                        <span class="card-title h5">Element: [[*{name}]]</span>
                         <p class="card-text">
                             <div>
                                 Number of occurrences: [[*{cardinalityMin}]] - [[*{cardinalityMax}]]

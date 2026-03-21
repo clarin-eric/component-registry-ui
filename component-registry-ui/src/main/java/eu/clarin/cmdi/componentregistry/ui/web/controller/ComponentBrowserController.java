@@ -154,6 +154,17 @@ public class ComponentBrowserController {
         }
     }
 
+    @GetMapping(path = "/item/{id}/preview")
+    public String itemPreview(Model model,
+            @PathVariable String id) {
+        //get item description from API
+        final BaseDescription item = api.getItem(id);
+        
+        model.addAttribute("item", item);
+        model.addAttribute("component", null);
+        return "browser/items/itemPreview :: component-ref";
+    }
+
     @GetMapping(path = "/item/{id}/specification")
     public String itemSpecification(Model model,
             @PathVariable String id) {
