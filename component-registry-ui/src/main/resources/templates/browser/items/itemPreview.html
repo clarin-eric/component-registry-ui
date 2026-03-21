@@ -48,18 +48,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
             </div>
 
+            <!--/*******
+                Preview cards 
+            *******/-->
+
+            <!--/* Spec root */-->
             <div class="preview-spec" th:fragment="spec(spec)">
                 <div th:replace="~{this :: component(${spec.component})}">
                     [Root component]
                 </div>
             </div>
 
+            <!--/*******
+                Component 
+            *******/-->
             <div class="preview-component mt-2" th:fragment="component(component)"
+                 th:object="${component}">
+                <th:block th:unless="*{componentRef}">
+                    <div th:replace="~{this :: component-inline(${component})}" />
+                </th:block>
+                <th:block th:if="*{componentRef}">
+                    <div th:replace="~{this :: component-ref(${component})}" />
+                </th:block>
+            </div>
+
+            <!--/* Inline component */-->
+            <div class="preview-component mt-2" th:fragment="component-inline(component)"
                  th:object="${component}">
                 <div class="card">
                     <div class="card-body">
-                        <span th:unless="*{componentRef}" class="card-title h6">Component: [[*{name}]]</span>
-                        <span th:if="*{componentRef}" class="card-title h6">REF: [[*{componentRef}]]</span>
+                        <span class="card-title h6">Component: [[*{name}]]</span>
                         <p class="card-text">
                             <div>
                                 Number of occurrences: [[*{cardinalityMin}]] - [[*{cardinalityMax}]]
@@ -68,10 +86,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 ConceptLink: [[*{conceptLink}]]
                             </div>
                         </p>
-                        <!--
-                                                <a href="#" class="card-link">Card link</a>
-                                                <a href="#" class="card-link">Another link</a>
-                        -->
                     </div>
                 </div>
 
@@ -94,6 +108,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
             </div>
 
+            <!--/* Referenced component */-->
+            <div class="preview-component mt-2" th:fragment="component-ref(component)"
+                 th:object="${component}">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="card-title h6">REF: [[*{componentRef}]]</span>
+                        <p class="card-text">
+                            <div>
+                                Number of occurrences: [[*{cardinalityMin}]] - [[*{cardinalityMax}]]
+                            </div>
+                        </p>
+                        <!--
+                                                <a href="#" class="card-link">Card link</a>
+                                                <a href="#" class="card-link">Another link</a>
+                        -->
+                    </div>
+                </div>
+            </div>
+            
+            <!--/*******
+                Element 
+            *******/-->
             <div class="preview-element mt-2" th:fragment="element(element)"
                  th:object="${element}">
                 <div class="card">
