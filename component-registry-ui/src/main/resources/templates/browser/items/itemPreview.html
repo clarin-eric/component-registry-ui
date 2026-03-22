@@ -41,7 +41,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </div>
                         </div>
 
+                        <!--/*
                         <pre id="item-spec" style="max-width: 80em; max-height: 3em; overflow: auto;" class="overflow-auto" th:text="${spec}"></pre>
+                        */-->
                         <div th:replace="~{this :: spec(${spec})}"></div>
 
                     </div>
@@ -64,14 +66,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <!--/*******
                 Component 
             *******/-->
-            <div class="preview-component mt-2" th:fragment="component(component)"
+            <div class="preview-component mt-2 border-start border-primary ps-1" th:fragment="component(component)"
                  th:object="${component}">
                 <th:block th:unless="*{componentRef}">
                     <div th:replace="~{this :: component-inline(${component})}" />
                 </th:block>
-                <th:block th:if="*{componentRef}">
+                <div th:if="*{componentRef}" class="preview-component-ref-container">
                     <div th:replace="~{this :: component-ref(${component}, null)}" />
-                </th:block>
+                </div>
             </div>
 
             <!--/* Inline component */-->
