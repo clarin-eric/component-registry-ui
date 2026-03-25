@@ -66,42 +66,69 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <!--/* Add component button */-->
             <div th:fragment="addChildComponentButton(path, parentId)"
                  th:with="TransformationActions=${T(eu.clarin.cmdi.componentregistry.ui.service.TransformationActions)}">
-                <a href="#" class="btn btn-link btn-sm" title="Add a component"
-                   th:hx-post="@{/editor/transform(
-                   operation=${TransformationActions.ADD_CHILD_COMPONENT},
-                   path=${basePath},
-                   itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
-                   th:hx-target="|#${parentId}|"
-                   th:hx-select="|#${parentId}|"
-                   hx-push-url="true">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>Add a component</span>
+
+                <div class="dropdown">
+                    <button class="btn btn-link dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-plus"></i>
+                        Add a component
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" 
+                               href="#" title="Link a component"
+                               th:hx-get="@{/editor/componentsSelector(
+                                path=${path},
+                                itemId=${rootComponentId},
+                                parentId=${parentId})}"
+                               hx-select="#componentSelector"
+                               hx-target="#componentSelectorContainer"
+                               hx-swap="innerHTML"
+                               @htmx:after-request="componentSelectorOpen = true">
+                                <span>Link existing component</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item" 
+                               href="#" title="Add a component"
+                               th:hx-post="@{/editor/transform(
+                               operation=${TransformationActions.ADD_CHILD_COMPONENT},
+                               path=${path},
+                               itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
+                               th:hx-target="|#${parentId}|"
+                               th:hx-select="|#${parentId}|"
+                               hx-indicator="closest .dropdown"
+                               hx-push-url="true">
+                                <span>Create inline component</span>
+                            </a>
+                        </li>
+                    </ul>
                     <div class="spinner-border spinner-border-sm htmx-indicator" role="status">
                         <span class="visually-hidden">Loading...</span>
                     </div>
-                </a>
+                </div>
             </div> <!-- end fragment: addChildComponentButton -->
 
             <!--/* Add element button */-->
             <div th:fragment="addChildElementButton(path, parentId)"
                  th:with="TransformationActions=${T(eu.clarin.cmdi.componentregistry.ui.service.TransformationActions)}">
-                <a href="#" class="btn btn-link btn-sm" title="Add an element"
+                <a href="#" class="btn btn-link btn-sm" title="Add an element" 
                    th:hx-post="@{/editor/transform(
                    operation=${TransformationActions.ADD_CHILD_ELEMENT},
                    path=${basePath},
                    itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
                    th:hx-target="|#${fieldsDivId}|"
                    th:hx-select="|#${fieldsDivId}|"
-                   hx-push-url="true">
+                   hx-push-url="true"
+                   hx-indicator="closest div">
                     <i class="fa-solid fa-plus"></i>
                     <span>Add an element</span>
-                    <div class="spinner-border spinner-border-sm htmx-indicator" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
                 </a>    
+                <div class="spinner-border spinner-border-sm htmx-indicator" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div> <!-- end fragment: addChildElementButton -->
 
-            <!--/* Add element button */-->
+            <!--/* Add attribute button */-->
             <div th:fragment="addChildAttributeButton(path, parentId, type)"
                  th:with="TransformationActions=${T(eu.clarin.cmdi.componentregistry.ui.service.TransformationActions)}">
                 <a href="#" class="btn btn-link btn-sm" title="Add an attribute"
@@ -111,13 +138,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                    itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
                    th:hx-target="|#${fieldsDivId}|"
                    th:hx-select="|#${fieldsDivId}|"
-                   hx-push-url="true">
+                   hx-push-url="true"
+                   hx-indicator="closest div">
                     <i class="fa-solid fa-plus"></i>
                     <span>Add an attribute</span>
-                    <div class="spinner-border spinner-border-sm htmx-indicator" role="status">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                </a>    
+                </a>
+                <div class="spinner-border spinner-border-sm htmx-indicator" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
             </div>
         </main>
     </body>

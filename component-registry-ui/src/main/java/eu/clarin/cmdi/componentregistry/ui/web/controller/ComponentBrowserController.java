@@ -16,20 +16,13 @@
  */
 package eu.clarin.cmdi.componentregistry.ui.web.controller;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableList;
 import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsApi;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.BaseDescription;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.ComponentSpec;
 import static eu.clarin.cmdi.componentregistry.ui.HtmxUtils.isHtmxRequest;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.regex.Pattern;
-import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -47,7 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author twagoo
  */
 @Controller
-public class ComponentBrowserController {
+public class ComponentBrowserController extends BaseController {
 
     private final ItemsApi api;
 
@@ -69,14 +62,6 @@ public class ComponentBrowserController {
 
     public static final String SELECTED_ITEM_QUERY_PARAM = "item";
 
-    private static final List<String> ITEM_TABLE_FIELDS = Arrays.asList(
-            "name",
-            "groupName",
-            "domainName",
-            "creatorName",
-            //            "description",
-            "registrationDate");
-
     @Autowired
     public ComponentBrowserController(ItemsApi api) {
         this.api = api;
@@ -84,15 +69,15 @@ public class ComponentBrowserController {
 
     @GetMapping(path = {"/", "/browser"})
     public String browser(@RequestParam MultiValueMap<String, String> params, Model model) {
-        setCommonModelAttributes(params, model);
+        setCommonItemModelAttributes(params, model);
         return "browser/browser";
     }
 
     @GetMapping(path = "/items")
     public String items(@RequestParam MultiValueMap<String, String> params, Model model) {
-        List<BaseDescription> items = getItems(params);
+        List<BaseDescription> items = getItemsForRequest(api, params);
 
-        setCommonModelAttributes(params, model);
+        setCommonItemModelAttributes(params, model);
 
         //filter results
         final String textFilter = params.getFirst(TEXT_FILTER_QUERY_PARAM);
@@ -101,32 +86,6 @@ public class ComponentBrowserController {
         model.addAttribute("items", items);
 
         return "browser/items/table";
-    }
-
-    private void setCommonModelAttributes(MultiValueMap<String, String> params, Model model) {
-        model.addAttribute("fields", ITEM_TABLE_FIELDS);
-        model.addAttribute("selectedItems", params.get(SELECTED_ITEM_QUERY_PARAM));
-        model.addAttribute("textFilter", params.getFirst(TEXT_FILTER_QUERY_PARAM));
-        model.addAttribute("type", getFirstOrDefault(params, ITEM_TYPE_QUERY_PARAM, ITEM_TYPE_DEFAULT));
-        model.addAttribute("status", params.getOrDefault(ITEM_STATUS_QUERY_PARAM, ITEM_STATUS_DEFAULT));
-        model.addAttribute("sortedBy", getFirstOrDefault(params, SORT_BY_QUERY_PARAM, SORT_BY_DEFAULT));
-        model.addAttribute("sortedDirection", getFirstOrDefault(params, SORT_DIRECTION_QUERY_PARAM, SORT_DIRECTION_DEFAULT));
-    }
-
-    private List<BaseDescription> getItems(MultiValueMap<String, String> params) {
-        final String type = getFirstOrDefault(params, ITEM_TYPE_QUERY_PARAM, ITEM_TYPE_DEFAULT);
-        final String textFilter = params.getFirst(TEXT_FILTER_QUERY_PARAM);
-        final List<String> status = params.getOrDefault(ITEM_STATUS_QUERY_PARAM, ITEM_STATUS_DEFAULT);
-        final String sortBy = getFirstOrDefault(params, SORT_BY_QUERY_PARAM, SORT_BY_DEFAULT);
-        final String sortDirection = getFirstOrDefault(params, SORT_DIRECTION_QUERY_PARAM, SORT_DIRECTION_DEFAULT);
-        return switch (type) {
-            case ITEM_TYPE_COMPONENT ->
-                api.getItems("component", status, sortBy, sortDirection); //TODO: pass text filter
-            case ITEM_TYPE_PROFILE ->
-                api.getItems("profile", status, sortBy, sortDirection); //TODO: pass text filter
-            default ->
-                Collections.emptyList();
-        };
     }
 
     @GetMapping(path = "/item/{id}")
@@ -159,7 +118,7 @@ public class ComponentBrowserController {
             @PathVariable String id) {
         //get item description from API
         final BaseDescription item = api.getItem(id);
-        
+
         model.addAttribute("item", item);
         model.addAttribute("component", null);
         return "browser/items/itemPreview :: component-ref";
@@ -232,32 +191,11 @@ public class ComponentBrowserController {
      */
     private ModelAndView partialResponse(Map<String, String> headers, MultiValueMap<String, String> params, Model model, final String fragment, boolean forcePartial) {
         if (forcePartial || isHtmxRequest(headers)) {
-            setCommonModelAttributes(params, model);
+            setCommonItemModelAttributes(params, model);
             return new ModelAndView(fragment, model.asMap());
         } else {
             // not an HTMX request 
             return new ModelAndView("redirect:/", params);
-        }
-    }
-
-    private <T> T getFirstOrDefault(MultiValueMap<String, T> map, String key, T defaultValue) {
-        return Optional.ofNullable(map.getFirst(key)).orElse(defaultValue);
-    }
-
-    private List<BaseDescription> filterItems(final String textFilter, List<BaseDescription> items) {
-        if (!Strings.isNullOrEmpty(textFilter) && !items.isEmpty()) {
-            final Pattern filterPattern = Pattern.compile(Pattern.quote(textFilter), Pattern.CASE_INSENSITIVE);
-            return items.stream().filter(desc -> {
-                return Stream.of(desc.getId(),
-                        desc.getName(),
-                        desc.getDescription(),
-                        desc.getGroupName(),
-                        desc.getDomainName())
-                        .filter(Objects::nonNull)
-                        .anyMatch(val -> filterPattern.matcher(val).find());
-            }).toList();
-        } else {
-            return items;
         }
     }
 

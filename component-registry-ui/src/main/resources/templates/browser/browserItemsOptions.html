@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                    placeholder="Filter items" 
                                    th:value="${textFilter}"
                                    th:hx-get="@{/itemsContainer(type=${type}, status=${status}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
-                                   hx-trigger="keyup changed delay:1s"
+                                   hx-trigger="keyup changed delay:.5s"
                                    />
                         </div>
                         <div class="px-2 pb-1">

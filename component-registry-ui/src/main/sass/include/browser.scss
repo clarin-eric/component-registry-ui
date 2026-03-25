@@ -6,7 +6,25 @@
 *
 */
 
-/* HTMX updating */
+
+/* Only in the browser */
+#browser-main {
+    .items-table:hover {
+        cursor: pointer;
+
+        a.item-info {
+            opacity: 1;
+        }
+    }
+}
+
+/***
+ *
+ * Items table 
+ *
+ */
+
+/* -- HTMX updating */
 
 #items-table tbody {
     .htmx-request  & {
@@ -18,8 +36,7 @@
 }
 
 
-
-/* Item table column specific styling */
+/* -- Item table column specific styling */
 
 .items-table {
 
@@ -44,14 +61,6 @@
     tr {
         a.item-info {
             opacity: .1;
-        }
-
-        &:hover {
-            cursor: pointer;
-
-            a.item-info {
-                opacity: 1;
-            }
         }
 
         &.table-active {

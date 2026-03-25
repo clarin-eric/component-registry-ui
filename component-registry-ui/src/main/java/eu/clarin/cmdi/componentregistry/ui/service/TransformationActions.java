@@ -34,6 +34,7 @@ public class TransformationActions {
     public static final String ADD_CHILD_ATTRIBUTE_TO_ELEMENT = "elementAddChildAttribute";
     public static final String ADD_CHILD_ELEMENT = "addChildElement";
     public static final String ADD_CHILD_COMPONENT = "addChildComponent";
+    public static final String LINK_CHILD_COMPONENT = "linkChildComponent";
     public static final String INSERT_COMPONENT = "insertComponent";
     public static final String INSERT_ELEMENT = "insertElement";
 

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!--
+Copyright (C) 2024 CLARIN ERIC
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>Component selector for the editor</title>
+    </head>
+
+    <body>
+        <main>
+            <div th:fragment="componentSelector" id="componentSelector">
+
+                <div id="componentSelectorContainer">
+                    <div th:replace="~{this :: componentSelectorFilters}">
+                        [Filters]
+                    </div>
+                    <div id="componentSelectorTableContainer"
+                         class="m-2 overflow-y-auto"
+                         th:hx-target="|#${parentId}|"
+                         th:hx-select="|#${parentId}|"
+                         hx-indicator="closest table"
+                         hx-push-url="true">
+                        <table th:replace="~{/browser/items/table :: #items-table}">
+                            [Items]
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!--/* Table components (added compared to browser mode) */-->
+            <table>
+                <tr>
+                    <!--/* Header for 'add child component' button column ONLY in editor mode */-->
+                    <th th:fragment="linkComponentActionColumnHeader(mode)" th:if="'editor' eq ${mode}">
+                        Insert
+                    </th>
+                </tr>
+                <tr>
+                    <!--/* Table cell that includes a button for linking in the component represented by the row */-->
+                    <td th:fragment="linkComponentActionColumn(path, rootItemId, linkId)"
+                        th:with="TransformationActions=${T(eu.clarin.cmdi.componentregistry.ui.service.TransformationActions)}">
+                        <a class="btn btn-primary" 
+                           href="#" title="Add a component"
+                           th:hx-post="@{/editor/transform(
+                           operation=${TransformationActions.LINK_CHILD_COMPONENT},
+                           path=${path}, linkId=${linkId}, itemId=${rootItemId},
+                           uniqId=${#strings.randomAlphanumeric(6)})}"
+                           @htmx:after-request="componentSelectorOpen = false">
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+
+            <form th:fragment="componentSelectorFilters" class="d-flex flex-wrap" 
+                  hx-select="#componentSelectorContainer"
+                  hx-target="#componentSelectorContainer"
+                  hx-swap="outerHTML">
+                <input type="hidden" name="type" th:value="${type}" />
+                <input type="hidden" name="sortBy" th:value="${sortBy}" />
+                <input type="hidden" name="sortDirection" th:value="${sortDirection}" />
+
+                <div class="px-2 pb-1">
+                    <input type="search" class="form-control"
+                           name="textFilter"
+                           placeholder="Filter items" 
+                           th:value="${textFilter}"
+                           th:hx-get="@{/editor/componentsSelector(path=${path},itemId=${itemId},parentId=${parentId},
+                           status=${status}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
+                           hx-trigger="keyup changed delay:.5s"
+                           hx-select="#componentSelectorTableContainer"
+                           hx-target="#componentSelectorTableContainer"/>
+                </div>
+                <div class="px-2 pb-1">
+                    <button class="btn btn-outline-secondary" title="Show only recommended"><i
+                            class="fa-regular fa-star"></i></button>
+                </div>
+                <div class="px-2 pb-1">
+                    <div class="dropdown">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Group(s)
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">(All)</a></li>
+                            <li><a class="dropdown-item" href="#">Recommended</a></li>
+                            <li><a class="dropdown-item" href="#">..</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="px-2 pb-1">
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false"
+                           th:text="#{|status.${#lists.size(status) == 1 ? status[0] : 'all'}|}"
+                           >
+                            Status
+                        </a>
+
+                        <ul class="dropdown-menu"
+                            th:with="allStatuses=${ {'development', 'production', 'deprecated'} }"
+                            hx-boost="true"
+                            hx-swap="outerHTML">
+                            <li>
+                                <a class="dropdown-item"
+                                   th:classappend="${#lists.size(status) == 3 ? 'active' : ''}"
+                                   th:text="#{status.all}"
+                                   th:hx-get="@{/editor/componentsSelector(path=${path},itemId=${itemId},parentId=${parentId},
+                                   status=${allStatuses}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                                    (All)
+                                </a>
+                            </li>
+
+                            <li th:each="statusOption : ${allStatuses}">
+                                <a class="dropdown-item"
+                                   th:classappend="${(#lists.size(status) == 1 && status[0] == statusOption) ? 'active' : ''}"
+                                   th:text="#{|status.${statusOption}|}"              
+                                   th:hx-get="@{/editor/componentsSelector(path=${path},itemId=${itemId},parentId=${parentId},
+                                   status=${statusOption}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                                    {status}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </form>
+        </main>
+    </body>
+</html>

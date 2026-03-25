@@ -21,32 +21,52 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     </head>
     <body>
         <table>
-            <!-- Table header with sorting options -->
-            <thead>
-            </thead>
-            <!-- Data -->
             <tbody th:fragment="itemsTableBody" 
-                   id="items-table-body">
+                   id="items-table-body"
+                   th:switch="${mode}?:'browser'">
 
-                <tr th:id="|table_${description['id']}|"
-                    th:each="description : ${items}"
-                    th:x-data="|{itemId: '${description['id']}'}|"
-                    :class="{ 'table-active': (selectedItem == itemId) }"
-                    @click="selectedItem = itemId"
-                    th:hx-get="@{|/item/${description.id}|}"
-                    th:hx-push-url="@{|/#table_${description['id']}|(item=${description.id},type=${type})}"
-                    hx-target="#browser-item-view-container"
-                    hx-select="#browser-item-view"
-                    hx-select-oob="#selected-item-actions"
-                    hx-swap="innerHTML">
+                <!--/* BROWSER MODE */-->
+                <th:block th:case="browser">
+                    <!--/* Row is clickable for selection in the browser  */-->
+                    <tr th:id="|table_${description['id']}|"
+                        th:each="description : ${items}"
+                        th:x-data="|{itemId: '${description['id']}'}|"
+                        :class="{ 'table-active': (selectedItem == itemId) }"
+                        @click="selectedItem = itemId"
+                        th:hx-get="@{|/item/${description.id}|}"
+                        th:hx-push-url="@{|/#table_${description['id']}|(item=${description.id},type=${type})}"
+                        hx-target="#browser-item-view-container"
+                        hx-select="#browser-item-view"
+                        hx-select-oob="#selected-item-actions"
+                        hx-swap="innerHTML">
 
-                    <td th:each="field: ${fields}" 
-                        th:class="|column-field_${field}|">
-                        <span th:text="${description[field]}">link</span>
-                    </td>
+                        <!--/* Field columns */-->
+                        <th:block th:fragment="rowBody(mode, fields)">
+                            <td th:each="field: ${fields}" 
+                                th:class="|column-field_${field}|">
+                                <span th:text="${description[field]}">link</span>
+                            </td>
+                        </th:block>
+                    </tr>
+                </th:block>
 
-                </tr>
+                <!--/* EDITOR MODE */-->
+                <th:block th:case="'editor'">
+                    <!--/* Row is not clickable, instead we insert a button column for linking the row's item */-->
+                    <tr th:id="|table_${description['id']}|"
+                        th:each="description : ${items}">
+                        <!--/* Cell with a button to link in the row's item */-->
+                        <td th:replace="~{editor/fragments/componentSelector :: linkComponentActionColumn(
+                            path=${path}, rootItemId=${itemId}, linkId=${description['id']})}">
+                            [Link button]
+                        </td>
 
+                        <!--/* Copy field columns from browser mode */-->
+                        <td th:replace="~{this :: rowBody(${mode}, ${fields})}">
+                            Field columns
+                        </td>
+                    </tr>
+                </th:block>
             </tbody>
         </table>
 
