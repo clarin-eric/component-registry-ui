@@ -98,18 +98,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </div>
 
                 <!--/* children */-->
-                <div th:id="|children_${localId}|" class="component-children collapse show">
-                    <div class="childComponents mx-4" th:if="*{component}">
-                        <th:block th:each="child : *{component}">
-                            <div th:replace="~{this :: component(${child})}">
-                                [Component]
-                            </div>
-                        </th:block>
-                    </div>
+                <div th:fragment="component-children(component, localId)" th:id="|children_${localId}|" class="component-children collapse show"
+                     th:object="${component}">
                     <div class="childElements mx-4" th:if="*{element}">
                         <th:block th:each="child : *{element}">
                             <div th:replace="~{this :: element(${child})}">
                                 [Element]
+                            </div>
+                        </th:block>
+                    </div>
+                    <div class="childComponents mx-4" th:if="*{component}">
+                        <th:block th:each="child : *{component}">
+                            <div th:replace="~{this :: component(${child})}">
+                                [Component]
                             </div>
                         </th:block>
                     </div>

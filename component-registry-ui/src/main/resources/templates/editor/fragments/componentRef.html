@@ -32,6 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="row">
                             <div th:id="${titleId}" class="col-xl-9 h4">
                                 Component reference: (..)
+                                <i class="fa-solid fa-puzzle-piece"></i>
                             </div>
 
                             <div class="col-xl-3 text-xl-end">
@@ -60,7 +61,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                     <div href="#" 
                          th:hx-get="@{/editor/referencedComponent/{id}(id=${component.componentRef})}"
-                         hx-select="#details"
+                         hx-select=".expanded-component-details"
                          th:hx-select-oob="|#${titleId}|"
                          hx-trigger="load">
                         <!--/* load referenced component details */-->
@@ -71,16 +72,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         </main>
 
         <th:block th:remove="all">
+
             <div th:fragment="expandedComponent"
                  th:with="TemplateUtils=${T(eu.clarin.cmdi.componentregistry.ui.TemplateUtils)},
                  titleId=|title_${TemplateUtils.makeIdSafe(spec.header.id)}|">
                 <div th:id="${titleId}" class="col-xl-9 h4">
-                    Component reference: [[${spec.header.name}]]
+                    <a data-bs-toggle="collapse" 
+                       th:href="|#details_${titleId}|" role="button" aria-expanded="false" th:aria-controls="|details_${titleId}|">
+                        [[${spec.header.name}]]
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                    </a>
                 </div>
 
-                <div id="details">
-                    (details)
-                    <!--<pre th:text="${spec}"></pre>-->
+                <div th:id="|details_${titleId}|" class="collapse expanded-component-details">
+                    <div th:replace="~{/browser/items/itemPreview :: component-children(${spec.component}, ${titleId})}">
+                        (details)
+                    </div>
                 </div>
             </div>
         </th:block>
