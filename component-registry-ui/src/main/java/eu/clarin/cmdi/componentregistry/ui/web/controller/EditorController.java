@@ -41,6 +41,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.WebDataBinder;
@@ -59,7 +60,7 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping(value = "/editor")
 @Slf4j
-public class EditorController {
+public class EditorController extends BaseController {
     
     private final ItemsApi api;
     
@@ -348,6 +349,14 @@ public class EditorController {
         model.addAttribute("path", path);
         model.addAttribute("doc", new DocumentationType());
         return "/editor/fragments/documentation :: documentationElement";
+    }
+    
+    @GetMapping("/componentsSelector")
+    public String componentsSelector(@RequestParam MultiValueMap<String, String> params, Model model) {
+        final List<BaseDescription> items = getItemsForRequest(api, params);
+        model.addAttribute("items", items);
+        //TODO: make view
+        return "/editor/componentsSelector :: main";
     }
     
 }
