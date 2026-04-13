@@ -73,20 +73,30 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         Add a component
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Link existing component</a></li>
+                        <li><a class="dropdown-item" 
+                               th:hx-get="@{/editor/componentsSelector}"
+                               hx-select="#componentSelector"
+                               hx-target="#componentSelectorContainer"
+                               hx-swap="innerHTML"
+                               @htmx:after-request="componentSelectorOpen = true">
+                                <span>Link existing component</span>
+                            </a>
+                        </li>
 
-                        <a class="dropdown-item" 
-                           href="#" title="Add a component"
-                           th:hx-post="@{/editor/transform(
-                           operation=${TransformationActions.ADD_CHILD_COMPONENT},
-                           path=${basePath},
-                           itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
-                           th:hx-target="|#${parentId}|"
-                           th:hx-select="|#${parentId}|"
-                           hx-indicator="closest .dropdown"
-                           hx-push-url="true">
-                            <span>Create inline component</span>
-                        </a>
+                        <li>
+                            <a class="dropdown-item" 
+                               href="#" title="Add a component"
+                               th:hx-post="@{/editor/transform(
+                               operation=${TransformationActions.ADD_CHILD_COMPONENT},
+                               path=${basePath},
+                               itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
+                               th:hx-target="|#${parentId}|"
+                               th:hx-select="|#${parentId}|"
+                               hx-indicator="closest .dropdown"
+                               hx-push-url="true">
+                                <span>Create inline component</span>
+                            </a>
+                        </li>
                     </ul>
                     <div class="spinner-border spinner-border-sm htmx-indicator" role="status">
                         <span class="visually-hidden">Loading...</span>

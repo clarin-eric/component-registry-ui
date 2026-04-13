@@ -354,9 +354,10 @@ public class EditorController extends BaseController {
     @GetMapping("/componentsSelector")
     public String componentsSelector(@RequestParam MultiValueMap<String, String> params, Model model) {
         final List<BaseDescription> items = getItemsForRequest(api, params);
+        setCommonItemModelAttributes(params, model);
         model.addAttribute("items", items);
         //TODO: make view
-        return "/editor/componentsSelector :: main";
+        return "/editor/fragments/componentSelector :: componentSelector";
     }
     
 }

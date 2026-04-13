@@ -36,7 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     {HEADER}
                 </header>
                 <main id="editor-main">
-                    <div class="container">
+                    <div class="container"
+                         x-data="{componentSelectorOpen: false}">
                         <div class="row">
                             <div class="col-8">
 
@@ -62,9 +63,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </div>
 
                         </div>
+
+                        <!--/* "Off canvas" container for the component selector (activated when the 'Link existing component' action is chosen) */-->
+                        <div id="componentSelectorOffcanvas" 
+                             class="offcanvas offcanvas-bottom" style="height: 60%"
+                             :class="{'show': componentSelectorOpen}">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasLabel">Select component to link</h5>
+                                <button type="button" class="btn-close" aria-label="Close" @click="componentSelectorOpen = false"></button>
+                            </div>
+                            <div id="componentSelectorContainer" class="offcanvas-body" >
+                                [component selector]
+                            </div>
+                        </div>
                     </div>
                 </main>
-                
+
                 <footer th:replace="~{fragments/footer :: footer}">
                     {FOOTER}
                 </footer>
