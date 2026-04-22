@@ -27,6 +27,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     hx-target="#items-table" 
                     hx-swap="outerHTML show:none"
                     hx-select="#items-table">
+                    <th th:if="'editor' eq ${mode}">
+                        <!--/*header for 'add child component' button column */-->
+                    </th>
                     <th th:each="field: ${fields}"
                         th:hx-vals='|{"sortBy": "${field}", "sortDirection": "${sortedDirection}"}|'
                         th:class="|column-field_${field}|"

@@ -356,7 +356,7 @@ public class EditorController extends BaseController {
         final List<BaseDescription> items = getItemsForRequest(api, params);
         setCommonItemModelAttributes(params, model);
         model.addAttribute("items", items);
-        //TODO: make view
+        model.addAttribute("mode", "editor");
         return "/editor/fragments/componentSelector :: componentSelector";
     }
     

@@ -30,7 +30,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     No components
                 </div>
 
-                <div class="ms-2" 
+                <div id="childComponents" class="ms-2" 
                      th:each="childComponent, iterStat : ${components}"
                      th:with="isInline= ${#strings.isEmpty(childComponent.componentRef)}">
 

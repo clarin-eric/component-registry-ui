@@ -28,7 +28,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <tbody th:fragment="itemsTableBody" 
                    id="items-table-body">
 
-                <tr th:id="|table_${description['id']}|"
+                <tr th:if="'editor' eq ${mode}"
+                    th:id="|table_${description['id']}|"
+                    th:each="description : ${items}">
+                    <td th:replace="~{this :: rowBody(${mode}, ${fields})}">body</td>
+                </tr>
+
+                <tr th:unless="'editor' eq ${mode}"
+                    th:id="|table_${description['id']}|"
                     th:each="description : ${items}"
                     th:x-data="|{itemId: '${description['id']}'}|"
                     :class="{ 'table-active': (selectedItem == itemId) }"
@@ -39,16 +46,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     hx-select="#browser-item-view"
                     hx-select-oob="#selected-item-actions"
                     hx-swap="innerHTML">
-
-                    <td th:each="field: ${fields}" 
-                        th:class="|column-field_${field}|">
-                        <span th:text="${description[field]}">link</span>
-                    </td>
-
+                    <td th:replace="~{this :: rowBody(${mode}, ${fields})}">body</td>
                 </tr>
+
 
             </tbody>
         </table>
+
+        <th:block th:fragment="rowBody(mode, fields)">
+            <td th:if="'editor' eq ${mode}">
+                <a class="btn btn-primary">+</a>
+            </td>
+
+            <td th:each="field: ${fields}" 
+                th:class="|column-field_${field}|">
+                <span th:text="${description[field]}">link</span>
+            </td>
+        </th:block>
 
     </body>
 </html>
