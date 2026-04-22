@@ -74,7 +74,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </button>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" 
-                               th:hx-get="@{/editor/componentsSelector}"
+                               href="#" title="Link a component"
+                               th:hx-get="@{/editor/componentsSelector(path=${path},parentId=${parentId})}"
                                hx-select="#componentSelector"
                                hx-target="#componentSelectorContainer"
                                hx-swap="innerHTML"
@@ -88,7 +89,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                href="#" title="Add a component"
                                th:hx-post="@{/editor/transform(
                                operation=${TransformationActions.ADD_CHILD_COMPONENT},
-                               path=${basePath},
+                               path=${path},
                                itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
                                th:hx-target="|#${parentId}|"
                                th:hx-select="|#${parentId}|"

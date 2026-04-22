@@ -26,38 +26,53 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             </thead>
             <!-- Data -->
             <tbody th:fragment="itemsTableBody" 
-                   id="items-table-body">
+                   id="items-table-body"
+                   th:switch="${mode}">
 
-                <tr th:if="'editor' eq ${mode}"
-                    th:id="|table_${description['id']}|"
-                    th:each="description : ${items}">
-                    <td th:replace="~{this :: rowBody(${mode}, ${fields})}">body</td>
-                </tr>
+                <!-- Editor mode -->
+                <th:block th:case="'editor'"
+                          th:with="TransformationActions=${T(eu.clarin.cmdi.componentregistry.ui.service.TransformationActions)}">
+                    <tr th:id="|table_${description['id']}|"
+                        th:each="description : ${items}">
+                        <td>
+                            <a class="btn btn-primary" 
+                               href="#" title="Add a component"
+                               th:hx-post="@{/editor/transform(
+                               operation=${TransformationActions.ADD_CHILD_COMPONENT},
+                               path=${path},
+                               itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
+                               th:hx-target="|#${parentId}|"
+                               th:hx-select="|#${parentId}|"
+                               hx-indicator="closest table"
+                               hx-push-url="true">
+                                +
+                            </a>
 
-                <tr th:unless="'editor' eq ${mode}"
-                    th:id="|table_${description['id']}|"
-                    th:each="description : ${items}"
-                    th:x-data="|{itemId: '${description['id']}'}|"
-                    :class="{ 'table-active': (selectedItem == itemId) }"
-                    @click="selectedItem = itemId"
-                    th:hx-get="@{|/item/${description.id}|}"
-                    th:hx-push-url="@{|/#table_${description['id']}|(item=${description.id},type=${type})}"
-                    hx-target="#browser-item-view-container"
-                    hx-select="#browser-item-view"
-                    hx-select-oob="#selected-item-actions"
-                    hx-swap="innerHTML">
-                    <td th:replace="~{this :: rowBody(${mode}, ${fields})}">body</td>
-                </tr>
+                        </td>
+                        <td th:replace="~{this :: rowBody(${mode}, ${fields})}">body</td>
+                    </tr>
+                </th:block>
 
-
+                <!-- Browser mode -->
+                <th:block th:case="*">
+                    <tr th:id="|table_${description['id']}|"
+                        th:each="description : ${items}"
+                        th:x-data="|{itemId: '${description['id']}'}|"
+                        :class="{ 'table-active': (selectedItem == itemId) }"
+                        @click="selectedItem = itemId"
+                        th:hx-get="@{|/item/${description.id}|}"
+                        th:hx-push-url="@{|/#table_${description['id']}|(item=${description.id},type=${type})}"
+                        hx-target="#browser-item-view-container"
+                        hx-select="#browser-item-view"
+                        hx-select-oob="#selected-item-actions"
+                        hx-swap="innerHTML">
+                        <td th:replace="~{this :: rowBody(${mode}, ${fields})}">body</td>
+                    </tr>
+                </th:block>
             </tbody>
         </table>
 
         <th:block th:fragment="rowBody(mode, fields)">
-            <td th:if="'editor' eq ${mode}">
-                <a class="btn btn-primary">+</a>
-            </td>
-
             <td th:each="field: ${fields}" 
                 th:class="|column-field_${field}|">
                 <span th:text="${description[field]}">link</span>

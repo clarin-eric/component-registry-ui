@@ -61,13 +61,13 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/editor")
 @Slf4j
 public class EditorController extends BaseController {
-    
+
     private final ItemsApi api;
-    
+
     private final ComponentSpecTransformationService specTransformationService;
     private final Converter<String, List<ItemType>> csvToItemsConverter;
     private final Converter<List<ItemType>, String> itemsToCsvConverter;
-    
+
     @Autowired
     public EditorController(ItemsApi api, ComponentSpecTransformationService specTransformationService, Converter<String, List<ItemType>> csvToItemsConverter, Converter<List<ItemType>, String> itemsToCsvConverter) {
         this.api = api;
@@ -75,14 +75,14 @@ public class EditorController extends BaseController {
         this.csvToItemsConverter = csvToItemsConverter;
         this.itemsToCsvConverter = itemsToCsvConverter;
     }
-    
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         // we need to support large collection size for large vocabularies
         // TODO: make this configurable with a property
         binder.setAutoGrowCollectionLimit(10_000);
     }
-    
+
     @GetMapping(path = "/{itemId}")
     public String editor(@PathVariable String itemId, Model model) throws ErrorResponseException {
         final BaseDescription description = api.getItem(itemId);
@@ -90,15 +90,15 @@ public class EditorController extends BaseController {
             throw new ErrorResponseException(HttpStatus.NOT_FOUND);
         } else {
             final ComponentSpec spec = api.getItemSpec(itemId, MediaType.APPLICATION_JSON_VALUE);
-            
+
             model.addAttribute("itemId", itemId);
             model.addAttribute("description", description);
             model.addAttribute("spec", spec);
-            
+
             return "editor/editor";
         }
     }
-    
+
     @PostMapping(path = "/{itemId}/spec")
     public String submitSpec(@PathVariable String itemId, ComponentSpec formData, BindingResult bindingResult, Model model) {
         log.info("Item: {}, Incoming data: {}", itemId, formData);
@@ -106,17 +106,17 @@ public class EditorController extends BaseController {
         // https://stackoverflow.com/questions/30280131/thymeleaf-spring-nested-backing-object-is-not-binding-the-values-on-form-submit
         return editor(itemId, model);
     }
-    
+
     @PostMapping(path = "/transform")
     public String performOperation(ComponentSpec spec,
             @RequestParam String operation,
             @RequestParam String path,
             Model model) throws JsonProcessingException, ComponentSpecTransformationException {
         final ComponentSpec transformedSpec = transform(operation, spec, path);
-        
+
         model.addAttribute("componentId", spec.getHeader().getId());
         model.addAttribute("spec", transformedSpec);
-        
+
         return "editor/fragments/specForm :: specForm";
     }
 
@@ -135,26 +135,26 @@ public class EditorController extends BaseController {
             return new ModelAndView("redirect:/editor/{itemId}", ImmutableMap.of("itemId", itemId));
         }
     }
-    
+
     @GetMapping("/referencedComponent/{componentId}")
     public String getReferencedComponent(@PathVariable String componentId, Model model) {
         final ComponentSpec spec = api.getItemSpec(componentId, null);
         model.addAttribute("spec", spec);
         return "/editor/fragments/componentRef :: expandedComponent";
     }
-    
+
     @PostMapping("/elementValueSchemeEditor")
     public String valueSchemeEditor(ComponentSpec spec, @RequestParam String path, Model model) {
         try {
             final ElementType element = specTransformationService.extractElement(spec, path);
             final ValueSchemeType valueScheme = element.getValueScheme();
             final ElementType.ValueSchemeAttributeEnum valueSchemeAttribute = element.getValueSchemeAttribute();
-            
+
             model.addAttribute("parentType", "element");
             model.addAttribute("parentPath", path);
             model.addAttribute("valueSchemeAttribute", valueSchemeAttribute);
             model.addAttribute("valueScheme", valueScheme);
-            
+
             if (valueScheme != null && valueScheme.getVocabulary() != null) {
                 model.addAttribute("selectedTab", "vocabulary");
             } else if (valueScheme != null && valueScheme.getPattern() != null) {
@@ -162,24 +162,24 @@ public class EditorController extends BaseController {
             } else {
                 model.addAttribute("selectedTab", "simple");
             }
-            
+
             return "/editor/fragments/valueScheme :: valueSchemeEditor";
         } catch (ComponentSpecTransformationException | JsonProcessingException ex) {
             log.error("Error while extracting element from spec at path " + path);
             throw new RuntimeException(ex);
         }
     }
-    
+
     @PostMapping("/elementValueSchemeEditor/simple")
     public String simpleValueScheme(@RequestParam String path, @RequestParam Attribute.ValueSchemeEnum type, Model model) {
         return valueScheme(model, path, type, null);
     }
-    
+
     @PostMapping("/elementValueSchemeEditor/pattern")
     public String patternValueScheme(@RequestParam String path, @RequestParam String pattern, Model model) {
         final ValueSchemeType valueScheme = new ValueSchemeType();
         valueScheme.setPattern(pattern);
-        
+
         return valueScheme(model, path, null, valueScheme);
     }
 
@@ -194,7 +194,7 @@ public class EditorController extends BaseController {
     @PostMapping("/elementValueSchemeEditor/vocabulary")
     public String vocabularyValueScheme(@RequestParam String path, VocabularyDTO vocabData, Model model) {
         final ValueSchemeType valueScheme = new ValueSchemeType();
-        
+
         if (vocabData.getVocabularyType().equals("closed")) {
             //TODO: validate vocab definition
             //TODO: validate values of other properties
@@ -216,18 +216,18 @@ public class EditorController extends BaseController {
             //open vocabulary: the enumeration must not be set!
             vocabData.getVocabulary().setEnumeration(null);
         }
-        
+
         valueScheme.setVocabulary(vocabData.getVocabulary());
-        
+
         return valueScheme(model, path, null, valueScheme);
     }
-    
+
     @GetMapping("/elementValueSchemeEditor/vocabulary/emptyRow")
     public String newVocabularyItem(@RequestParam Integer index, Model model) {
         model.addAttribute("index", String.valueOf(index));
         return "/editor/fragments/vocabulary :: itemRow";
     }
-    
+
     @PostMapping("/elementValueSchemeEditor/vocabulary/transformItemsList")
     public String transformItemsList(@RequestParam String operation, @RequestParam Integer index, VocabularyDTO vocabData, Model model) {
         if (vocabData != null) {
@@ -264,25 +264,25 @@ public class EditorController extends BaseController {
         }
         return "/editor/fragments/vocabulary :: closedVocabTable";
     }
-    
+
     @PostMapping("/elementValueSchemeEditor/vocabulary/bulkEditor")
     public String bulkEditor(VocabularyDTO vocabData, Model model) {
-        
+
         String csv = itemsToCsvConverter.convert(vocabData.getVocabulary().getEnumeration().getItem());
         model.addAttribute("csv", csv);
-        
+
         return "/editor/fragments/vocabulary :: itemsBulkEditor";
     }
-    
+
     @PostMapping("/elementValueSchemeEditor/vocabulary/itemsTable")
     public String csvToItemsTable(VocabularyDTO vocabData, Model model) {
-        
+
         VocabularyType vocabulary = vocabData.getVocabulary();
         if (vocabulary == null) {
             vocabulary = new VocabularyType();
         }
         EnumerationType enumeration = vocabulary.getEnumeration();
-        
+
         if (enumeration == null) {
             enumeration = new EnumerationType();
             vocabulary.enumeration(enumeration);
@@ -296,17 +296,17 @@ public class EditorController extends BaseController {
         }
         return "/editor/fragments/vocabulary :: closedVocabTable";
     }
-    
+
     private String valueScheme(Model model, String path, final Attribute.ValueSchemeEnum valueSchemeAttribute, final ValueSchemeType valueScheme) {
         model.addAttribute("parentPath", path);
         model.addAttribute("valueSchemeAttributePath", path + ".valueSchemeAttribute");
         model.addAttribute("valueSchemeAttributeValue", valueSchemeAttribute);
         model.addAttribute("valueSchemePath", path + ".valueScheme");
         model.addAttribute("valueSchemeValue", valueScheme);
-        
+
         return "/editor/fragments/valueScheme :: valueScheme";
     }
-    
+
     private ComponentSpec transform(String operation, ComponentSpec spec, String path) throws ComponentSpecTransformationException, JsonProcessingException {
         return switch (operation) {
             case NOOP ->
@@ -343,21 +343,24 @@ public class EditorController extends BaseController {
             }
         };
     }
-    
+
     @GetMapping("/newDocumentationElement")
     public String newDocumentationElement(@RequestParam String path, Model model) {
         model.addAttribute("path", path);
         model.addAttribute("doc", new DocumentationType());
         return "/editor/fragments/documentation :: documentationElement";
     }
-    
+
     @GetMapping("/componentsSelector")
-    public String componentsSelector(@RequestParam MultiValueMap<String, String> params, Model model) {
+    public String componentsSelector(@RequestParam String path, @RequestParam String parentId,
+            @RequestParam MultiValueMap<String, String> params, Model model) {
         final List<BaseDescription> items = getItemsForRequest(api, params);
         setCommonItemModelAttributes(params, model);
         model.addAttribute("items", items);
         model.addAttribute("mode", "editor");
+        model.addAttribute("path", path);
+        model.addAttribute("parentId", parentId);
         return "/editor/fragments/componentSelector :: componentSelector";
     }
-    
+
 }
