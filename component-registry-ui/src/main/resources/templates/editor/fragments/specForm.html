@@ -25,7 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
             <div class="container">
 
-                <div th:fragment="specForm(componentId)" id="spec-form">
+                <div th:fragment="specForm(componentId)" 
+                     id="spec-form" 
+                     x-data="{componentSelectorOpen: false}">
                     <form th:action="@{/editor/{componentId}/spec(componentId=${componentId})}"
                           th:with="rootComponentId=${componentId}"
                           method="post">
@@ -42,6 +44,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div id="root-component">
                             <div th:replace="~{/editor/fragments/componentFormBlock :: componentBlockContent(
                                  component = ${spec.component},
+                                 rootComponentId = ${rootComponentId},
                                  basePath = 'component',
                                  fieldsDivId = 'root-component-fields',
                                  headerId = 'specNoopHeader',
@@ -52,6 +55,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
+
+                        <!--/* "Off canvas" container for the component selector (activated when the 'Link existing component' action is chosen) */-->
+                        <div id="componentSelectorOffcanvas" 
+                             class="offcanvas offcanvas-bottom" style="height: 60%"
+                             :class="{'show': componentSelectorOpen}">
+                            <div class="offcanvas-header">
+                                <h5 class="offcanvas-title" id="offcanvasLabel">Select component to link</h5>
+                                <button type="button" class="btn-close" aria-label="Close" @click="componentSelectorOpen = false"></button>
+                            </div>
+                            <div id="componentSelectorContainer" class="offcanvas-body" >
+                                [component selector]
+                            </div>
+                        </div>
                     </form>
 
                     <div id="valueSchemeModal"
@@ -65,7 +81,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <div class="modal-content"></div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </main>

@@ -38,13 +38,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <a class="btn btn-primary" 
                                href="#" title="Add a component"
                                th:hx-post="@{/editor/transform(
-                               operation=${TransformationActions.ADD_CHILD_COMPONENT},
+                               operation=${TransformationActions.LINK_CHILD_COMPONENT},
                                path=${path},
-                               itemId=${rootComponentId}, uniqId=${#strings.randomAlphanumeric(6)})}"
+                               linkId=${description['id']},
+                               itemId=${itemId},
+                               uniqId=${#strings.randomAlphanumeric(6)})}"
                                th:hx-target="|#${parentId}|"
                                th:hx-select="|#${parentId}|"
                                hx-indicator="closest table"
-                               hx-push-url="true">
+                               hx-push-url="true"
+                               @htmx:after-request="componentSelectorOpen = false">
                                 +
                             </a>
 

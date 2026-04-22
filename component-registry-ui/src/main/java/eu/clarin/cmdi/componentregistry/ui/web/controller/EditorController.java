@@ -33,7 +33,10 @@ import eu.clarin.cmdi.componentregistry.ui.service.ComponentSpecTransformationEx
 import eu.clarin.cmdi.componentregistry.ui.service.ComponentSpecTransformationService;
 import static eu.clarin.cmdi.componentregistry.ui.service.TransformationActions.*;
 import eu.clarin.cmdi.componentregistry.ui.web.controller.model.VocabularyDTO;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
@@ -111,8 +114,9 @@ public class EditorController extends BaseController {
     public String performOperation(ComponentSpec spec,
             @RequestParam String operation,
             @RequestParam String path,
+            @RequestParam Map<String, String> params,
             Model model) throws JsonProcessingException, ComponentSpecTransformationException {
-        final ComponentSpec transformedSpec = transform(operation, spec, path);
+        final ComponentSpec transformedSpec = transform(operation, spec, path, params);
 
         model.addAttribute("componentId", spec.getHeader().getId());
         model.addAttribute("spec", transformedSpec);
@@ -308,6 +312,10 @@ public class EditorController extends BaseController {
     }
 
     private ComponentSpec transform(String operation, ComponentSpec spec, String path) throws ComponentSpecTransformationException, JsonProcessingException {
+        return transform(operation, spec, path, Collections.emptyMap());
+    }
+
+    private ComponentSpec transform(String operation, ComponentSpec spec, String path, Map<String, String> params) throws ComponentSpecTransformationException, JsonProcessingException {
         return switch (operation) {
             case NOOP ->
                 spec;
@@ -327,6 +335,10 @@ public class EditorController extends BaseController {
                 specTransformationService.moveAttributeDown(spec, path);
             case ADD_CHILD_COMPONENT ->
                 specTransformationService.addChildComponent(spec, path);
+            case LINK_CHILD_COMPONENT ->
+                specTransformationService.linkChildComponent(spec, path,
+                //linkId param MUST be set, else we throw
+                Optional.ofNullable(params.get("linkId")).orElseThrow());
             case ADD_CHILD_ELEMENT ->
                 specTransformationService.addChildElement(spec, path);
             case ADD_CHILD_ATTRIBUTE_TO_COMPONENT ->
@@ -353,11 +365,13 @@ public class EditorController extends BaseController {
 
     @GetMapping("/componentsSelector")
     public String componentsSelector(@RequestParam String path, @RequestParam String parentId,
+            @RequestParam String itemId,
             @RequestParam MultiValueMap<String, String> params, Model model) {
         final List<BaseDescription> items = getItemsForRequest(api, params);
         setCommonItemModelAttributes(params, model);
         model.addAttribute("items", items);
         model.addAttribute("mode", "editor");
+        model.addAttribute("itemId", itemId);
         model.addAttribute("path", path);
         model.addAttribute("parentId", parentId);
         return "/editor/fragments/componentSelector :: componentSelector";

@@ -75,7 +75,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" 
                                href="#" title="Link a component"
-                               th:hx-get="@{/editor/componentsSelector(path=${path},parentId=${parentId})}"
+                               th:hx-get="@{/editor/componentsSelector(
+                                path=${path},
+                                itemId=${rootComponentId},
+                                parentId=${parentId})}"
                                hx-select="#componentSelector"
                                hx-target="#componentSelectorContainer"
                                hx-swap="innerHTML"
@@ -103,7 +106,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <span class="visually-hidden">Loading...</span>
                     </div>
                 </div>
-
             </div> <!-- end fragment: addChildComponentButton -->
 
             <!--/* Add element button */-->
