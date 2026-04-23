@@ -28,10 +28,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     hx-swap="outerHTML show:none"
                     hx-select="#items-table">
                     
-                    <!--/* header for 'add child component' button column ONLY in editor mode */-->
-                    <th th:if="'editor' eq ${mode}">
-                        Insert
-                    </th>
+                    <!--/* Header column for editor mode */-->
+                    <th th:replace="~{editor/fragments/componentSelector :: linkComponentActionColumnHeader(${mode}?:'browser')}"></th>
                     
                     <th th:each="field: ${fields}"
                         th:hx-vals='|{"sortBy": "${field}", "sortDirection": "${sortedDirection}"}|'

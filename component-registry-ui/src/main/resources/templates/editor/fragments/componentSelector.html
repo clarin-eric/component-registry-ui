@@ -17,7 +17,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
     <head>
-        <title>Editor</title>
+        <title>Component selector for the editor</title>
     </head>
 
     <body>
@@ -26,8 +26,36 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 <div class="m-2 overflow-y-auto">
                     <table th:replace="~{/browser/items/table :: #items-table}"></table>
                 </div>
-                
             </div>
+            
+            <!--/* Table components (added compared to browser mode) */-->
+            <table>
+                <tr>
+                    <!--/* Header for 'add child component' button column ONLY in editor mode */-->
+                    <th th:fragment="linkComponentActionColumnHeader(mode)" th:if="'editor' eq ${mode}">
+                        Insert
+                    </th>
+                </tr>
+                <tr>
+                    <!--/* Table cell that includes a button for linking in the component represented by the row */-->
+                    <td th:fragment="linkComponentActionColumn(path, rootItemId, parentId, linkId)"
+                        th:with="TransformationActions=${T(eu.clarin.cmdi.componentregistry.ui.service.TransformationActions)}">
+                        <a class="btn btn-primary" 
+                           href="#" title="Add a component"
+                           th:hx-post="@{/editor/transform(
+                           operation=${TransformationActions.LINK_CHILD_COMPONENT},
+                           path=${path}, linkId=${linkId}, itemId=${rootItemId},
+                           uniqId=${#strings.randomAlphanumeric(6)})}"
+                           th:hx-target="|#${parentId}|"
+                           th:hx-select="|#${parentId}|"
+                           hx-indicator="closest table"
+                           hx-push-url="true"
+                           @htmx:after-request="componentSelectorOpen = false">
+                            <i class="fa-solid fa-plus"></i>
+                        </a>
+                    </td>
+                </tr>
+            </table>
         </main>
     </body>
 </html>
