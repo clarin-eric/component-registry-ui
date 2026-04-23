@@ -24,17 +24,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <main>
             <div th:fragment="componentSelector" id="componentSelector">
 
-                <div th:replace="~{this :: componentSelectorFilters}">
-                    [Filters]
-                </div>
-                <div class="m-2 overflow-y-auto"
-                     th:hx-target="|#${parentId}|"
-                     th:hx-select="|#${parentId}|"
-                     hx-indicator="closest table"
-                     hx-push-url="true">
-                    <table th:replace="~{/browser/items/table :: #items-table}">
-                        [Items]
-                    </table>
+                <div id="componentSelectorTableContainer">
+                    <div th:replace="~{this :: componentSelectorFilters}">
+                        [Filters]
+                    </div>
+                    <div class="m-2 overflow-y-auto"
+                         th:hx-target="|#${parentId}|"
+                         th:hx-select="|#${parentId}|"
+                         hx-indicator="closest table"
+                         hx-push-url="true">
+                        <table th:replace="~{/browser/items/table :: #items-table}">
+                            [Items]
+                        </table>
+                    </div>
                 </div>
             </div>
 
@@ -63,13 +65,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </tr>
             </table>
 
-            <div th:fragment="componentSelectorFilters" class="d-flex flex-wrap">
+            <div th:fragment="componentSelectorFilters" class="d-flex flex-wrap"
+                 hx-select="#componentSelectorTableContainer"
+                 hx-target="#componentSelectorTableContainer"
+                 hx-swap="outerHTML">
                 <div class="px-2 pb-1">
                     <input type="search" class="form-control"
                            name="textFilter"
                            placeholder="Filter items" 
                            th:value="${textFilter}"
-                           th:hx-get="@{/itemsContainer(type=${type}, status=${status}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
+                           th:hx-get="@{/editor/componentsSelector(path=${path},itemId=${itemId},parentId=${parentId},
+                           status=${status}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
                            hx-trigger="keyup changed delay:1s"
                            />
                 </div>
@@ -103,14 +109,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <ul class="dropdown-menu"
                             th:with="allStatuses=${ {'development', 'production', 'deprecated'} }"
                             hx-boost="true"
-                            hx-target="#items-container"
-                            hx-select="#items-container"
                             hx-swap="outerHTML">
                             <li>
                                 <a class="dropdown-item"
                                    th:classappend="${#lists.size(status) == 3 ? 'active' : ''}"
                                    th:text="#{status.all}"
-                                   th:href="@{/itemsContainer(type=${type}, status=${allStatuses}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                                   th:hx-get="@{/editor/componentsSelector(path=${path},itemId=${itemId},parentId=${parentId},
+                                   status=${allStatuses}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
                                     (All)
                                 </a>
                             </li>
@@ -118,8 +123,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <li th:each="statusOption : ${allStatuses}">
                                 <a class="dropdown-item"
                                    th:classappend="${(#lists.size(status) == 1 && status[0] == statusOption) ? 'active' : ''}"
-                                   th:text="#{|status.${statusOption}|}"                                                           
-                                   th:href="@{/itemsContainer(type=${type}, status=${statusOption}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                                   th:text="#{|status.${statusOption}|}"              
+                                   th:hx-get="@{/editor/componentsSelector(path=${path},itemId=${itemId},parentId=${parentId},
+                                   status=${statusOption}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
                                     {status}
                                 </a>
                             </li>
