@@ -23,11 +23,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <main>
             <div th:fragment="componentSelector()" id="componentSelector">
+
+                <div th:replace="~{this :: componentSelectorFilters}">
+                    [Filters]
+                </div>
+
                 <div class="m-2 overflow-y-auto">
-                    <table th:replace="~{/browser/items/table :: #items-table}"></table>
+                    <table th:replace="~{/browser/items/table :: #items-table}">
+                        [Items]
+                    </table>
                 </div>
             </div>
-            
+
             <!--/* Table components (added compared to browser mode) */-->
             <table>
                 <tr>
@@ -56,6 +63,71 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </td>
                 </tr>
             </table>
+
+            <div th:fragment="componentSelectorFilters" class="d-flex flex-wrap">
+                <div class="px-2 pb-1">
+                    <input type="search" class="form-control"
+                           name="textFilter"
+                           placeholder="Filter items" 
+                           th:value="${textFilter}"
+                           th:hx-get="@{/itemsContainer(type=${type}, status=${status}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
+                           hx-trigger="keyup changed delay:1s"
+                           />
+                </div>
+                <div class="px-2 pb-1">
+                    <button class="btn btn-outline-secondary" title="Show only recommended"><i
+                            class="fa-regular fa-star"></i></button>
+                </div>
+                <div class="px-2 pb-1">
+                    <div class="dropdown">
+                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Group(s)
+                        </a>
+
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">(All)</a></li>
+                            <li><a class="dropdown-item" href="#">Recommended</a></li>
+                            <li><a class="dropdown-item" href="#">..</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="px-2 pb-1">
+                    <div class="dropdown">
+                        <a class="btn btn-primary dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false"
+                           th:text="#{|status.${#lists.size(status) == 1 ? status[0] : 'all'}|}"
+                           >
+                            Status
+                        </a>
+
+                        <ul class="dropdown-menu"
+                            th:with="allStatuses=${ {'development', 'production', 'deprecated'} }"
+                            hx-boost="true"
+                            hx-target="#items-container"
+                            hx-select="#items-container"
+                            hx-swap="outerHTML">
+                            <li>
+                                <a class="dropdown-item"
+                                   th:classappend="${#lists.size(status) == 3 ? 'active' : ''}"
+                                   th:text="#{status.all}"
+                                   th:href="@{/itemsContainer(type=${type}, status=${allStatuses}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                                    (All)
+                                </a>
+                            </li>
+
+                            <li th:each="statusOption : ${allStatuses}">
+                                <a class="dropdown-item"
+                                   th:classappend="${(#lists.size(status) == 1 && status[0] == statusOption) ? 'active' : ''}"
+                                   th:text="#{|status.${statusOption}|}"                                                           
+                                   th:href="@{/itemsContainer(type=${type}, status=${statusOption}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                                    {status}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
         </main>
     </body>
 </html>

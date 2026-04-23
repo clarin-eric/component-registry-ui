@@ -71,6 +71,10 @@ public abstract class BaseController {
 
     protected List<BaseDescription> getItemsForRequest(ItemsApi api, MultiValueMap<String, String> params) {
         final String type = getFirstOrDefault(params, ITEM_TYPE_QUERY_PARAM, ITEM_TYPE_DEFAULT);
+        return getItemsForRequest(api, params, type);
+    }
+
+    protected List<BaseDescription> getItemsForRequest(ItemsApi api, MultiValueMap<String, String> params, String type) {
         final String textFilter = params.getFirst(TEXT_FILTER_QUERY_PARAM);
         final List<String> status = params.getOrDefault(ITEM_STATUS_QUERY_PARAM, ITEM_STATUS_DEFAULT);
         final String sortBy = getFirstOrDefault(params, SORT_BY_QUERY_PARAM, SORT_BY_DEFAULT);

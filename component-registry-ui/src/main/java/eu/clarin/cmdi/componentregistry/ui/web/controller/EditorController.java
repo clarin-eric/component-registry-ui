@@ -32,6 +32,7 @@ import eu.clarin.cmdi.componentregistry.openapi.client.model.VocabularyType;
 import eu.clarin.cmdi.componentregistry.ui.service.ComponentSpecTransformationException;
 import eu.clarin.cmdi.componentregistry.ui.service.ComponentSpecTransformationService;
 import static eu.clarin.cmdi.componentregistry.ui.service.TransformationActions.*;
+import static eu.clarin.cmdi.componentregistry.ui.web.controller.ComponentBrowserController.ITEM_TYPE_COMPONENT;
 import eu.clarin.cmdi.componentregistry.ui.web.controller.model.VocabularyDTO;
 import java.util.Collections;
 import java.util.List;
@@ -367,7 +368,7 @@ public class EditorController extends BaseController {
     public String componentsSelector(@RequestParam String path, @RequestParam String parentId,
             @RequestParam String itemId,
             @RequestParam MultiValueMap<String, String> params, Model model) {
-        final List<BaseDescription> items = getItemsForRequest(api, params);
+        final List<BaseDescription> items = getItemsForRequest(api, params, ITEM_TYPE_COMPONENT);
         setCommonItemModelAttributes(params, model);
         model.addAttribute("items", items);
         model.addAttribute("mode", "editor");

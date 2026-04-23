@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                    id="items-table-body"
                    th:switch="${mode}?:'browser'">
 
-                <!-- BROWSER MODE -->
+                <!--/* BROWSER MODE */-->
                 <th:block th:case="browser">
                     <!--/* Row is clickable for selection in the browser  */-->
                     <tr th:id="|table_${description['id']}|"
@@ -50,7 +50,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </tr>
                 </th:block>
 
-                <!-- EDITOR MODE -->
+                <!--/* EDITOR MODE */-->
                 <th:block th:case="'editor'">
                     <!--/* Row is not clickable, instead we insert a button column for linking the row's item */-->
                     <tr th:id="|table_${description['id']}|"
