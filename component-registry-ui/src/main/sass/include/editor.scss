@@ -101,3 +101,16 @@
         }
     }
 }
+
+#componentSelector {
+    table.htmx-request {
+        th, td, th a {
+            color: lightgrey;
+        }
+
+        a.btn {
+            background: lightgrey;
+            cursor: default;
+        }
+    }
+}
