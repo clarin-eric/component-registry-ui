@@ -56,6 +56,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </th:block>
                 </div>
 
+                <!--/* 
+                    Linked component placeholder
+                
+                    This will only be shown (using AlpineJS) if the component 
+                    selector was triggered for the current parent component
+                    and is still shown.
+                */-->
+                <div class="ms-2 linkedComponentTarget"
+                     th:x-show="|componentSelectorOpen &amp;&amp; componentTarget == '${parentId}'|"
+                     x-cloak x-transition>
+
+                    <div class="cmd-component p-2" 
+                         :class="{'highlight': linkComponentButtonHover}">
+                        <div class="editor-section-header container">
+                            <div class="row">
+                                <div class="col-xl-9 h4">
+                                    Linked component
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="px-2">
                     <!--/* Add component button */-->
                     <div th:replace="~{/editor/fragments/transformationControls 

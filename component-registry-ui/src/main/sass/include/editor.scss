@@ -25,7 +25,7 @@
         border: 2px solid transparent;
         border-left: 2px solid var(--bs-gray-200);
 
-        &:hover {
+        &:hover, &.highlight {
             background: var(--bs-gray-100);
             border: 2px dotted var(--bs-gray-800);
             padding-left: 0px;
@@ -56,6 +56,20 @@
     div.cmd-component > .editor-section-header .h4 {
         color: salmon;
     }
+
+    .linkedComponentTarget {
+        div.cmd-component {
+            & > .editor-section-header .h4 {
+                color: lightgrey;
+                font-style: italic;
+            }
+
+            &.highlight > .editor-section-header .h4 {
+                color: darkgrey;
+            }
+        }
+    }
+
 
     // Transitions
     div.cmd-element, div.cmd-component {
@@ -100,17 +114,17 @@
             }
         }
     }
-}
 
-#componentSelector {
-    table.htmx-request {
-        th, td, th a {
-            color: lightgrey;
-        }
+    #componentSelector {
+        table.htmx-request {
+            th, td, th a {
+                color: lightgrey;
+            }
 
-        a.btn {
-            background: lightgrey;
-            cursor: default;
+            a.btn {
+                background: lightgrey;
+                cursor: default;
+            }
         }
     }
 }

@@ -27,7 +27,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                 <div th:fragment="specForm(componentId)" 
                      id="spec-form" 
-                     x-data="{componentSelectorOpen: false}">
+                     x-data="{
+                     componentSelectorOpen: false, 
+                     componentTarget: '',
+                     linkComponentButtonHover: false
+                     }">
                     <form th:action="@{/editor/{componentId}/spec(componentId=${componentId})}"
                           th:with="rootComponentId=${componentId}"
                           method="post">
@@ -59,7 +63,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <!--/* "Off canvas" container for the component selector (activated when the 'Link existing component' action is chosen) */-->
                         <div id="componentSelectorOffcanvas" 
                              class="offcanvas offcanvas-bottom" style="height: 60%"
-                             :class="{'show': componentSelectorOpen}">
+                             :class="{'show': componentSelectorOpen}"
+                             x-transition>
                             <div class="offcanvas-header">
                                 <h5 class="offcanvas-title" id="offcanvasLabel">Select component to link</h5>
                                 <button type="button" class="btn-close" aria-label="Close" @click="componentSelectorOpen = false"></button>

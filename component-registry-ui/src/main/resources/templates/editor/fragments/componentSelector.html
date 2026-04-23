@@ -59,7 +59,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                            operation=${TransformationActions.LINK_CHILD_COMPONENT},
                            path=${path}, linkId=${linkId}, itemId=${rootItemId},
                            uniqId=${#strings.randomAlphanumeric(6)})}"
-                           @htmx:after-request="componentSelectorOpen = false">
+                           @htmx:after-request="componentSelectorOpen = false"
+                           @mouseover="linkComponentButtonHover = true"
+                           @mouseout="linkComponentButtonHover = false">
                             <i class="fa-solid fa-plus"></i>
                         </a>
                     </td>

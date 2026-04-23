@@ -81,8 +81,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 parentId=${parentId})}"
                                hx-select="#componentSelector"
                                hx-target="#componentSelectorContainer"
+                               hx-indicator="closest .dropdown"
                                hx-swap="innerHTML"
-                               @htmx:after-request="componentSelectorOpen = true">
+                               th:@htmx:after-request="|componentSelectorOpen = true;componentTarget = '${parentId}'|">
                                 <span>Link existing component</span>
                             </a>
                         </li>
