@@ -22,13 +22,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     <body>
         <main>
-            <div th:fragment="componentSelector()" id="componentSelector">
+            <div th:fragment="componentSelector" id="componentSelector">
 
                 <div th:replace="~{this :: componentSelectorFilters}">
                     [Filters]
                 </div>
-
-                <div class="m-2 overflow-y-auto">
+                <div class="m-2 overflow-y-auto"
+                     th:hx-target="|#${parentId}|"
+                     th:hx-select="|#${parentId}|"
+                     hx-indicator="closest table"
+                     hx-push-url="true">
                     <table th:replace="~{/browser/items/table :: #items-table}">
                         [Items]
                     </table>
@@ -45,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 </tr>
                 <tr>
                     <!--/* Table cell that includes a button for linking in the component represented by the row */-->
-                    <td th:fragment="linkComponentActionColumn(path, rootItemId, parentId, linkId)"
+                    <td th:fragment="linkComponentActionColumn(path, rootItemId, linkId)"
                         th:with="TransformationActions=${T(eu.clarin.cmdi.componentregistry.ui.service.TransformationActions)}">
                         <a class="btn btn-primary" 
                            href="#" title="Add a component"
@@ -53,10 +56,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                            operation=${TransformationActions.LINK_CHILD_COMPONENT},
                            path=${path}, linkId=${linkId}, itemId=${rootItemId},
                            uniqId=${#strings.randomAlphanumeric(6)})}"
-                           th:hx-target="|#${parentId}|"
-                           th:hx-select="|#${parentId}|"
-                           hx-indicator="closest table"
-                           hx-push-url="true"
                            @htmx:after-request="componentSelectorOpen = false">
                             <i class="fa-solid fa-plus"></i>
                         </a>

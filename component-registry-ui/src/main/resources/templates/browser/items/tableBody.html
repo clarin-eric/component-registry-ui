@@ -39,7 +39,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         hx-select="#browser-item-view"
                         hx-select-oob="#selected-item-actions"
                         hx-swap="innerHTML">
-                        
+
                         <!--/* Field columns */-->
                         <th:block th:fragment="rowBody(mode, fields)">
                             <td th:each="field: ${fields}" 
@@ -57,11 +57,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         th:each="description : ${items}">
                         <!--/* Cell with a button to link in the row's item */-->
                         <td th:replace="~{editor/fragments/componentSelector :: linkComponentActionColumn(
-                            path=${path}, rootItemId=${itemId}, 
-                            linkId=${description['id']}, parentId=${parentId})}">
+                            path=${path}, rootItemId=${itemId}, linkId=${description['id']})}">
                             [Link button]
                         </td>
-                        
+
                         <!--/* Copy field columns from browser mode */-->
                         <td th:replace="~{this :: rowBody(${mode}, ${fields})}">
                             Field columns
