@@ -16,10 +16,12 @@
  */
 package eu.clarin.cmdi.componentregistry.ui.configuration;
 
+import java.util.Set;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
@@ -44,10 +46,11 @@ public class TemplateConfiguration {
     }
 
     @Bean
-    public SpringTemplateEngine templateEnginge(MessageSource messageSource, ITemplateResolver templateResolver) {
+    public SpringTemplateEngine templateEnginge(MessageSource messageSource, ITemplateResolver templateResolver, SpringSecurityDialect springSecurityDialect) {
         final SpringTemplateEngine engine = new SpringTemplateEngine();
         engine.setTemplateResolver(templateResolver);
         engine.setMessageSource(messageSource);
+        engine.setAdditionalDialects(Set.of(springSecurityDialect));
         return engine;
     }
 }
