@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                    name="textFilter"
                                    placeholder="Filter items" 
                                    th:value="${textFilter}"
-                                   th:hx-get="@{/itemsContainer(type=${type}, status=${status}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
+                                   th:hx-get="@{/browser/itemsContainer(type=${type}, status=${status}, sortBy=${sortBy}, sortDirection=${sortDirection})}"
                                    hx-trigger="keyup changed delay:.5s"
                                    />
                         </div>
@@ -78,7 +78,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                         <a class="dropdown-item"
                                            th:classappend="${#lists.size(status) == 3 ? 'active' : ''}"
                                            th:text="#{status.all}"
-                                           th:href="@{/itemsContainer(type=${type}, status=${allStatuses}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                                           th:href="@{/browser/itemsContainer(type=${type}, status=${allStatuses}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
                                             (All)
                                         </a>
                                     </li>
@@ -87,7 +87,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                         <a class="dropdown-item"
                                            th:classappend="${(#lists.size(status) == 1 && status[0] == statusOption) ? 'active' : ''}"
                                            th:text="#{|status.${statusOption}|}"                                                           
-                                           th:href="@{/itemsContainer(type=${type}, status=${statusOption}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                                           th:href="@{/browser/itemsContainer(type=${type}, status=${statusOption}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
                                             {status}
                                         </a>
                                     </li>
@@ -109,7 +109,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <a href="#" 
                            class="btn btn-danger"
                            th:classappend="${selectedItemCount <= 0 ? 'disabled' : ''}"
-                           th:hx-delete="@{/items/{componentId}(componentId=${singleSelectedItem})}"
+                           th:hx-delete="@{/browser/items/{componentId}(componentId=${singleSelectedItem})}"
                            hx-confirm="Are you sure you wish to delete the selected item?">
                             <i class="fa-solid fa-trash"></i>
                             Delete

@@ -38,14 +38,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <span th:if="${sortedBy == field}">                                
                             <a th:if="${sortedDirection == 'ASC'}" 
                                hx-vals='{"sortDirection": "DESC"}'
-                               th:href="@{/items}"
+                               th:href="@{/browser/items}"
                                th:hx-push-url="${'/?sortDirection=DESC&amp;sortBy='+field}">
                                 <span th:text="#{|item.field.${field}|}"></span>
                                 <i class="fa-solid fa-arrow-down-a-z"></i>
                             </a>
                             <a th:if="${sortedDirection == 'DESC'}" 
                                th:hx-vals='|{"sortBy": "", "sortDirection": ""}|'
-                               th:href="@{/items}"
+                               th:href="@{/browser/items}"
                                th:hx-push-url="${'/'}">
                                 <span th:text="#{|item.field.${field}|}"></span>
                                 <i class="fa-solid fa-arrow-up-z-a"></i>
@@ -54,7 +54,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
                         <span th:if="${sortedBy != field}">   
                             <a hx-vals='{"sortDirection": "ASC"}'
-                               th:href="@{/items}"
+                               th:href="@{/browser/items}"
                                th:hx-push-url="${'/?sortDirection=ASC&amp;sortBy='+field}"
                                ><span th:text="#{|item.field.${field}|}"></span></a>
                         </span>

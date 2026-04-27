@@ -31,6 +31,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.servlet.ModelAndView;
@@ -40,6 +41,7 @@ import org.springframework.web.servlet.ModelAndView;
  * @author twagoo
  */
 @Controller
+@RequestMapping(value = "/browser")
 public class ComponentBrowserController extends BaseController {
 
     private final ItemsApi api;
@@ -67,7 +69,7 @@ public class ComponentBrowserController extends BaseController {
         this.api = api;
     }
 
-    @GetMapping(path = {"/", "/browser"})
+    @GetMapping(path = "/")
     public String browser(@RequestParam MultiValueMap<String, String> params, Model model) {
         setCommonItemModelAttributes(params, model);
         return "browser/browser";
@@ -88,7 +90,7 @@ public class ComponentBrowserController extends BaseController {
         return "browser/items/table";
     }
 
-    @GetMapping(path = "/item/{id}")
+    @GetMapping(path = "/items/{id}")
     public List<ModelAndView> itemDetails(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model,
             @PathVariable String id) {
         //get item description from API
@@ -113,7 +115,7 @@ public class ComponentBrowserController extends BaseController {
         }
     }
 
-    @GetMapping(path = "/item/{id}/preview")
+    @GetMapping(path = "/items/{id}/preview")
     public String itemPreview(Model model,
             @PathVariable String id) {
         //get item description from API
@@ -124,7 +126,7 @@ public class ComponentBrowserController extends BaseController {
         return "browser/items/itemPreview :: component-ref";
     }
 
-    @GetMapping(path = "/item/{id}/specification")
+    @GetMapping(path = "/items/{id}/specification")
     public String itemSpecification(Model model,
             @PathVariable String id) {
         //get item spec from API

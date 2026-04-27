@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         th:x-data="|{itemId: '${description['id']}'}|"
                         :class="{ 'table-active': (selectedItem == itemId) }"
                         @click="selectedItem = itemId"
-                        th:hx-get="@{|/item/${description.id}|}"
+                        th:hx-get="@{|/browser/items/${description.id}|}"
                         th:hx-push-url="@{|/#table_${description['id']}|(item=${description.id},type=${type})}"
                         hx-target="#browser-item-view-container"
                         hx-select="#browser-item-view"

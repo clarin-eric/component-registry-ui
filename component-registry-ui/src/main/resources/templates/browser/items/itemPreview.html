@@ -137,7 +137,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     <div class="card-body">
                         <!--/* Lazy loading details for component ref (title and description from item info) */-->
                         <div th:unless="${item}" class="itemDescriptionDetails"
-                             th:hx-get="@{/item/{id}/preview(id=*{componentRef})}"
+                             th:hx-get="@{/browser/item/{id}/preview(id=*{componentRef})}"
                              hx-select=".itemDescriptionDetails"
                              hx-swap="outerHTML"
                              hx-trigger="intersect once">
@@ -151,8 +151,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                         <div th:if="${item}" class="itemDescriptionDetails">
                             <div class="card-title h5">
-                                <a th:href="@{/item/{id}(id=${item.id})}"
-                                   th:hx-get="@{/item/{id}(id=${item.id})}"
+                                <a th:href="@{/browser/items/{id}(id=${item.id})}"
+                                   th:hx-get="@{/browser/items/{id}(id=${item.id})}"
                                    hx-select=".preview-root-component"
                                    hx-target="closest .preview-component-ref"
                                    hx-swap="outerHTML"

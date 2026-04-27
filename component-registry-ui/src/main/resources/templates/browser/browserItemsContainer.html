@@ -65,7 +65,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
                     <div class="p-2 flex-grow-1 overflow-y-auto">
                         <div hx-trigger="load"
-                             th:hx-get="@{/items(type=${type},status=${status}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}"
+                             th:hx-get="@{/browser/items(type=${type},status=${status}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}"
                              hx-select="#items-table-wrapper"
                              hx-swap="innerHTML"
                              hx-indicator="#items-container">
@@ -80,7 +80,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             <!--/* some content that we will replace on load */-->
                             <div id="browser-item-view"
                                  hx-trigger="load"
-                                 th:hx-get="@{|/item/${selectedItem}|}"
+                                 th:hx-get="@{|/browser/items/${selectedItem}|}"
                                  hx-select="#browser-item-view"
                                  hx-select-oob="#selected-item-actions"
                                  hx-swap="outerHTML">
