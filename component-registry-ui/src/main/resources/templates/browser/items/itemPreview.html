@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         <div class="col-md-8">
                             <a data-bs-toggle="collapse" 
                                href="#browser-item-view-content" role="button" aria-expanded="false" aria-controls="browser-item-view-content"
-                               @click="itemViewShow = !itemViewShow">
+                               @click="if(itemViewShow) itemViewMax = false; itemViewShow = !itemViewShow">
                                 <i class="fa-solid"
                                    :class="itemViewShow ? 'fa-solid fa-angle-down':'fa-solid fa-angle-up'"></i></a>
                             Item preview
