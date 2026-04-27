@@ -24,7 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
         <main>
             <!-- Table "panel" -->
             <div id="items-container"
-                 class="p-2 h-100">
+                 class="p-2 h-100"
+                 x-data="{ itemViewMax: false }">
                 <div id="item-view" class="offcanvas offcanvas-end w-50" tabindex="-1" data-bs-theme="dark">
                     <div class="offcanvas-header">
                         <h5 class="offcanvas-title" id="offcanvasLabel">Item</h5>
@@ -72,7 +73,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     </div>
 
                     <!--/* item preview container, content to be replaced when a selection is active */-->
-                    <div id="browser-item-view-container" class="mt-2">
+                    <div id="browser-item-view-container" class="mt-2"
+                         :class="itemViewMax ? 'maximized':''">
                         <!--/* Item selection on load? Lazy loading of details */-->
                         <th:block th:if="!${#strings.isEmpty(selectedItem)}">
                             <!--/* some content that we will replace on load */-->

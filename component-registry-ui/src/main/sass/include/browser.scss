@@ -72,3 +72,15 @@
         }
     }
 }
+
+
+#browser-item-view-container {
+    #browser-item-view-content {
+        max-height: 15em;
+    }
+
+    &.maximized #browser-item-view-content {
+        min-height: 30em;
+        max-height: 30em;
+    }
+}

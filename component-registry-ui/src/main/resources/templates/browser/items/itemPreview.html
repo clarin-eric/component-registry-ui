@@ -23,18 +23,26 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <main>
             <div id="browser-item-view" th:fragment="preview">
-                <div class="p-0 border"
-                     x-data="{itemViewShow: true}">
+                <div class="p-0 border" x-data="{itemViewShow: true}">
                     <!--/* Toggler */-->
-                    <div class="m-0 p-1 bg-secondary-subtle border-bottom">
-                        <a data-bs-toggle="collapse" 
-                           href="#browser-item-view-content" role="button" aria-expanded="false" aria-controls="browser-item-view-content"
-                           @click="itemViewShow = !itemViewShow">
-                            <i class="fa-solid"
-                               :class="itemViewShow ? 'fa-solid fa-angles-down':'fa-solid fa-angles-up'"></i></a>
-                        Item preview
+                    <div class="m-0 p-1 bg-secondary-subtle border-bottom row">
+                        <div class="col-md-8">
+                            <a data-bs-toggle="collapse" 
+                               href="#browser-item-view-content" role="button" aria-expanded="false" aria-controls="browser-item-view-content"
+                               @click="itemViewShow = !itemViewShow">
+                                <i class="fa-solid"
+                                   :class="itemViewShow ? 'fa-solid fa-angle-down':'fa-solid fa-angle-up'"></i></a>
+                            Item preview
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <a x-show="itemViewShow"
+                               href="#browser-item-view-content" role="button"
+                               @click="itemViewMax = !itemViewMax">
+                                <i class="fa-solid"
+                                   :class="itemViewMax ? 'fa-solid fa-angles-down':'fa-solid fa-angles-up'"></i></a>
+                        </div>
                     </div>
-                    <div id="browser-item-view-content" class="collapse show overflow-x-hidden overflow-y-auto p-2 mt-2" style="max-height: 15em;">
+                    <div id="browser-item-view-content" class="collapse show overflow-x-hidden overflow-y-auto p-2 mt-2">
                         <h3 class="border-bottom" th:text="${item.name}">name</h3>
                         <div class="row">
                             <div class="col-md order-lg-last">
