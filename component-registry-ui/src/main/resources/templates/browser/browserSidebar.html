@@ -47,7 +47,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             hx-swap="outerHTML show:none"
                             hx-indicator="#items-container">
                             <li class="nav-item">
-                                <a href="/main?type=profile" 
+                                <a th:href="@{/browser/main?type=profile}"
                                    class="nav-link" 
                                    th:classappend="${type == 'profile' ? 'active' : ''}"
                                    th:aria-selected="${type == 'profile'}">
@@ -55,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 </a>
                             </li>
                             <li>
-                                <a href="/main?type=component" 
+                                <a th:href="@{/browser/main?type=component}" 
                                    class="nav-link"
                                    th:classappend="${type == 'component' ? 'active' : ''}"
                                    th:aria-selected="${type == 'component'}">
