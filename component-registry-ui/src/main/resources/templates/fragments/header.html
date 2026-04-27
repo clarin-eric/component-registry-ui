@@ -15,7 +15,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns="http://www.w3.org/1999/xhtml">
     <body>
         <header th:fragment="header(current, item)">
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
@@ -51,7 +53,20 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                                 [Help]
                             </li>
                         </ul>
-                        <form class="d-flex" role="login">
+
+
+                        <form method="post" th:action="@{/logout}" class="d-flex" role="logout" sec:authorize="isAuthenticated()">
+                            <div class="p-2">
+                                <i class="fa-solid fa-user"></i>
+                                <span th:remove="tag" sec:authentication="name">{userName}</span>
+                            </div>
+                            <button type="submit" class="btn btn-outline-secondary">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                Log out
+                            </button>
+                        </form>
+
+                        <form class="d-flex" role="login" sec:authorize="!isAuthenticated()">
                             <a th:href="@{/login}" class="btn btn-outline-primary">
                                 <i class="fa-solid fa-right-to-bracket"></i>
                                 Log in

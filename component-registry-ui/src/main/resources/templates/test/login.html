@@ -15,7 +15,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns="http://www.w3.org/1999/xhtml">
     <head th:replace="~{fragments/base :: head}">
         <title>Login</title> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -37,19 +39,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
             <main id="login-main" class="my-4">
-                <div class="container-sm border">
+
+                <div th:if="${param.error}">
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}">
+                    You have been logged out.
+                </div>
+
+                <div class="container-sm border" sec:authorize="isAuthenticated()">
+                    <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">{user}</span>, you are already logged in!</h1>
+                </div>
+
+                <div class="container-sm border" sec:authorize="!isAuthenticated()">
                     <h1 class="text-center p-2">Please log in:</h1>
 
                     <div class="d-flex justify-content-center pb-2">
-                        <div class="p-2">Username:</div>
-                        <div class="p2"><input type="text" /></div>
-                    </div>
-                    <div class="d-flex justify-content-center pb-2">
-                        <div class="p-2">Password:</div>
-                        <div class="p2"><input type="password" /></div>
-                    </div>
-                    <div class="d-flex justify-content-center pb-2">
-                        <input type="submit" value="Login" />
+
+                        <form th:action="@{/login}" method="post">
+                            <div><label> User Name : <input type="text" name="username" value="user"/> </label></div>
+                            <div><label> Password: <input type="password" name="password" value="password"/> </label></div>
+                            <div><input type="submit" value="Sign In"/></div>
+                        </form>
                     </div>
                 </div>
             </main>
