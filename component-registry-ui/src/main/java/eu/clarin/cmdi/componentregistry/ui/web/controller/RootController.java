@@ -38,4 +38,9 @@ public class RootController {
         return "redirect:/editor/new";
     }
 
+    @GetMapping(path = {"/help"})
+    public String getHelpPage() {
+        return "/help";
+    }
+
 }
