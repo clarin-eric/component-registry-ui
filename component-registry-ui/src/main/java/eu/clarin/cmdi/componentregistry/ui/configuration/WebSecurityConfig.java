@@ -42,7 +42,7 @@ class WebSecurityConfig {
         // @formatter:off
         http
                 .authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/", "/browser/**", "/login", "/webjars/**", "/css/**").permitAll()
+                .requestMatchers("/", "/browser/**", "/help", "/login", "/webjars/**", "/css/**").permitAll()
                 .anyRequest().authenticated())
                 .formLogin((form) -> form.loginPage("/login").permitAll())
                 .logout(LogoutConfigurer::permitAll);
