@@ -27,7 +27,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 public class ComponentsAndProfilesApi {
     private ApiClient apiClient;
 
@@ -66,7 +66,7 @@ public class ComponentsAndProfilesApi {
 
         pathParams.put("componentId", componentId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -81,7 +81,7 @@ public class ComponentsAndProfilesApi {
         String[] localVarAuthNames = new String[] {  };
 
         ParameterizedTypeReference<ComponentDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/registry/components/{componentId}/description", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/registry/components/{componentId}/description", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -121,17 +121,20 @@ public class ComponentsAndProfilesApi {
     public ResponseSpec getComponentItemWithResponseSpec(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         return getComponentItemRequestCreation(componentId);
     }
+
     /**
      * 
      * 
      * <p><b>200</b> - OK
      * @param status The status parameter
+     * @param registrySpace The registrySpace parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
+     * @param groupId The groupId parameter
      * @return ComponentsList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getComponentsRequestCreation(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    private ResponseSpec getComponentsRequestCreation(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         Object postBody = null;
         // verify the required parameter 'status' is set
         if (status == null) {
@@ -140,15 +143,17 @@ public class ComponentsAndProfilesApi {
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "status", status));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortBy", sortBy));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortDirection", sortDirection));
-        
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "registrySpace", registrySpace));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "status", status));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortBy", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortDirection", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "groupId", groupId));
+
         final String[] localVarAccepts = { 
             "application/json", "application/xml"
         };
@@ -159,7 +164,7 @@ public class ComponentsAndProfilesApi {
         String[] localVarAuthNames = new String[] {  };
 
         ParameterizedTypeReference<ComponentsList> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/registry/components", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/registry/components", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -167,14 +172,16 @@ public class ComponentsAndProfilesApi {
      * 
      * <p><b>200</b> - OK
      * @param status The status parameter
+     * @param registrySpace The registrySpace parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
+     * @param groupId The groupId parameter
      * @return ComponentsList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ComponentsList getComponents(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    public ComponentsList getComponents(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentsList> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getComponentsRequestCreation(status, sortBy, sortDirection).body(localVarReturnType);
+        return getComponentsRequestCreation(status, registrySpace, sortBy, sortDirection, groupId).body(localVarReturnType);
     }
 
     /**
@@ -182,14 +189,16 @@ public class ComponentsAndProfilesApi {
      * 
      * <p><b>200</b> - OK
      * @param status The status parameter
+     * @param registrySpace The registrySpace parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
+     * @param groupId The groupId parameter
      * @return ResponseEntity&lt;ComponentsList&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ComponentsList> getComponentsWithHttpInfo(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    public ResponseEntity<ComponentsList> getComponentsWithHttpInfo(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentsList> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getComponentsRequestCreation(status, sortBy, sortDirection).toEntity(localVarReturnType);
+        return getComponentsRequestCreation(status, registrySpace, sortBy, sortDirection, groupId).toEntity(localVarReturnType);
     }
 
     /**
@@ -197,14 +206,17 @@ public class ComponentsAndProfilesApi {
      * 
      * <p><b>200</b> - OK
      * @param status The status parameter
+     * @param registrySpace The registrySpace parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
+     * @param groupId The groupId parameter
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getComponentsWithResponseSpec(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
-        return getComponentsRequestCreation(status, sortBy, sortDirection);
+    public ResponseSpec getComponentsWithResponseSpec(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
+        return getComponentsRequestCreation(status, registrySpace, sortBy, sortDirection, groupId);
     }
+
     /**
      * 
      * 
@@ -224,7 +236,7 @@ public class ComponentsAndProfilesApi {
 
         pathParams.put("componentId", componentId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -239,7 +251,7 @@ public class ComponentsAndProfilesApi {
         String[] localVarAuthNames = new String[] {  };
 
         ParameterizedTypeReference<ProfileDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/registry/profiles/{componentId}/description", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/registry/profiles/{componentId}/description", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -279,34 +291,35 @@ public class ComponentsAndProfilesApi {
     public ResponseSpec getProfileItemWithResponseSpec(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         return getProfileItemRequestCreation(componentId);
     }
+
     /**
      * 
      * 
      * <p><b>200</b> - OK
+     * @param registrySpace The registrySpace parameter
      * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
+     * @param groupId The groupId parameter
      * @return ProfilesList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getProfilesRequestCreation(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    private ResponseSpec getProfilesRequestCreation(@jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         Object postBody = null;
-        // verify the required parameter 'status' is set
-        if (status == null) {
-            throw new RestClientResponseException("Missing the required parameter 'status' when calling getProfiles", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
-        }
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "status", status));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortBy", sortBy));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortDirection", sortDirection));
-        
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "registrySpace", registrySpace));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "status", status));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortBy", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortDirection", sortDirection));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "groupId", groupId));
+
         final String[] localVarAccepts = { 
             "application/json", "application/xml"
         };
@@ -317,50 +330,56 @@ public class ComponentsAndProfilesApi {
         String[] localVarAuthNames = new String[] {  };
 
         ParameterizedTypeReference<ProfilesList> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/registry/profiles", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/registry/profiles", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
      * 
      * 
      * <p><b>200</b> - OK
+     * @param registrySpace The registrySpace parameter
      * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
+     * @param groupId The groupId parameter
      * @return ProfilesList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ProfilesList getProfiles(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    public ProfilesList getProfiles(@jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         ParameterizedTypeReference<ProfilesList> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getProfilesRequestCreation(status, sortBy, sortDirection).body(localVarReturnType);
+        return getProfilesRequestCreation(registrySpace, status, sortBy, sortDirection, groupId).body(localVarReturnType);
     }
 
     /**
      * 
      * 
      * <p><b>200</b> - OK
+     * @param registrySpace The registrySpace parameter
      * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
+     * @param groupId The groupId parameter
      * @return ResponseEntity&lt;ProfilesList&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ProfilesList> getProfilesWithHttpInfo(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    public ResponseEntity<ProfilesList> getProfilesWithHttpInfo(@jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         ParameterizedTypeReference<ProfilesList> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getProfilesRequestCreation(status, sortBy, sortDirection).toEntity(localVarReturnType);
+        return getProfilesRequestCreation(registrySpace, status, sortBy, sortDirection, groupId).toEntity(localVarReturnType);
     }
 
     /**
      * 
      * 
      * <p><b>200</b> - OK
+     * @param registrySpace The registrySpace parameter
      * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
+     * @param groupId The groupId parameter
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getProfilesWithResponseSpec(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
-        return getProfilesRequestCreation(status, sortBy, sortDirection);
+    public ResponseSpec getProfilesWithResponseSpec(@jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
+        return getProfilesRequestCreation(registrySpace, status, sortBy, sortDirection, groupId);
     }
 }

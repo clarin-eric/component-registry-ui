@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import java.time.OffsetDateTime;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
@@ -50,7 +51,7 @@ import io.github.threetenjaxb.core.*;
   ComponentDescription.JSON_PROPERTY_SHOW_IN_EDITOR,
   ComponentDescription.JSON_PROPERTY_IS_PUBLIC
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 @XmlRootElement(name = "componentDescription")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "componentDescription")
@@ -197,7 +198,7 @@ public class ComponentDescription {
    * @return name
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(value = JSON_PROPERTY_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "name")
 
@@ -206,7 +207,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(value = JSON_PROPERTY_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "name")
   public void setName(@jakarta.annotation.Nullable String name) {
@@ -224,7 +225,7 @@ public class ComponentDescription {
    * @return description
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonProperty(value = JSON_PROPERTY_DESCRIPTION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "description")
 
@@ -233,7 +234,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DESCRIPTION)
+  @JsonProperty(value = JSON_PROPERTY_DESCRIPTION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "description")
   public void setDescription(@jakarta.annotation.Nullable String description) {
@@ -251,7 +252,7 @@ public class ComponentDescription {
    * @return registrationDate
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_REGISTRATION_DATE)
+  @JsonProperty(value = JSON_PROPERTY_REGISTRATION_DATE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "registrationDate")
 
@@ -260,7 +261,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_REGISTRATION_DATE)
+  @JsonProperty(value = JSON_PROPERTY_REGISTRATION_DATE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "registrationDate")
   public void setRegistrationDate(@jakarta.annotation.Nullable OffsetDateTime registrationDate) {
@@ -278,7 +279,7 @@ public class ComponentDescription {
    * @return creatorName
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CREATOR_NAME)
+  @JsonProperty(value = JSON_PROPERTY_CREATOR_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "creatorName")
 
@@ -287,7 +288,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CREATOR_NAME)
+  @JsonProperty(value = JSON_PROPERTY_CREATOR_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "creatorName")
   public void setCreatorName(@jakarta.annotation.Nullable String creatorName) {
@@ -305,7 +306,7 @@ public class ComponentDescription {
    * @return userId
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_USER_ID)
+  @JsonProperty(value = JSON_PROPERTY_USER_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "userId")
 
@@ -314,7 +315,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_USER_ID)
+  @JsonProperty(value = JSON_PROPERTY_USER_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "userId")
   public void setUserId(@jakarta.annotation.Nullable String userId) {
@@ -332,7 +333,7 @@ public class ComponentDescription {
    * @return domainName
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DOMAIN_NAME)
+  @JsonProperty(value = JSON_PROPERTY_DOMAIN_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "domainName")
 
@@ -341,7 +342,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DOMAIN_NAME)
+  @JsonProperty(value = JSON_PROPERTY_DOMAIN_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "domainName")
   public void setDomainName(@jakarta.annotation.Nullable String domainName) {
@@ -359,7 +360,7 @@ public class ComponentDescription {
    * @return href
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_HREF)
+  @JsonProperty(value = JSON_PROPERTY_HREF, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "href", namespace = "http://www.w3.org/1999/xlink")
 
@@ -368,7 +369,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_HREF)
+  @JsonProperty(value = JSON_PROPERTY_HREF, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "href", namespace = "http://www.w3.org/1999/xlink")
   public void setHref(@jakarta.annotation.Nullable String href) {
@@ -386,7 +387,7 @@ public class ComponentDescription {
    * @return groupName
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_GROUP_NAME)
+  @JsonProperty(value = JSON_PROPERTY_GROUP_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "groupName")
 
@@ -395,7 +396,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_GROUP_NAME)
+  @JsonProperty(value = JSON_PROPERTY_GROUP_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "groupName")
   public void setGroupName(@jakarta.annotation.Nullable String groupName) {
@@ -413,7 +414,7 @@ public class ComponentDescription {
    * @return status
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_STATUS)
+  @JsonProperty(value = JSON_PROPERTY_STATUS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "status")
 
@@ -422,7 +423,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_STATUS)
+  @JsonProperty(value = JSON_PROPERTY_STATUS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "status")
   public void setStatus(@jakarta.annotation.Nullable StatusEnum status) {
@@ -440,7 +441,7 @@ public class ComponentDescription {
    * @return derivedfrom
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DERIVEDFROM)
+  @JsonProperty(value = JSON_PROPERTY_DERIVEDFROM, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "derivedfrom")
 
@@ -449,7 +450,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DERIVEDFROM)
+  @JsonProperty(value = JSON_PROPERTY_DERIVEDFROM, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "derivedfrom")
   public void setDerivedfrom(@jakarta.annotation.Nullable String derivedfrom) {
@@ -467,7 +468,7 @@ public class ComponentDescription {
    * @return successor
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SUCCESSOR)
+  @JsonProperty(value = JSON_PROPERTY_SUCCESSOR, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "successor")
 
@@ -476,7 +477,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SUCCESSOR)
+  @JsonProperty(value = JSON_PROPERTY_SUCCESSOR, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "successor")
   public void setSuccessor(@jakarta.annotation.Nullable String successor) {
@@ -494,7 +495,7 @@ public class ComponentDescription {
    * @return commentsCount
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_COMMENTS_COUNT)
+  @JsonProperty(value = JSON_PROPERTY_COMMENTS_COUNT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "commentsCount")
 
@@ -503,7 +504,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_COMMENTS_COUNT)
+  @JsonProperty(value = JSON_PROPERTY_COMMENTS_COUNT, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "commentsCount")
   public void setCommentsCount(@jakarta.annotation.Nullable Integer commentsCount) {
@@ -521,7 +522,7 @@ public class ComponentDescription {
    * @return recommended
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_RECOMMENDED)
+  @JsonProperty(value = JSON_PROPERTY_RECOMMENDED, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "recommended")
 
@@ -530,7 +531,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_RECOMMENDED)
+  @JsonProperty(value = JSON_PROPERTY_RECOMMENDED, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "recommended")
   public void setRecommended(@jakarta.annotation.Nullable Boolean recommended) {
@@ -548,7 +549,7 @@ public class ComponentDescription {
    * @return _public
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PUBLIC)
+  @JsonProperty(value = JSON_PROPERTY_PUBLIC, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "public")
 
@@ -557,7 +558,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PUBLIC)
+  @JsonProperty(value = JSON_PROPERTY_PUBLIC, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "public")
   public void setPublic(@jakarta.annotation.Nullable Boolean _public) {
@@ -575,7 +576,7 @@ public class ComponentDescription {
    * @return id
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "id")
 
@@ -584,7 +585,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ID)
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "id")
   public void setId(@jakarta.annotation.Nullable String id) {
@@ -602,7 +603,7 @@ public class ComponentDescription {
    * @return showInEditor
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_SHOW_IN_EDITOR)
+  @JsonProperty(value = JSON_PROPERTY_SHOW_IN_EDITOR, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "showInEditor")
 
@@ -611,7 +612,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_SHOW_IN_EDITOR)
+  @JsonProperty(value = JSON_PROPERTY_SHOW_IN_EDITOR, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "showInEditor")
   public void setShowInEditor(@jakarta.annotation.Nullable Boolean showInEditor) {
@@ -629,7 +630,7 @@ public class ComponentDescription {
    * @return isPublic
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_IS_PUBLIC)
+  @JsonProperty(value = JSON_PROPERTY_IS_PUBLIC, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "isPublic")
 
@@ -638,7 +639,7 @@ public class ComponentDescription {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_IS_PUBLIC)
+  @JsonProperty(value = JSON_PROPERTY_IS_PUBLIC, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "isPublic")
   public void setIsPublic(@jakarta.annotation.Nullable Boolean isPublic) {
@@ -709,10 +710,7 @@ public class ComponentDescription {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.VocabularyType;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
@@ -35,7 +36,7 @@ import io.github.threetenjaxb.core.*;
   ValueSchemeType.JSON_PROPERTY_PATTERN,
   ValueSchemeType.JSON_PROPERTY_VOCABULARY
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 @XmlRootElement(name = "ValueSchemeType")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ValueSchemeType")
@@ -64,7 +65,7 @@ public class ValueSchemeType {
    * @return pattern
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_PATTERN)
+  @JsonProperty(value = JSON_PROPERTY_PATTERN, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "pattern")
 
@@ -73,7 +74,7 @@ public class ValueSchemeType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_PATTERN)
+  @JsonProperty(value = JSON_PROPERTY_PATTERN, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "pattern")
   public void setPattern(@jakarta.annotation.Nullable String pattern) {
@@ -91,7 +92,7 @@ public class ValueSchemeType {
    * @return vocabulary
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VOCABULARY)
+  @JsonProperty(value = JSON_PROPERTY_VOCABULARY, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "Vocabulary")
 
@@ -100,7 +101,7 @@ public class ValueSchemeType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VOCABULARY)
+  @JsonProperty(value = JSON_PROPERTY_VOCABULARY, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "Vocabulary")
   public void setVocabulary(@jakarta.annotation.Nullable VocabularyType vocabulary) {
@@ -141,10 +142,7 @@ public class ValueSchemeType {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

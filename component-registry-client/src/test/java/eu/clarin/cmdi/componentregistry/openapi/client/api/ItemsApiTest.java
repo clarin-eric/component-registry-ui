@@ -68,10 +68,11 @@ public class ItemsApiTest {
     @Test
     public void getItemsTest()  {
         String type = null;
+        Long groupId = null;
         List<String> status = null;
         String sortBy = null;
         String sortDirection = null;
-        List<BaseDescription> response = api.getItems(type, status, sortBy, sortDirection);
+        List<BaseDescription> response = api.getItems(type, groupId, status, sortBy, sortDirection);
 
         // TODO: test validations
     }

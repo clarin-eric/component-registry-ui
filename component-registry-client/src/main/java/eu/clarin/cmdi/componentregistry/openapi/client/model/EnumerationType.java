@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
@@ -38,7 +39,7 @@ import io.github.threetenjaxb.core.*;
   EnumerationType.JSON_PROPERTY_APPINFO,
   EnumerationType.JSON_PROPERTY_ITEM
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 @XmlRootElement(name = "EnumerationType")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "EnumerationType")
@@ -67,7 +68,7 @@ public class EnumerationType {
    * @return appinfo
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_APPINFO)
+  @JsonProperty(value = JSON_PROPERTY_APPINFO, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "appinfo")
 
@@ -76,7 +77,7 @@ public class EnumerationType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_APPINFO)
+  @JsonProperty(value = JSON_PROPERTY_APPINFO, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "appinfo")
   public void setAppinfo(@jakarta.annotation.Nullable String appinfo) {
@@ -102,7 +103,7 @@ public class EnumerationType {
    * @return item
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_ITEM)
+  @JsonProperty(value = JSON_PROPERTY_ITEM, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   @JacksonXmlProperty(localName = "item")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -112,7 +113,7 @@ public class EnumerationType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ITEM)
+  @JsonProperty(value = JSON_PROPERTY_ITEM, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   @JacksonXmlProperty(localName = "item")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -154,10 +155,7 @@ public class EnumerationType {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

@@ -44,25 +44,38 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/browser")
 public class ComponentBrowserController extends BaseController {
 
-    private final ItemsApi api;
-
+    /**
+     * CONSTANTS
+     */
+    //sorting
     public static final String SORT_BY_QUERY_PARAM = "sortBy";
     public static final String SORT_BY_DEFAULT = "name";
     public static final String SORT_DIRECTION_QUERY_PARAM = "sortDirection";
     public static final String SORT_DIRECTION_DEFAULT = "ASC";
 
+    //types
     public static final String ITEM_TYPE_COMPONENT = "component";
     public static final String ITEM_TYPE_PROFILE = "profile";
     public static final String ITEM_TYPE_QUERY_PARAM = "type";
     public static final String ITEM_TYPE_DEFAULT = ITEM_TYPE_PROFILE;
 
-    public static final String TEXT_FILTER_QUERY_PARAM = "textFilter";
+    //space and groups
+    public static final String ITEM_SPACE_QUERY_PARAM = "registrySpace";
+    public static final String ITEM_SPACE_DEFAULT = "public";
+    public static final String ITEM_GROUP_QUERY_PARAM = "groupId";
 
+    //status
     public static final String ITEM_STATUS_PRODUCTION = "production";
     public static final String ITEM_STATUS_QUERY_PARAM = "status";
     public static final List<String> ITEM_STATUS_DEFAULT = ImmutableList.of(ITEM_STATUS_PRODUCTION);
 
+    //search
+    public static final String TEXT_FILTER_QUERY_PARAM = "textFilter";
+
+    //selection
     public static final String SELECTED_ITEM_QUERY_PARAM = "item";
+
+    private final ItemsApi api;
 
     @Autowired
     public ComponentBrowserController(ItemsApi api) {

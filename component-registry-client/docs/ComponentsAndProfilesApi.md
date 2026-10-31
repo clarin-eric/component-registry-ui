@@ -77,7 +77,7 @@ No authorization required
 
 ## getComponents
 
-> ComponentsList getComponents(status, sortBy, sortDirection)
+> ComponentsList getComponents(status, registrySpace, sortBy, sortDirection, groupId)
 
 
 
@@ -98,10 +98,12 @@ public class Example {
 
         ComponentsAndProfilesApi apiInstance = new ComponentsAndProfilesApi(defaultClient);
         List<String> status = Arrays.asList(); // List<String> | 
+        String registrySpace = "published"; // String | 
         String sortBy = "name"; // String | 
         String sortDirection = "ASC"; // String | 
+        Long groupId = 56L; // Long | 
         try {
-            ComponentsList result = apiInstance.getComponents(status, sortBy, sortDirection);
+            ComponentsList result = apiInstance.getComponents(status, registrySpace, sortBy, sortDirection, groupId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ComponentsAndProfilesApi#getComponents");
@@ -120,8 +122,10 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **status** | [**List&lt;String&gt;**](String.md)|  | [enum: development, production, deprecated] |
+| **registrySpace** | **String**|  | [optional] [default to published] |
 | **sortBy** | **String**|  | [optional] [default to name] |
 | **sortDirection** | **String**|  | [optional] [default to ASC] [enum: ASC, DESC] |
+| **groupId** | **Long**|  | [optional] |
 
 ### Return type
 
@@ -209,7 +213,7 @@ No authorization required
 
 ## getProfiles
 
-> ProfilesList getProfiles(status, sortBy, sortDirection)
+> ProfilesList getProfiles(registrySpace, status, sortBy, sortDirection, groupId)
 
 
 
@@ -229,11 +233,13 @@ public class Example {
         defaultClient.setBasePath("http://localhost:8080/rest");
 
         ComponentsAndProfilesApi apiInstance = new ComponentsAndProfilesApi(defaultClient);
+        String registrySpace = "published"; // String | 
         List<String> status = Arrays.asList(); // List<String> | 
         String sortBy = "name"; // String | 
         String sortDirection = "ASC"; // String | 
+        Long groupId = 56L; // Long | 
         try {
-            ProfilesList result = apiInstance.getProfiles(status, sortBy, sortDirection);
+            ProfilesList result = apiInstance.getProfiles(registrySpace, status, sortBy, sortDirection, groupId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ComponentsAndProfilesApi#getProfiles");
@@ -251,9 +257,11 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **status** | [**List&lt;String&gt;**](String.md)|  | [enum: development, production, deprecated] |
+| **registrySpace** | **String**|  | [optional] [default to published] |
+| **status** | [**List&lt;String&gt;**](String.md)|  | [optional] [enum: development, production, deprecated] |
 | **sortBy** | **String**|  | [optional] [default to name] |
 | **sortDirection** | **String**|  | [optional] [default to ASC] [enum: ASC, DESC] |
+| **groupId** | **Long**|  | [optional] |
 
 ### Return type
 

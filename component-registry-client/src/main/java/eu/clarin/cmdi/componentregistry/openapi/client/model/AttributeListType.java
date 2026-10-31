@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
@@ -37,7 +38,7 @@ import io.github.threetenjaxb.core.*;
 @JsonPropertyOrder({
   AttributeListType.JSON_PROPERTY_ATTRIBUTE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 @XmlRootElement(name = "AttributeListType")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "AttributeListType")
@@ -69,7 +70,7 @@ public class AttributeListType {
    * @return attribute
    */
   @jakarta.annotation.Nonnull
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTE)
+  @JsonProperty(value = JSON_PROPERTY_ATTRIBUTE, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   @JacksonXmlProperty(localName = "Attribute")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -79,7 +80,7 @@ public class AttributeListType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTE)
+  @JsonProperty(value = JSON_PROPERTY_ATTRIBUTE, required = true)
   @JsonInclude(value = JsonInclude.Include.ALWAYS)
   @JacksonXmlProperty(localName = "Attribute")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -119,10 +120,7 @@ public class AttributeListType {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

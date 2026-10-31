@@ -25,7 +25,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 public class ItemsApi {
     private ApiClient apiClient;
 
@@ -65,7 +65,7 @@ public class ItemsApi {
 
         pathParams.put("componentId", componentId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
@@ -80,7 +80,7 @@ public class ItemsApi {
         String[] localVarAuthNames = new String[] {  };
 
         ParameterizedTypeReference<BaseDescription> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/registry/items/{componentId}", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/registry/items/{componentId}", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -123,6 +123,7 @@ public class ItemsApi {
     public ResponseSpec getItemWithResponseSpec(@jakarta.annotation.Nonnull String componentId) throws RestClientResponseException {
         return getItemRequestCreation(componentId);
     }
+
     /**
      * Get the specification for the profile or component
      * 
@@ -144,11 +145,10 @@ public class ItemsApi {
 
         pathParams.put("componentId", componentId);
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
-
 
         if (accept != null)
         headerParams.add("Accept", apiClient.parameterToString(accept));
@@ -162,7 +162,7 @@ public class ItemsApi {
         String[] localVarAuthNames = new String[] {  };
 
         ParameterizedTypeReference<ComponentSpec> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/registry/items/{componentId}/spec", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/registry/items/{componentId}/spec", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -208,32 +208,35 @@ public class ItemsApi {
     public ResponseSpec getItemSpecWithResponseSpec(@jakarta.annotation.Nonnull String componentId, @jakarta.annotation.Nullable String accept) throws RestClientResponseException {
         return getItemSpecRequestCreation(componentId, accept);
     }
+
     /**
      * Get a filtered list of descriptions of profiles and/or components
      * 
      * <p><b>200</b> - A list of items that meet the filter criteria (if applicable)
      * @param type The type parameter
+     * @param groupId The groupId parameter
      * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
      * @return List&lt;BaseDescription&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getItemsRequestCreation(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    private ResponseSpec getItemsRequestCreation(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable Long groupId, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         Object postBody = null;
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
-        final MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
+        final MultiValueMap<String, String> localVarQueryParams = new LinkedMultiValueMap<>();
         final HttpHeaders headerParams = new HttpHeaders();
         final MultiValueMap<String, String> cookieParams = new LinkedMultiValueMap<>();
         final MultiValueMap<String, Object> formParams = new LinkedMultiValueMap<>();
 
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "type", type));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "status", status));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortBy", sortBy));
-        queryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortDirection", sortDirection));
-        
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "type", type));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "groupId", groupId));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(ApiClient.CollectionFormat.valueOf("multi".toUpperCase(Locale.ROOT)), "status", status));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortBy", sortBy));
+        localVarQueryParams.putAll(apiClient.parameterToMultiValueMap(null, "sortDirection", sortDirection));
+
         final String[] localVarAccepts = { 
             "application/xml", "application/json"
         };
@@ -244,7 +247,7 @@ public class ItemsApi {
         String[] localVarAuthNames = new String[] {  };
 
         ParameterizedTypeReference<List<BaseDescription>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return apiClient.invokeAPI("/registry/items", HttpMethod.GET, pathParams, queryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
+        return apiClient.invokeAPI("/registry/items", HttpMethod.GET, pathParams, localVarQueryParams, postBody, headerParams, cookieParams, formParams, localVarAccept, localVarContentType, localVarAuthNames, localVarReturnType);
     }
 
     /**
@@ -252,15 +255,16 @@ public class ItemsApi {
      * 
      * <p><b>200</b> - A list of items that meet the filter criteria (if applicable)
      * @param type The type parameter
+     * @param groupId The groupId parameter
      * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
      * @return List&lt;BaseDescription&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public List<BaseDescription> getItems(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    public List<BaseDescription> getItems(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable Long groupId, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         ParameterizedTypeReference<List<BaseDescription>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getItemsRequestCreation(type, status, sortBy, sortDirection).body(localVarReturnType);
+        return getItemsRequestCreation(type, groupId, status, sortBy, sortDirection).body(localVarReturnType);
     }
 
     /**
@@ -268,15 +272,16 @@ public class ItemsApi {
      * 
      * <p><b>200</b> - A list of items that meet the filter criteria (if applicable)
      * @param type The type parameter
+     * @param groupId The groupId parameter
      * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
      * @return ResponseEntity&lt;List&lt;BaseDescription&gt;&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<List<BaseDescription>> getItemsWithHttpInfo(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+    public ResponseEntity<List<BaseDescription>> getItemsWithHttpInfo(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable Long groupId, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
         ParameterizedTypeReference<List<BaseDescription>> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getItemsRequestCreation(type, status, sortBy, sortDirection).toEntity(localVarReturnType);
+        return getItemsRequestCreation(type, groupId, status, sortBy, sortDirection).toEntity(localVarReturnType);
     }
 
     /**
@@ -284,13 +289,14 @@ public class ItemsApi {
      * 
      * <p><b>200</b> - A list of items that meet the filter criteria (if applicable)
      * @param type The type parameter
+     * @param groupId The groupId parameter
      * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getItemsWithResponseSpec(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
-        return getItemsRequestCreation(type, status, sortBy, sortDirection);
+    public ResponseSpec getItemsWithResponseSpec(@jakarta.annotation.Nullable String type, @jakarta.annotation.Nullable Long groupId, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection) throws RestClientResponseException {
+        return getItemsRequestCreation(type, groupId, status, sortBy, sortDirection);
     }
 }

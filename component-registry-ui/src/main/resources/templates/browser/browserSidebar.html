@@ -23,21 +23,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     <body>
         <div class="container-fluid vh-100">
             <main>
-                <!-- Sidebar -->
+                <!--/* Sidebar */-->
                 <div id="browser-sidebar" 
                      class="d-flex flex-column h-100">
                     <div class="mb-2 pb-2 border-bottom">
-                        <div class="dropdown">
-                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                               data-bs-toggle="dropdown" aria-expanded="false">
-                                Public
-                            </a>
-
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item disabled" href="#">Private</a></li>
-                                <li><a class="dropdown-item disabled" href="#">My team</a></li>
-                                <li><a class="dropdown-item disabled" href="#">Another team</a></li>
-                            </ul>
+                        <div th:replace="~{ :: spacesDropdown}">
+                            [Spaces]
                         </div>
                     </div>
                     <div>
@@ -64,8 +55,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                             </li>
                         </ul>
                     </div>
-                </div> <!-- END sidebar-->
+                </div> <!--/* END sidebar */-->
             </main>
         </div>
+
+        <th:block th:remove="all">
+            <!-- Fragment: spaces dropdown -->
+            <div th:fragment="spacesDropdown" class="dropdown">
+                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Public
+                </a>
+
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item disabled" href="#">Private</a></li>
+                    <li><a class="dropdown-item disabled" href="#">My team</a></li>
+                    <li><a class="dropdown-item disabled" href="#">Another team</a></li>
+                </ul>
+            </div>
+        </th:block>
     </body>
 </html>

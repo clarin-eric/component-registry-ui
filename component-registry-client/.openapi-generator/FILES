@@ -21,6 +21,9 @@ docs/ItemType.md
 docs/ItemsApi.md
 docs/ProfileDescription.md
 docs/ProfilesList.md
+docs/RegistryUser.md
+docs/UserApi.md
+docs/UserGroup.md
 docs/ValueSchemeType.md
 docs/VocabularyType.md
 git_push.sh
@@ -33,6 +36,7 @@ pom.xml
 settings.gradle
 src/main/AndroidManifest.xml
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/ApiClient.java
+src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/ExceptionProvider.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/JavaTimeFormatter.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/RFC3339DateFormat.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/RFC3339InstantDeserializer.java
@@ -42,6 +46,7 @@ src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/ServerVariable.jav
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/StringUtil.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/api/ComponentsAndProfilesApi.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/api/ItemsApi.java
+src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/api/UserApi.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/auth/ApiKeyAuth.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/auth/Authentication.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/auth/HttpBasicAuth.java
@@ -60,5 +65,7 @@ src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/model/Header.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/model/ItemType.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/model/ProfileDescription.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/model/ProfilesList.java
+src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/model/RegistryUser.java
+src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/model/UserGroup.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/model/ValueSchemeType.java
 src/main/java/eu/clarin/cmdi/componentregistry/openapi/client/model/VocabularyType.java

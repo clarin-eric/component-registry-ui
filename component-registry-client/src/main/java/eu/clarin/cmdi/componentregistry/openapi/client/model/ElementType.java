@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
@@ -51,7 +52,7 @@ import io.github.threetenjaxb.core.*;
   ElementType.JSON_PROPERTY_OTHER_ATTRIBUTES,
   ElementType.JSON_PROPERTY_VALUE_SCHEME_ATTRIBUTE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 @XmlRootElement(name = "ElementType")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ElementType")
@@ -202,7 +203,7 @@ public class ElementType {
    * @return documentation
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_DOCUMENTATION)
+  @JsonProperty(value = JSON_PROPERTY_DOCUMENTATION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "Documentation")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -212,7 +213,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_DOCUMENTATION)
+  @JsonProperty(value = JSON_PROPERTY_DOCUMENTATION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "Documentation")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -231,7 +232,7 @@ public class ElementType {
    * @return attributeList
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTE_LIST)
+  @JsonProperty(value = JSON_PROPERTY_ATTRIBUTE_LIST, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "AttributeList")
 
@@ -240,7 +241,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ATTRIBUTE_LIST)
+  @JsonProperty(value = JSON_PROPERTY_ATTRIBUTE_LIST, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "AttributeList")
   public void setAttributeList(@jakarta.annotation.Nullable AttributeListType attributeList) {
@@ -258,7 +259,7 @@ public class ElementType {
    * @return valueScheme
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUE_SCHEME)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_SCHEME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ValueScheme")
 
@@ -267,7 +268,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUE_SCHEME)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_SCHEME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ValueScheme")
   public void setValueScheme(@jakarta.annotation.Nullable ValueSchemeType valueScheme) {
@@ -293,7 +294,7 @@ public class ElementType {
    * @return autoValue
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_AUTO_VALUE)
+  @JsonProperty(value = JSON_PROPERTY_AUTO_VALUE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "AutoValue")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -303,7 +304,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_AUTO_VALUE)
+  @JsonProperty(value = JSON_PROPERTY_AUTO_VALUE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "AutoValue")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -322,7 +323,7 @@ public class ElementType {
    * @return name
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(value = JSON_PROPERTY_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "name", isAttribute = true)
 
@@ -331,7 +332,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_NAME)
+  @JsonProperty(value = JSON_PROPERTY_NAME, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "name", isAttribute = true)
   public void setName(@jakarta.annotation.Nullable String name) {
@@ -349,7 +350,7 @@ public class ElementType {
    * @return conceptLink
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CONCEPT_LINK)
+  @JsonProperty(value = JSON_PROPERTY_CONCEPT_LINK, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ConceptLink", isAttribute = true)
 
@@ -358,7 +359,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CONCEPT_LINK)
+  @JsonProperty(value = JSON_PROPERTY_CONCEPT_LINK, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ConceptLink", isAttribute = true)
   public void setConceptLink(@jakarta.annotation.Nullable String conceptLink) {
@@ -384,7 +385,7 @@ public class ElementType {
    * @return cardinalityMin
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CARDINALITY_MIN)
+  @JsonProperty(value = JSON_PROPERTY_CARDINALITY_MIN, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "CardinalityMin", isAttribute = true)
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -394,7 +395,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CARDINALITY_MIN)
+  @JsonProperty(value = JSON_PROPERTY_CARDINALITY_MIN, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "CardinalityMin", isAttribute = true)
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -421,7 +422,7 @@ public class ElementType {
    * @return cardinalityMax
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CARDINALITY_MAX)
+  @JsonProperty(value = JSON_PROPERTY_CARDINALITY_MAX, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "CardinalityMax", isAttribute = true)
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -431,7 +432,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CARDINALITY_MAX)
+  @JsonProperty(value = JSON_PROPERTY_CARDINALITY_MAX, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "CardinalityMax", isAttribute = true)
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -450,7 +451,7 @@ public class ElementType {
    * @return multilingual
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_MULTILINGUAL)
+  @JsonProperty(value = JSON_PROPERTY_MULTILINGUAL, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "Multilingual", isAttribute = true)
 
@@ -459,7 +460,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_MULTILINGUAL)
+  @JsonProperty(value = JSON_PROPERTY_MULTILINGUAL, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "Multilingual", isAttribute = true)
   public void setMultilingual(@jakarta.annotation.Nullable Boolean multilingual) {
@@ -485,7 +486,7 @@ public class ElementType {
    * @return otherAttributes
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_OTHER_ATTRIBUTES)
+  @JsonProperty(value = JSON_PROPERTY_OTHER_ATTRIBUTES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "otherAttributes")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -495,7 +496,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_OTHER_ATTRIBUTES)
+  @JsonProperty(value = JSON_PROPERTY_OTHER_ATTRIBUTES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "otherAttributes")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -514,7 +515,7 @@ public class ElementType {
    * @return valueSchemeAttribute
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUE_SCHEME_ATTRIBUTE)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_SCHEME_ATTRIBUTE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ValueScheme", isAttribute = true)
 
@@ -523,7 +524,7 @@ public class ElementType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUE_SCHEME_ATTRIBUTE)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_SCHEME_ATTRIBUTE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ValueScheme", isAttribute = true)
   public void setValueSchemeAttribute(@jakarta.annotation.Nullable ValueSchemeAttributeEnum valueSchemeAttribute) {
@@ -582,10 +583,7 @@ public class ElementType {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

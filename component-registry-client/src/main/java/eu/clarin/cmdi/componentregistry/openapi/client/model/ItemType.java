@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
@@ -38,7 +39,7 @@ import io.github.threetenjaxb.core.*;
   ItemType.JSON_PROPERTY_APP_INFO,
   ItemType.JSON_PROPERTY_OTHER_ATTRIBUTES
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 @XmlRootElement(name = "ItemType")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ItemType")
@@ -77,7 +78,7 @@ public class ItemType {
    * @return value
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonProperty(value = JSON_PROPERTY_VALUE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "value")
 
@@ -86,7 +87,7 @@ public class ItemType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUE)
+  @JsonProperty(value = JSON_PROPERTY_VALUE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "value")
   public void setValue(@jakarta.annotation.Nullable String value) {
@@ -104,7 +105,7 @@ public class ItemType {
    * @return conceptLink
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_CONCEPT_LINK)
+  @JsonProperty(value = JSON_PROPERTY_CONCEPT_LINK, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ConceptLink", isAttribute = true)
 
@@ -113,7 +114,7 @@ public class ItemType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_CONCEPT_LINK)
+  @JsonProperty(value = JSON_PROPERTY_CONCEPT_LINK, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ConceptLink", isAttribute = true)
   public void setConceptLink(@jakarta.annotation.Nullable String conceptLink) {
@@ -131,7 +132,7 @@ public class ItemType {
    * @return appInfo
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_APP_INFO)
+  @JsonProperty(value = JSON_PROPERTY_APP_INFO, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "AppInfo", isAttribute = true)
 
@@ -140,7 +141,7 @@ public class ItemType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_APP_INFO)
+  @JsonProperty(value = JSON_PROPERTY_APP_INFO, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "AppInfo", isAttribute = true)
   public void setAppInfo(@jakarta.annotation.Nullable String appInfo) {
@@ -166,7 +167,7 @@ public class ItemType {
    * @return otherAttributes
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_OTHER_ATTRIBUTES)
+  @JsonProperty(value = JSON_PROPERTY_OTHER_ATTRIBUTES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "otherAttributes")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -176,7 +177,7 @@ public class ItemType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_OTHER_ATTRIBUTES)
+  @JsonProperty(value = JSON_PROPERTY_OTHER_ATTRIBUTES, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "otherAttributes")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -222,10 +223,7 @@ public class ItemType {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

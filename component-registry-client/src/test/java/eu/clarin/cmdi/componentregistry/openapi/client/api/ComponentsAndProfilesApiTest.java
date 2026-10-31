@@ -56,9 +56,11 @@ public class ComponentsAndProfilesApiTest {
     @Test
     public void getComponentsTest()  {
         List<String> status = null;
+        String registrySpace = null;
         String sortBy = null;
         String sortDirection = null;
-        ComponentsList response = api.getComponents(status, sortBy, sortDirection);
+        Long groupId = null;
+        ComponentsList response = api.getComponents(status, registrySpace, sortBy, sortDirection, groupId);
 
         // TODO: test validations
     }
@@ -83,10 +85,12 @@ public class ComponentsAndProfilesApiTest {
      */
     @Test
     public void getProfilesTest()  {
+        String registrySpace = null;
         List<String> status = null;
         String sortBy = null;
         String sortDirection = null;
-        ProfilesList response = api.getProfiles(status, sortBy, sortDirection);
+        Long groupId = null;
+        ProfilesList response = api.getProfiles(registrySpace, status, sortBy, sortDirection, groupId);
 
         // TODO: test validations
     }

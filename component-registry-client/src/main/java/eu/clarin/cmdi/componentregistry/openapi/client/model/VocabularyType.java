@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.EnumerationType;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
@@ -37,7 +38,7 @@ import io.github.threetenjaxb.core.*;
   VocabularyType.JSON_PROPERTY_VALUE_PROPERTY,
   VocabularyType.JSON_PROPERTY_VALUE_LANGUAGE
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 @XmlRootElement(name = "VocabularyType")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "VocabularyType")
@@ -76,7 +77,7 @@ public class VocabularyType {
    * @return enumeration
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_ENUMERATION)
+  @JsonProperty(value = JSON_PROPERTY_ENUMERATION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "enumeration")
 
@@ -85,7 +86,7 @@ public class VocabularyType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_ENUMERATION)
+  @JsonProperty(value = JSON_PROPERTY_ENUMERATION, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "enumeration")
   public void setEnumeration(@jakarta.annotation.Nullable EnumerationType enumeration) {
@@ -103,7 +104,7 @@ public class VocabularyType {
    * @return uri
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_URI)
+  @JsonProperty(value = JSON_PROPERTY_URI, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "URI", isAttribute = true)
 
@@ -112,7 +113,7 @@ public class VocabularyType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_URI)
+  @JsonProperty(value = JSON_PROPERTY_URI, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "URI", isAttribute = true)
   public void setUri(@jakarta.annotation.Nullable String uri) {
@@ -130,7 +131,7 @@ public class VocabularyType {
    * @return valueProperty
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUE_PROPERTY)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_PROPERTY, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ValueProperty", isAttribute = true)
 
@@ -139,7 +140,7 @@ public class VocabularyType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUE_PROPERTY)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_PROPERTY, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ValueProperty", isAttribute = true)
   public void setValueProperty(@jakarta.annotation.Nullable String valueProperty) {
@@ -157,7 +158,7 @@ public class VocabularyType {
    * @return valueLanguage
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_VALUE_LANGUAGE)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_LANGUAGE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ValueLanguage", isAttribute = true)
 
@@ -166,7 +167,7 @@ public class VocabularyType {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_VALUE_LANGUAGE)
+  @JsonProperty(value = JSON_PROPERTY_VALUE_LANGUAGE, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "ValueLanguage", isAttribute = true)
   public void setValueLanguage(@jakarta.annotation.Nullable String valueLanguage) {
@@ -211,10 +212,7 @@ public class VocabularyType {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

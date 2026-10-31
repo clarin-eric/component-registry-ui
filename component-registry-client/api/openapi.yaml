@@ -15,15 +15,94 @@ tags:
   name: Items
 - description: Registry of components and profiles
   name: Components and profiles
+- description: Information on the user
+  name: User
 paths:
+  /user:
+    get:
+      operationId: getInfo
+      parameters:
+      - explode: true
+        in: query
+        name: userId
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
+        name: principalName
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RegistryUser"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/RegistryUser"
+          description: User info
+      summary: "Info for a user, normally the current user"
+      tags:
+      - User
+      x-accepts:
+      - application/json
+      - application/xml
+  /user/teams:
+    get:
+      operationId: getTeams
+      parameters:
+      - explode: true
+        in: query
+        name: userId
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: "#/components/schemas/UserGroup"
+                type: array
+                default: null
+            application/xml:
+              schema:
+                items:
+                  $ref: "#/components/schemas/UserGroup"
+                type: array
+                default: null
+          description: A list of teams of which the user is a member
+      summary: Get a user's teams
+      tags:
+      - User
+      x-accepts:
+      - application/json
+      - application/xml
   /registry/profiles:
     get:
       operationId: getProfiles
       parameters:
       - explode: true
         in: query
+        name: registrySpace
+        required: false
+        schema:
+          default: published
+          type: string
+        style: form
+      - explode: true
+        in: query
         name: status
-        required: true
+        required: false
         schema:
           items:
             enum:
@@ -32,6 +111,7 @@ paths:
             - deprecated
             type: string
           type: array
+          default: null
         style: form
       - explode: true
         in: query
@@ -51,6 +131,14 @@ paths:
           - ASC
           - DESC
           type: string
+        style: form
+      - explode: true
+        in: query
+        name: groupId
+        required: false
+        schema:
+          format: int64
+          type: integer
         style: form
       responses:
         "200":
@@ -109,6 +197,14 @@ paths:
         style: form
       - explode: true
         in: query
+        name: groupId
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - explode: true
+        in: query
         name: status
         required: false
         schema:
@@ -119,6 +215,7 @@ paths:
             - deprecated
             type: string
           type: array
+          default: null
         style: form
       - explode: true
         in: query
@@ -147,11 +244,13 @@ paths:
                 items:
                   $ref: "#/components/schemas/BaseDescription"
                 type: array
+                default: null
             application/json:
               schema:
                 items:
                   $ref: "#/components/schemas/BaseDescription"
                 type: array
+                default: null
           description: A list of items that meet the filter criteria (if applicable)
       summary: Get a filtered list of descriptions of profiles and/or components
       tags:
@@ -233,6 +332,14 @@ paths:
       parameters:
       - explode: true
         in: query
+        name: registrySpace
+        required: false
+        schema:
+          default: published
+          type: string
+        style: form
+      - explode: true
+        in: query
         name: status
         required: true
         schema:
@@ -243,6 +350,7 @@ paths:
             - deprecated
             type: string
           type: array
+          default: null
         style: form
       - explode: true
         in: query
@@ -262,6 +370,14 @@ paths:
           - ASC
           - DESC
           type: string
+        style: form
+      - explode: true
+        in: query
+        name: groupId
+        required: false
+        schema:
+          format: int64
+          type: integer
         style: form
       responses:
         "200":
@@ -306,25 +422,67 @@ paths:
       - application/xml
 components:
   schemas:
+    RegistryUser:
+      example:
+        name: name
+        principalName: principalName
+        id: 0
+        groups:
+        - id: 6
+          name: name
+          ownerId: 1
+        - id: 6
+          name: name
+          ownerId: 1
+      properties:
+        name:
+          type: string
+        principalName:
+          type: string
+        id:
+          format: int64
+          type: integer
+        groups:
+          items:
+            $ref: "#/components/schemas/UserGroup"
+          type: array
+          uniqueItems: true
+          default: null
+    UserGroup:
+      example:
+        id: 6
+        name: name
+        ownerId: 1
+      properties:
+        id:
+          format: int64
+          type: integer
+        name:
+          type: string
+        ownerId:
+          format: int64
+          type: integer
+      xml:
+        name: group
     ProfileDescription:
       example:
-        successor: successor
-        creatorName: creatorName
-        description: description
-        derivedfrom: derivedfrom
-        userId: userId
-        recommended: true
-        groupName: groupName
-        public: true
-        commentsCount: 0
-        domainName: domainName
         name: name
+        description: description
         registrationDate: 2000-01-23T04:56:07.000+00:00
-        isPublic: true
+        creatorName: creatorName
+        userId: userId
+        domainName: domainName
         href: href
-        id: id
-        showInEditor: true
+        groupName: groupName
         status: development
+        derivedfrom: derivedfrom
+        successor: successor
+        commentsCount: 0
+        recommended: true
+        showInEditor: true
+        public: true
+        id: id
+        isPublic: true
       properties:
         name:
           type: string
@@ -373,64 +531,65 @@ components:
     ProfilesList:
       example:
         components:
-        - successor: successor
-          creatorName: creatorName
+        - name: name
           description: description
-          derivedfrom: derivedfrom
-          userId: userId
-          recommended: true
-          groupName: groupName
-          public: true
-          commentsCount: 0
-          domainName: domainName
-          name: name
           registrationDate: 2000-01-23T04:56:07.000+00:00
-          isPublic: true
-          href: href
-          id: id
-          showInEditor: true
-          status: development
-        - successor: successor
           creatorName: creatorName
-          description: description
-          derivedfrom: derivedfrom
           userId: userId
-          recommended: true
-          groupName: groupName
-          public: true
-          commentsCount: 0
           domainName: domainName
-          name: name
-          registrationDate: 2000-01-23T04:56:07.000+00:00
-          isPublic: true
           href: href
-          id: id
-          showInEditor: true
+          groupName: groupName
           status: development
+          derivedfrom: derivedfrom
+          successor: successor
+          commentsCount: 0
+          recommended: true
+          showInEditor: true
+          public: true
+          id: id
+          isPublic: true
+        - name: name
+          description: description
+          registrationDate: 2000-01-23T04:56:07.000+00:00
+          creatorName: creatorName
+          userId: userId
+          domainName: domainName
+          href: href
+          groupName: groupName
+          status: development
+          derivedfrom: derivedfrom
+          successor: successor
+          commentsCount: 0
+          recommended: true
+          showInEditor: true
+          public: true
+          id: id
+          isPublic: true
       properties:
         components:
           items:
             $ref: "#/components/schemas/ProfileDescription"
           type: array
+          default: null
     BaseDescription:
       example:
-        successor: successor
-        creatorName: creatorName
-        description: description
-        derivedfrom: derivedfrom
-        userId: userId
-        recommended: true
-        groupName: groupName
-        public: true
-        commentsCount: 0
-        domainName: domainName
         name: name
+        description: description
         registrationDate: 2000-01-23T04:56:07.000+00:00
-        isPublic: true
+        creatorName: creatorName
+        userId: userId
+        domainName: domainName
         href: href
+        groupName: groupName
+        status: development
+        derivedfrom: derivedfrom
+        successor: successor
+        commentsCount: 0
+        recommended: true
+        public: true
         id: id
         showInEditor: true
-        status: development
+        isPublic: true
       properties:
         name:
           type: string
@@ -478,39 +637,39 @@ components:
         name: description
     Attribute:
       example:
-        conceptLink: conceptLink
-        valueScheme: BOOLEAN
         documentation:
-        - lang: lang
-          value: value
-        - lang: lang
-          value: value
-        name: name
+        - value: value
+          lang: lang
+        - value: value
+          lang: lang
         attributeValueScheme:
+          pattern: pattern
           vocabulary:
-            valueLanguage: valueLanguage
             enumeration:
-              item:
-              - conceptLink: conceptLink
-                appInfo: appInfo
-                value: value
-                otherAttributes:
-                  key: otherAttributes
-              - conceptLink: conceptLink
-                appInfo: appInfo
-                value: value
-                otherAttributes:
-                  key: otherAttributes
               appinfo: appinfo
+              item:
+              - value: value
+                conceptLink: conceptLink
+                appInfo: appInfo
+                otherAttributes:
+                  key: otherAttributes
+              - value: value
+                conceptLink: conceptLink
+                appInfo: appInfo
+                otherAttributes:
+                  key: otherAttributes
             uri: uri
             valueProperty: valueProperty
-          pattern: pattern
-        otherAttributes:
-          key: otherAttributes
-        required: true
+            valueLanguage: valueLanguage
         autoValue:
         - autoValue
         - autoValue
+        name: name
+        conceptLink: conceptLink
+        valueScheme: BOOLEAN
+        required: true
+        otherAttributes:
+          key: otherAttributes
       properties:
         documentation:
           items:
@@ -518,6 +677,7 @@ components:
           type: array
           xml:
             name: Documentation
+          default: null
         attributeValueScheme:
           $ref: "#/components/schemas/ValueSchemeType"
         autoValue:
@@ -528,6 +688,7 @@ components:
           type: array
           xml:
             name: AutoValue
+          default: null
         name:
           type: string
           xml:
@@ -563,75 +724,76 @@ components:
         otherAttributes:
           additionalProperties:
             type: string
+          type: object
     AttributeListType:
       example:
         attribute:
-        - conceptLink: conceptLink
-          valueScheme: BOOLEAN
-          documentation:
-          - lang: lang
-            value: value
-          - lang: lang
-            value: value
-          name: name
+        - documentation:
+          - value: value
+            lang: lang
+          - value: value
+            lang: lang
           attributeValueScheme:
+            pattern: pattern
             vocabulary:
-              valueLanguage: valueLanguage
               enumeration:
-                item:
-                - conceptLink: conceptLink
-                  appInfo: appInfo
-                  value: value
-                  otherAttributes:
-                    key: otherAttributes
-                - conceptLink: conceptLink
-                  appInfo: appInfo
-                  value: value
-                  otherAttributes:
-                    key: otherAttributes
                 appinfo: appinfo
+                item:
+                - value: value
+                  conceptLink: conceptLink
+                  appInfo: appInfo
+                  otherAttributes:
+                    key: otherAttributes
+                - value: value
+                  conceptLink: conceptLink
+                  appInfo: appInfo
+                  otherAttributes:
+                    key: otherAttributes
               uri: uri
               valueProperty: valueProperty
-            pattern: pattern
-          otherAttributes:
-            key: otherAttributes
-          required: true
+              valueLanguage: valueLanguage
           autoValue:
           - autoValue
           - autoValue
-        - conceptLink: conceptLink
-          valueScheme: BOOLEAN
-          documentation:
-          - lang: lang
-            value: value
-          - lang: lang
-            value: value
           name: name
-          attributeValueScheme:
-            vocabulary:
-              valueLanguage: valueLanguage
-              enumeration:
-                item:
-                - conceptLink: conceptLink
-                  appInfo: appInfo
-                  value: value
-                  otherAttributes:
-                    key: otherAttributes
-                - conceptLink: conceptLink
-                  appInfo: appInfo
-                  value: value
-                  otherAttributes:
-                    key: otherAttributes
-                appinfo: appinfo
-              uri: uri
-              valueProperty: valueProperty
-            pattern: pattern
+          conceptLink: conceptLink
+          valueScheme: BOOLEAN
+          required: true
           otherAttributes:
             key: otherAttributes
-          required: true
+        - documentation:
+          - value: value
+            lang: lang
+          - value: value
+            lang: lang
+          attributeValueScheme:
+            pattern: pattern
+            vocabulary:
+              enumeration:
+                appinfo: appinfo
+                item:
+                - value: value
+                  conceptLink: conceptLink
+                  appInfo: appInfo
+                  otherAttributes:
+                    key: otherAttributes
+                - value: value
+                  conceptLink: conceptLink
+                  appInfo: appInfo
+                  otherAttributes:
+                    key: otherAttributes
+              uri: uri
+              valueProperty: valueProperty
+              valueLanguage: valueLanguage
           autoValue:
           - autoValue
           - autoValue
+          name: name
+          conceptLink: conceptLink
+          valueScheme: BOOLEAN
+          required: true
+          otherAttributes:
+            key: otherAttributes
       properties:
         attribute:
           items:
@@ -639,324 +801,325 @@ components:
           type: array
           xml:
             name: Attribute
+          default: null
       required:
       - attribute
     ComponentSpec:
       example:
-        isProfile: true
-        cmdoriginalVersion: cmdoriginalVersion
+        header:
+          id: id
+          name: name
+          description: description
+          status: status
+          statusComment: statusComment
+          successor: successor
+          derivedFrom: derivedFrom
         component:
+          documentation:
+          - value: value
+            lang: lang
+          - value: value
+            lang: lang
+          attributeList:
+            attribute:
+            - documentation:
+              - value: value
+                lang: lang
+              - value: value
+                lang: lang
+              attributeValueScheme:
+                pattern: pattern
+                vocabulary:
+                  enumeration:
+                    appinfo: appinfo
+                    item:
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                  uri: uri
+                  valueProperty: valueProperty
+                  valueLanguage: valueLanguage
+              autoValue:
+              - autoValue
+              - autoValue
+              name: name
+              conceptLink: conceptLink
+              valueScheme: BOOLEAN
+              required: true
+              otherAttributes:
+                key: otherAttributes
+            - documentation:
+              - value: value
+                lang: lang
+              - value: value
+                lang: lang
+              attributeValueScheme:
+                pattern: pattern
+                vocabulary:
+                  enumeration:
+                    appinfo: appinfo
+                    item:
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                  uri: uri
+                  valueProperty: valueProperty
+                  valueLanguage: valueLanguage
+              autoValue:
+              - autoValue
+              - autoValue
+              name: name
+              conceptLink: conceptLink
+              valueScheme: BOOLEAN
+              required: true
+              otherAttributes:
+                key: otherAttributes
+          element:
+          - documentation:
+            - value: value
+              lang: lang
+            - value: value
+              lang: lang
+            attributeList:
+              attribute:
+              - documentation:
+                - value: value
+                  lang: lang
+                - value: value
+                  lang: lang
+                attributeValueScheme:
+                  pattern: pattern
+                  vocabulary:
+                    enumeration:
+                      appinfo: appinfo
+                      item:
+                      - value: value
+                        conceptLink: conceptLink
+                        appInfo: appInfo
+                        otherAttributes:
+                          key: otherAttributes
+                      - value: value
+                        conceptLink: conceptLink
+                        appInfo: appInfo
+                        otherAttributes:
+                          key: otherAttributes
+                    uri: uri
+                    valueProperty: valueProperty
+                    valueLanguage: valueLanguage
+                autoValue:
+                - autoValue
+                - autoValue
+                name: name
+                conceptLink: conceptLink
+                valueScheme: BOOLEAN
+                required: true
+                otherAttributes:
+                  key: otherAttributes
+              - documentation:
+                - value: value
+                  lang: lang
+                - value: value
+                  lang: lang
+                attributeValueScheme:
+                  pattern: pattern
+                  vocabulary:
+                    enumeration:
+                      appinfo: appinfo
+                      item:
+                      - value: value
+                        conceptLink: conceptLink
+                        appInfo: appInfo
+                        otherAttributes:
+                          key: otherAttributes
+                      - value: value
+                        conceptLink: conceptLink
+                        appInfo: appInfo
+                        otherAttributes:
+                          key: otherAttributes
+                    uri: uri
+                    valueProperty: valueProperty
+                    valueLanguage: valueLanguage
+                autoValue:
+                - autoValue
+                - autoValue
+                name: name
+                conceptLink: conceptLink
+                valueScheme: BOOLEAN
+                required: true
+                otherAttributes:
+                  key: otherAttributes
+            valueScheme:
+              pattern: pattern
+              vocabulary:
+                enumeration:
+                  appinfo: appinfo
+                  item:
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                uri: uri
+                valueProperty: valueProperty
+                valueLanguage: valueLanguage
+            autoValue:
+            - autoValue
+            - autoValue
+            name: name
+            conceptLink: conceptLink
+            cardinalityMin:
+            - cardinalityMin
+            - cardinalityMin
+            cardinalityMax:
+            - cardinalityMax
+            - cardinalityMax
+            multilingual: true
+            otherAttributes:
+              key: otherAttributes
+            valueSchemeAttribute: BOOLEAN
+          - documentation:
+            - value: value
+              lang: lang
+            - value: value
+              lang: lang
+            attributeList:
+              attribute:
+              - documentation:
+                - value: value
+                  lang: lang
+                - value: value
+                  lang: lang
+                attributeValueScheme:
+                  pattern: pattern
+                  vocabulary:
+                    enumeration:
+                      appinfo: appinfo
+                      item:
+                      - value: value
+                        conceptLink: conceptLink
+                        appInfo: appInfo
+                        otherAttributes:
+                          key: otherAttributes
+                      - value: value
+                        conceptLink: conceptLink
+                        appInfo: appInfo
+                        otherAttributes:
+                          key: otherAttributes
+                    uri: uri
+                    valueProperty: valueProperty
+                    valueLanguage: valueLanguage
+                autoValue:
+                - autoValue
+                - autoValue
+                name: name
+                conceptLink: conceptLink
+                valueScheme: BOOLEAN
+                required: true
+                otherAttributes:
+                  key: otherAttributes
+              - documentation:
+                - value: value
+                  lang: lang
+                - value: value
+                  lang: lang
+                attributeValueScheme:
+                  pattern: pattern
+                  vocabulary:
+                    enumeration:
+                      appinfo: appinfo
+                      item:
+                      - value: value
+                        conceptLink: conceptLink
+                        appInfo: appInfo
+                        otherAttributes:
+                          key: otherAttributes
+                      - value: value
+                        conceptLink: conceptLink
+                        appInfo: appInfo
+                        otherAttributes:
+                          key: otherAttributes
+                    uri: uri
+                    valueProperty: valueProperty
+                    valueLanguage: valueLanguage
+                autoValue:
+                - autoValue
+                - autoValue
+                name: name
+                conceptLink: conceptLink
+                valueScheme: BOOLEAN
+                required: true
+                otherAttributes:
+                  key: otherAttributes
+            valueScheme:
+              pattern: pattern
+              vocabulary:
+                enumeration:
+                  appinfo: appinfo
+                  item:
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                uri: uri
+                valueProperty: valueProperty
+                valueLanguage: valueLanguage
+            autoValue:
+            - autoValue
+            - autoValue
+            name: name
+            conceptLink: conceptLink
+            cardinalityMin:
+            - cardinalityMin
+            - cardinalityMin
+            cardinalityMax:
+            - cardinalityMax
+            - cardinalityMax
+            multilingual: true
+            otherAttributes:
+              key: otherAttributes
+            valueSchemeAttribute: BOOLEAN
           component:
           - null
           - null
-          conceptLink: conceptLink
-          documentation:
-          - lang: lang
-            value: value
-          - lang: lang
-            value: value
-          attributeList:
-            attribute:
-            - conceptLink: conceptLink
-              valueScheme: BOOLEAN
-              documentation:
-              - lang: lang
-                value: value
-              - lang: lang
-                value: value
-              name: name
-              attributeValueScheme:
-                vocabulary:
-                  valueLanguage: valueLanguage
-                  enumeration:
-                    item:
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    appinfo: appinfo
-                  uri: uri
-                  valueProperty: valueProperty
-                pattern: pattern
-              otherAttributes:
-                key: otherAttributes
-              required: true
-              autoValue:
-              - autoValue
-              - autoValue
-            - conceptLink: conceptLink
-              valueScheme: BOOLEAN
-              documentation:
-              - lang: lang
-                value: value
-              - lang: lang
-                value: value
-              name: name
-              attributeValueScheme:
-                vocabulary:
-                  valueLanguage: valueLanguage
-                  enumeration:
-                    item:
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    appinfo: appinfo
-                  uri: uri
-                  valueProperty: valueProperty
-                pattern: pattern
-              otherAttributes:
-                key: otherAttributes
-              required: true
-              autoValue:
-              - autoValue
-              - autoValue
           name: name
           componentRef: componentRef
+          conceptLink: conceptLink
           cardinalityMin:
           - cardinalityMin
           - cardinalityMin
           cardinalityMax:
           - cardinalityMax
           - cardinalityMax
+          base: base
           otherAttributes:
             key: otherAttributes
-          element:
-          - conceptLink: conceptLink
-            valueScheme:
-              vocabulary:
-                valueLanguage: valueLanguage
-                enumeration:
-                  item:
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  appinfo: appinfo
-                uri: uri
-                valueProperty: valueProperty
-              pattern: pattern
-            documentation:
-            - lang: lang
-              value: value
-            - lang: lang
-              value: value
-            attributeList:
-              attribute:
-              - conceptLink: conceptLink
-                valueScheme: BOOLEAN
-                documentation:
-                - lang: lang
-                  value: value
-                - lang: lang
-                  value: value
-                name: name
-                attributeValueScheme:
-                  vocabulary:
-                    valueLanguage: valueLanguage
-                    enumeration:
-                      item:
-                      - conceptLink: conceptLink
-                        appInfo: appInfo
-                        value: value
-                        otherAttributes:
-                          key: otherAttributes
-                      - conceptLink: conceptLink
-                        appInfo: appInfo
-                        value: value
-                        otherAttributes:
-                          key: otherAttributes
-                      appinfo: appinfo
-                    uri: uri
-                    valueProperty: valueProperty
-                  pattern: pattern
-                otherAttributes:
-                  key: otherAttributes
-                required: true
-                autoValue:
-                - autoValue
-                - autoValue
-              - conceptLink: conceptLink
-                valueScheme: BOOLEAN
-                documentation:
-                - lang: lang
-                  value: value
-                - lang: lang
-                  value: value
-                name: name
-                attributeValueScheme:
-                  vocabulary:
-                    valueLanguage: valueLanguage
-                    enumeration:
-                      item:
-                      - conceptLink: conceptLink
-                        appInfo: appInfo
-                        value: value
-                        otherAttributes:
-                          key: otherAttributes
-                      - conceptLink: conceptLink
-                        appInfo: appInfo
-                        value: value
-                        otherAttributes:
-                          key: otherAttributes
-                      appinfo: appinfo
-                    uri: uri
-                    valueProperty: valueProperty
-                  pattern: pattern
-                otherAttributes:
-                  key: otherAttributes
-                required: true
-                autoValue:
-                - autoValue
-                - autoValue
-            name: name
-            cardinalityMin:
-            - cardinalityMin
-            - cardinalityMin
-            valueSchemeAttribute: BOOLEAN
-            cardinalityMax:
-            - cardinalityMax
-            - cardinalityMax
-            otherAttributes:
-              key: otherAttributes
-            multilingual: true
-            autoValue:
-            - autoValue
-            - autoValue
-          - conceptLink: conceptLink
-            valueScheme:
-              vocabulary:
-                valueLanguage: valueLanguage
-                enumeration:
-                  item:
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  appinfo: appinfo
-                uri: uri
-                valueProperty: valueProperty
-              pattern: pattern
-            documentation:
-            - lang: lang
-              value: value
-            - lang: lang
-              value: value
-            attributeList:
-              attribute:
-              - conceptLink: conceptLink
-                valueScheme: BOOLEAN
-                documentation:
-                - lang: lang
-                  value: value
-                - lang: lang
-                  value: value
-                name: name
-                attributeValueScheme:
-                  vocabulary:
-                    valueLanguage: valueLanguage
-                    enumeration:
-                      item:
-                      - conceptLink: conceptLink
-                        appInfo: appInfo
-                        value: value
-                        otherAttributes:
-                          key: otherAttributes
-                      - conceptLink: conceptLink
-                        appInfo: appInfo
-                        value: value
-                        otherAttributes:
-                          key: otherAttributes
-                      appinfo: appinfo
-                    uri: uri
-                    valueProperty: valueProperty
-                  pattern: pattern
-                otherAttributes:
-                  key: otherAttributes
-                required: true
-                autoValue:
-                - autoValue
-                - autoValue
-              - conceptLink: conceptLink
-                valueScheme: BOOLEAN
-                documentation:
-                - lang: lang
-                  value: value
-                - lang: lang
-                  value: value
-                name: name
-                attributeValueScheme:
-                  vocabulary:
-                    valueLanguage: valueLanguage
-                    enumeration:
-                      item:
-                      - conceptLink: conceptLink
-                        appInfo: appInfo
-                        value: value
-                        otherAttributes:
-                          key: otherAttributes
-                      - conceptLink: conceptLink
-                        appInfo: appInfo
-                        value: value
-                        otherAttributes:
-                          key: otherAttributes
-                      appinfo: appinfo
-                    uri: uri
-                    valueProperty: valueProperty
-                  pattern: pattern
-                otherAttributes:
-                  key: otherAttributes
-                required: true
-                autoValue:
-                - autoValue
-                - autoValue
-            name: name
-            cardinalityMin:
-            - cardinalityMin
-            - cardinalityMin
-            valueSchemeAttribute: BOOLEAN
-            cardinalityMax:
-            - cardinalityMax
-            - cardinalityMax
-            otherAttributes:
-              key: otherAttributes
-            multilingual: true
-            autoValue:
-            - autoValue
-            - autoValue
-          base: base
-        header:
-          successor: successor
-          name: name
-          derivedFrom: derivedFrom
-          description: description
-          id: id
-          statusComment: statusComment
-          status: status
+        isProfile: true
+        cmdoriginalVersion: cmdoriginalVersion
         cmdversion: cmdversion
       properties:
         header:
@@ -967,9 +1130,9 @@ components:
           type: boolean
           xml:
             attribute: true
-        cmdversion:
-          type: string
         cmdoriginalVersion:
+          type: string
+        cmdversion:
           type: string
       required:
       - component
@@ -978,309 +1141,309 @@ components:
         name: ComponentSpec
     ComponentType:
       example:
+        documentation:
+        - value: value
+          lang: lang
+        - value: value
+          lang: lang
+        attributeList:
+          attribute:
+          - documentation:
+            - value: value
+              lang: lang
+            - value: value
+              lang: lang
+            attributeValueScheme:
+              pattern: pattern
+              vocabulary:
+                enumeration:
+                  appinfo: appinfo
+                  item:
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                uri: uri
+                valueProperty: valueProperty
+                valueLanguage: valueLanguage
+            autoValue:
+            - autoValue
+            - autoValue
+            name: name
+            conceptLink: conceptLink
+            valueScheme: BOOLEAN
+            required: true
+            otherAttributes:
+              key: otherAttributes
+          - documentation:
+            - value: value
+              lang: lang
+            - value: value
+              lang: lang
+            attributeValueScheme:
+              pattern: pattern
+              vocabulary:
+                enumeration:
+                  appinfo: appinfo
+                  item:
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                uri: uri
+                valueProperty: valueProperty
+                valueLanguage: valueLanguage
+            autoValue:
+            - autoValue
+            - autoValue
+            name: name
+            conceptLink: conceptLink
+            valueScheme: BOOLEAN
+            required: true
+            otherAttributes:
+              key: otherAttributes
+        element:
+        - documentation:
+          - value: value
+            lang: lang
+          - value: value
+            lang: lang
+          attributeList:
+            attribute:
+            - documentation:
+              - value: value
+                lang: lang
+              - value: value
+                lang: lang
+              attributeValueScheme:
+                pattern: pattern
+                vocabulary:
+                  enumeration:
+                    appinfo: appinfo
+                    item:
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                  uri: uri
+                  valueProperty: valueProperty
+                  valueLanguage: valueLanguage
+              autoValue:
+              - autoValue
+              - autoValue
+              name: name
+              conceptLink: conceptLink
+              valueScheme: BOOLEAN
+              required: true
+              otherAttributes:
+                key: otherAttributes
+            - documentation:
+              - value: value
+                lang: lang
+              - value: value
+                lang: lang
+              attributeValueScheme:
+                pattern: pattern
+                vocabulary:
+                  enumeration:
+                    appinfo: appinfo
+                    item:
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                  uri: uri
+                  valueProperty: valueProperty
+                  valueLanguage: valueLanguage
+              autoValue:
+              - autoValue
+              - autoValue
+              name: name
+              conceptLink: conceptLink
+              valueScheme: BOOLEAN
+              required: true
+              otherAttributes:
+                key: otherAttributes
+          valueScheme:
+            pattern: pattern
+            vocabulary:
+              enumeration:
+                appinfo: appinfo
+                item:
+                - value: value
+                  conceptLink: conceptLink
+                  appInfo: appInfo
+                  otherAttributes:
+                    key: otherAttributes
+                - value: value
+                  conceptLink: conceptLink
+                  appInfo: appInfo
+                  otherAttributes:
+                    key: otherAttributes
+              uri: uri
+              valueProperty: valueProperty
+              valueLanguage: valueLanguage
+          autoValue:
+          - autoValue
+          - autoValue
+          name: name
+          conceptLink: conceptLink
+          cardinalityMin:
+          - cardinalityMin
+          - cardinalityMin
+          cardinalityMax:
+          - cardinalityMax
+          - cardinalityMax
+          multilingual: true
+          otherAttributes:
+            key: otherAttributes
+          valueSchemeAttribute: BOOLEAN
+        - documentation:
+          - value: value
+            lang: lang
+          - value: value
+            lang: lang
+          attributeList:
+            attribute:
+            - documentation:
+              - value: value
+                lang: lang
+              - value: value
+                lang: lang
+              attributeValueScheme:
+                pattern: pattern
+                vocabulary:
+                  enumeration:
+                    appinfo: appinfo
+                    item:
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                  uri: uri
+                  valueProperty: valueProperty
+                  valueLanguage: valueLanguage
+              autoValue:
+              - autoValue
+              - autoValue
+              name: name
+              conceptLink: conceptLink
+              valueScheme: BOOLEAN
+              required: true
+              otherAttributes:
+                key: otherAttributes
+            - documentation:
+              - value: value
+                lang: lang
+              - value: value
+                lang: lang
+              attributeValueScheme:
+                pattern: pattern
+                vocabulary:
+                  enumeration:
+                    appinfo: appinfo
+                    item:
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                    - value: value
+                      conceptLink: conceptLink
+                      appInfo: appInfo
+                      otherAttributes:
+                        key: otherAttributes
+                  uri: uri
+                  valueProperty: valueProperty
+                  valueLanguage: valueLanguage
+              autoValue:
+              - autoValue
+              - autoValue
+              name: name
+              conceptLink: conceptLink
+              valueScheme: BOOLEAN
+              required: true
+              otherAttributes:
+                key: otherAttributes
+          valueScheme:
+            pattern: pattern
+            vocabulary:
+              enumeration:
+                appinfo: appinfo
+                item:
+                - value: value
+                  conceptLink: conceptLink
+                  appInfo: appInfo
+                  otherAttributes:
+                    key: otherAttributes
+                - value: value
+                  conceptLink: conceptLink
+                  appInfo: appInfo
+                  otherAttributes:
+                    key: otherAttributes
+              uri: uri
+              valueProperty: valueProperty
+              valueLanguage: valueLanguage
+          autoValue:
+          - autoValue
+          - autoValue
+          name: name
+          conceptLink: conceptLink
+          cardinalityMin:
+          - cardinalityMin
+          - cardinalityMin
+          cardinalityMax:
+          - cardinalityMax
+          - cardinalityMax
+          multilingual: true
+          otherAttributes:
+            key: otherAttributes
+          valueSchemeAttribute: BOOLEAN
         component:
         - null
         - null
-        conceptLink: conceptLink
-        documentation:
-        - lang: lang
-          value: value
-        - lang: lang
-          value: value
-        attributeList:
-          attribute:
-          - conceptLink: conceptLink
-            valueScheme: BOOLEAN
-            documentation:
-            - lang: lang
-              value: value
-            - lang: lang
-              value: value
-            name: name
-            attributeValueScheme:
-              vocabulary:
-                valueLanguage: valueLanguage
-                enumeration:
-                  item:
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  appinfo: appinfo
-                uri: uri
-                valueProperty: valueProperty
-              pattern: pattern
-            otherAttributes:
-              key: otherAttributes
-            required: true
-            autoValue:
-            - autoValue
-            - autoValue
-          - conceptLink: conceptLink
-            valueScheme: BOOLEAN
-            documentation:
-            - lang: lang
-              value: value
-            - lang: lang
-              value: value
-            name: name
-            attributeValueScheme:
-              vocabulary:
-                valueLanguage: valueLanguage
-                enumeration:
-                  item:
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  appinfo: appinfo
-                uri: uri
-                valueProperty: valueProperty
-              pattern: pattern
-            otherAttributes:
-              key: otherAttributes
-            required: true
-            autoValue:
-            - autoValue
-            - autoValue
         name: name
         componentRef: componentRef
+        conceptLink: conceptLink
         cardinalityMin:
         - cardinalityMin
         - cardinalityMin
         cardinalityMax:
         - cardinalityMax
         - cardinalityMax
+        base: base
         otherAttributes:
           key: otherAttributes
-        element:
-        - conceptLink: conceptLink
-          valueScheme:
-            vocabulary:
-              valueLanguage: valueLanguage
-              enumeration:
-                item:
-                - conceptLink: conceptLink
-                  appInfo: appInfo
-                  value: value
-                  otherAttributes:
-                    key: otherAttributes
-                - conceptLink: conceptLink
-                  appInfo: appInfo
-                  value: value
-                  otherAttributes:
-                    key: otherAttributes
-                appinfo: appinfo
-              uri: uri
-              valueProperty: valueProperty
-            pattern: pattern
-          documentation:
-          - lang: lang
-            value: value
-          - lang: lang
-            value: value
-          attributeList:
-            attribute:
-            - conceptLink: conceptLink
-              valueScheme: BOOLEAN
-              documentation:
-              - lang: lang
-                value: value
-              - lang: lang
-                value: value
-              name: name
-              attributeValueScheme:
-                vocabulary:
-                  valueLanguage: valueLanguage
-                  enumeration:
-                    item:
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    appinfo: appinfo
-                  uri: uri
-                  valueProperty: valueProperty
-                pattern: pattern
-              otherAttributes:
-                key: otherAttributes
-              required: true
-              autoValue:
-              - autoValue
-              - autoValue
-            - conceptLink: conceptLink
-              valueScheme: BOOLEAN
-              documentation:
-              - lang: lang
-                value: value
-              - lang: lang
-                value: value
-              name: name
-              attributeValueScheme:
-                vocabulary:
-                  valueLanguage: valueLanguage
-                  enumeration:
-                    item:
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    appinfo: appinfo
-                  uri: uri
-                  valueProperty: valueProperty
-                pattern: pattern
-              otherAttributes:
-                key: otherAttributes
-              required: true
-              autoValue:
-              - autoValue
-              - autoValue
-          name: name
-          cardinalityMin:
-          - cardinalityMin
-          - cardinalityMin
-          valueSchemeAttribute: BOOLEAN
-          cardinalityMax:
-          - cardinalityMax
-          - cardinalityMax
-          otherAttributes:
-            key: otherAttributes
-          multilingual: true
-          autoValue:
-          - autoValue
-          - autoValue
-        - conceptLink: conceptLink
-          valueScheme:
-            vocabulary:
-              valueLanguage: valueLanguage
-              enumeration:
-                item:
-                - conceptLink: conceptLink
-                  appInfo: appInfo
-                  value: value
-                  otherAttributes:
-                    key: otherAttributes
-                - conceptLink: conceptLink
-                  appInfo: appInfo
-                  value: value
-                  otherAttributes:
-                    key: otherAttributes
-                appinfo: appinfo
-              uri: uri
-              valueProperty: valueProperty
-            pattern: pattern
-          documentation:
-          - lang: lang
-            value: value
-          - lang: lang
-            value: value
-          attributeList:
-            attribute:
-            - conceptLink: conceptLink
-              valueScheme: BOOLEAN
-              documentation:
-              - lang: lang
-                value: value
-              - lang: lang
-                value: value
-              name: name
-              attributeValueScheme:
-                vocabulary:
-                  valueLanguage: valueLanguage
-                  enumeration:
-                    item:
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    appinfo: appinfo
-                  uri: uri
-                  valueProperty: valueProperty
-                pattern: pattern
-              otherAttributes:
-                key: otherAttributes
-              required: true
-              autoValue:
-              - autoValue
-              - autoValue
-            - conceptLink: conceptLink
-              valueScheme: BOOLEAN
-              documentation:
-              - lang: lang
-                value: value
-              - lang: lang
-                value: value
-              name: name
-              attributeValueScheme:
-                vocabulary:
-                  valueLanguage: valueLanguage
-                  enumeration:
-                    item:
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    - conceptLink: conceptLink
-                      appInfo: appInfo
-                      value: value
-                      otherAttributes:
-                        key: otherAttributes
-                    appinfo: appinfo
-                  uri: uri
-                  valueProperty: valueProperty
-                pattern: pattern
-              otherAttributes:
-                key: otherAttributes
-              required: true
-              autoValue:
-              - autoValue
-              - autoValue
-          name: name
-          cardinalityMin:
-          - cardinalityMin
-          - cardinalityMin
-          valueSchemeAttribute: BOOLEAN
-          cardinalityMax:
-          - cardinalityMax
-          - cardinalityMax
-          otherAttributes:
-            key: otherAttributes
-          multilingual: true
-          autoValue:
-          - autoValue
-          - autoValue
-        base: base
       properties:
         documentation:
           items:
@@ -1288,6 +1451,7 @@ components:
           type: array
           xml:
             name: Documentation
+          default: null
         attributeList:
           $ref: "#/components/schemas/AttributeListType"
         element:
@@ -1296,12 +1460,14 @@ components:
           type: array
           xml:
             name: Element
+          default: null
         component:
           items:
             $ref: "#/components/schemas/ComponentType"
           type: array
           xml:
             name: Component
+          default: null
         name:
           type: string
           xml:
@@ -1323,6 +1489,7 @@ components:
           xml:
             attribute: true
             name: CardinalityMin
+          default: null
         cardinalityMax:
           items:
             type: string
@@ -1330,6 +1497,7 @@ components:
           xml:
             attribute: true
             name: CardinalityMax
+          default: null
         base:
           type: string
           xml:
@@ -1338,10 +1506,11 @@ components:
         otherAttributes:
           additionalProperties:
             type: string
+          type: object
     DocumentationType:
       example:
-        lang: lang
         value: value
+        lang: lang
       properties:
         value:
           type: string
@@ -1352,113 +1521,113 @@ components:
             namespace: http://www.w3.org/XML/1998/namespace
     ElementType:
       example:
-        conceptLink: conceptLink
-        valueScheme:
-          vocabulary:
-            valueLanguage: valueLanguage
-            enumeration:
-              item:
-              - conceptLink: conceptLink
-                appInfo: appInfo
-                value: value
-                otherAttributes:
-                  key: otherAttributes
-              - conceptLink: conceptLink
-                appInfo: appInfo
-                value: value
-                otherAttributes:
-                  key: otherAttributes
-              appinfo: appinfo
-            uri: uri
-            valueProperty: valueProperty
-          pattern: pattern
         documentation:
-        - lang: lang
-          value: value
-        - lang: lang
-          value: value
+        - value: value
+          lang: lang
+        - value: value
+          lang: lang
         attributeList:
           attribute:
-          - conceptLink: conceptLink
-            valueScheme: BOOLEAN
-            documentation:
-            - lang: lang
-              value: value
-            - lang: lang
-              value: value
-            name: name
+          - documentation:
+            - value: value
+              lang: lang
+            - value: value
+              lang: lang
             attributeValueScheme:
+              pattern: pattern
               vocabulary:
-                valueLanguage: valueLanguage
                 enumeration:
-                  item:
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
                   appinfo: appinfo
+                  item:
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
                 uri: uri
                 valueProperty: valueProperty
-              pattern: pattern
-            otherAttributes:
-              key: otherAttributes
-            required: true
+                valueLanguage: valueLanguage
             autoValue:
             - autoValue
             - autoValue
-          - conceptLink: conceptLink
-            valueScheme: BOOLEAN
-            documentation:
-            - lang: lang
-              value: value
-            - lang: lang
-              value: value
             name: name
-            attributeValueScheme:
-              vocabulary:
-                valueLanguage: valueLanguage
-                enumeration:
-                  item:
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  - conceptLink: conceptLink
-                    appInfo: appInfo
-                    value: value
-                    otherAttributes:
-                      key: otherAttributes
-                  appinfo: appinfo
-                uri: uri
-                valueProperty: valueProperty
-              pattern: pattern
+            conceptLink: conceptLink
+            valueScheme: BOOLEAN
+            required: true
             otherAttributes:
               key: otherAttributes
-            required: true
+          - documentation:
+            - value: value
+              lang: lang
+            - value: value
+              lang: lang
+            attributeValueScheme:
+              pattern: pattern
+              vocabulary:
+                enumeration:
+                  appinfo: appinfo
+                  item:
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                  - value: value
+                    conceptLink: conceptLink
+                    appInfo: appInfo
+                    otherAttributes:
+                      key: otherAttributes
+                uri: uri
+                valueProperty: valueProperty
+                valueLanguage: valueLanguage
             autoValue:
             - autoValue
             - autoValue
-        name: name
-        cardinalityMin:
-        - cardinalityMin
-        - cardinalityMin
-        valueSchemeAttribute: BOOLEAN
-        cardinalityMax:
-        - cardinalityMax
-        - cardinalityMax
-        otherAttributes:
-          key: otherAttributes
-        multilingual: true
+            name: name
+            conceptLink: conceptLink
+            valueScheme: BOOLEAN
+            required: true
+            otherAttributes:
+              key: otherAttributes
+        valueScheme:
+          pattern: pattern
+          vocabulary:
+            enumeration:
+              appinfo: appinfo
+              item:
+              - value: value
+                conceptLink: conceptLink
+                appInfo: appInfo
+                otherAttributes:
+                  key: otherAttributes
+              - value: value
+                conceptLink: conceptLink
+                appInfo: appInfo
+                otherAttributes:
+                  key: otherAttributes
+            uri: uri
+            valueProperty: valueProperty
+            valueLanguage: valueLanguage
         autoValue:
         - autoValue
         - autoValue
+        name: name
+        conceptLink: conceptLink
+        cardinalityMin:
+        - cardinalityMin
+        - cardinalityMin
+        cardinalityMax:
+        - cardinalityMax
+        - cardinalityMax
+        multilingual: true
+        otherAttributes:
+          key: otherAttributes
+        valueSchemeAttribute: BOOLEAN
       properties:
         documentation:
           items:
@@ -1466,6 +1635,7 @@ components:
           type: array
           xml:
             name: Documentation
+          default: null
         attributeList:
           $ref: "#/components/schemas/AttributeListType"
         valueScheme:
@@ -1478,6 +1648,7 @@ components:
           type: array
           xml:
             name: AutoValue
+          default: null
         name:
           type: string
           xml:
@@ -1494,6 +1665,7 @@ components:
           xml:
             attribute: true
             name: CardinalityMin
+          default: null
         cardinalityMax:
           items:
             type: string
@@ -1501,6 +1673,7 @@ components:
           xml:
             attribute: true
             name: CardinalityMax
+          default: null
         multilingual:
           type: boolean
           xml:
@@ -1509,6 +1682,7 @@ components:
         otherAttributes:
           additionalProperties:
             type: string
+          type: object
         valueSchemeAttribute:
           enum:
           - BOOLEAN
@@ -1529,18 +1703,18 @@ components:
             name: ValueScheme
     EnumerationType:
       example:
-        item:
-        - conceptLink: conceptLink
-          appInfo: appInfo
-          value: value
-          otherAttributes:
-            key: otherAttributes
-        - conceptLink: conceptLink
-          appInfo: appInfo
-          value: value
-          otherAttributes:
-            key: otherAttributes
         appinfo: appinfo
+        item:
+        - value: value
+          conceptLink: conceptLink
+          appInfo: appInfo
+          otherAttributes:
+            key: otherAttributes
+        - value: value
+          conceptLink: conceptLink
+          appInfo: appInfo
+          otherAttributes:
+            key: otherAttributes
       properties:
         appinfo:
           type: string
@@ -1548,17 +1722,18 @@ components:
           items:
             $ref: "#/components/schemas/ItemType"
           type: array
+          default: null
       required:
       - item
     Header:
       example:
-        successor: successor
-        name: name
-        derivedFrom: derivedFrom
-        description: description
         id: id
-        statusComment: statusComment
+        name: name
+        description: description
         status: status
+        statusComment: statusComment
+        successor: successor
+        derivedFrom: derivedFrom
       properties:
         id:
           type: string
@@ -1594,9 +1769,9 @@ components:
       - status
     ItemType:
       example:
+        value: value
         conceptLink: conceptLink
         appInfo: appInfo
-        value: value
         otherAttributes:
           key: otherAttributes
       properties:
@@ -1615,26 +1790,27 @@ components:
         otherAttributes:
           additionalProperties:
             type: string
+          type: object
     ValueSchemeType:
       example:
+        pattern: pattern
         vocabulary:
-          valueLanguage: valueLanguage
           enumeration:
-            item:
-            - conceptLink: conceptLink
-              appInfo: appInfo
-              value: value
-              otherAttributes:
-                key: otherAttributes
-            - conceptLink: conceptLink
-              appInfo: appInfo
-              value: value
-              otherAttributes:
-                key: otherAttributes
             appinfo: appinfo
+            item:
+            - value: value
+              conceptLink: conceptLink
+              appInfo: appInfo
+              otherAttributes:
+                key: otherAttributes
+            - value: value
+              conceptLink: conceptLink
+              appInfo: appInfo
+              otherAttributes:
+                key: otherAttributes
           uri: uri
           valueProperty: valueProperty
-        pattern: pattern
+          valueLanguage: valueLanguage
       properties:
         pattern:
           type: string
@@ -1642,22 +1818,22 @@ components:
           $ref: "#/components/schemas/VocabularyType"
     VocabularyType:
       example:
-        valueLanguage: valueLanguage
         enumeration:
-          item:
-          - conceptLink: conceptLink
-            appInfo: appInfo
-            value: value
-            otherAttributes:
-              key: otherAttributes
-          - conceptLink: conceptLink
-            appInfo: appInfo
-            value: value
-            otherAttributes:
-              key: otherAttributes
           appinfo: appinfo
+          item:
+          - value: value
+            conceptLink: conceptLink
+            appInfo: appInfo
+            otherAttributes:
+              key: otherAttributes
+          - value: value
+            conceptLink: conceptLink
+            appInfo: appInfo
+            otherAttributes:
+              key: otherAttributes
         uri: uri
         valueProperty: valueProperty
+        valueLanguage: valueLanguage
       properties:
         enumeration:
           $ref: "#/components/schemas/EnumerationType"
@@ -1678,23 +1854,23 @@ components:
             name: ValueLanguage
     ComponentDescription:
       example:
-        successor: successor
-        creatorName: creatorName
-        description: description
-        derivedfrom: derivedfrom
-        userId: userId
-        recommended: true
-        groupName: groupName
-        public: true
-        commentsCount: 0
-        domainName: domainName
         name: name
+        description: description
         registrationDate: 2000-01-23T04:56:07.000+00:00
-        isPublic: true
+        creatorName: creatorName
+        userId: userId
+        domainName: domainName
         href: href
+        groupName: groupName
+        status: development
+        derivedfrom: derivedfrom
+        successor: successor
+        commentsCount: 0
+        recommended: true
+        public: true
         id: id
         showInEditor: true
-        status: development
+        isPublic: true
       properties:
         name:
           type: string
@@ -1743,43 +1919,44 @@ components:
     ComponentsList:
       example:
         components:
-        - successor: successor
-          creatorName: creatorName
+        - name: name
           description: description
-          derivedfrom: derivedfrom
-          userId: userId
-          recommended: true
-          groupName: groupName
-          public: true
-          commentsCount: 0
-          domainName: domainName
-          name: name
           registrationDate: 2000-01-23T04:56:07.000+00:00
-          isPublic: true
+          creatorName: creatorName
+          userId: userId
+          domainName: domainName
           href: href
+          groupName: groupName
+          status: development
+          derivedfrom: derivedfrom
+          successor: successor
+          commentsCount: 0
+          recommended: true
+          public: true
           id: id
           showInEditor: true
-          status: development
-        - successor: successor
-          creatorName: creatorName
-          description: description
-          derivedfrom: derivedfrom
-          userId: userId
-          recommended: true
-          groupName: groupName
-          public: true
-          commentsCount: 0
-          domainName: domainName
-          name: name
-          registrationDate: 2000-01-23T04:56:07.000+00:00
           isPublic: true
+        - name: name
+          description: description
+          registrationDate: 2000-01-23T04:56:07.000+00:00
+          creatorName: creatorName
+          userId: userId
+          domainName: domainName
           href: href
+          groupName: groupName
+          status: development
+          derivedfrom: derivedfrom
+          successor: successor
+          commentsCount: 0
+          recommended: true
+          public: true
           id: id
           showInEditor: true
-          status: development
+          isPublic: true
       properties:
         components:
           items:
             $ref: "#/components/schemas/ComponentDescription"
           type: array
+          default: null
 

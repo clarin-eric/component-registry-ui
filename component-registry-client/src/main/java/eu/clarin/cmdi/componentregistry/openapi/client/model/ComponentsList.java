@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
@@ -37,7 +38,7 @@ import io.github.threetenjaxb.core.*;
 @JsonPropertyOrder({
   ComponentsList.JSON_PROPERTY_COMPONENTS
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]", comments = "Generator version: 7.14.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
 @XmlRootElement(name = "ComponentsList")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ComponentsList")
@@ -69,7 +70,7 @@ public class ComponentsList {
    * @return components
    */
   @jakarta.annotation.Nullable
-  @JsonProperty(JSON_PROPERTY_COMPONENTS)
+  @JsonProperty(value = JSON_PROPERTY_COMPONENTS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "componentDescription")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -79,7 +80,7 @@ public class ComponentsList {
   }
 
 
-  @JsonProperty(JSON_PROPERTY_COMPONENTS)
+  @JsonProperty(value = JSON_PROPERTY_COMPONENTS, required = false)
   @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
   @JacksonXmlProperty(localName = "componentDescription")
   @JacksonXmlElementWrapper(useWrapping = false)
@@ -119,10 +120,7 @@ public class ComponentsList {
    * (except the first line).
    */
   private String toIndentedString(Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
+    return o == null ? "null" : o.toString().replace("\n", "\n    ");
   }
 
 }

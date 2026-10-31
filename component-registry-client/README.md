@@ -4,9 +4,9 @@ Component Registry API
 
 - API version: 1.0
 
-- Build date: 2026-03-12T17:22:45.395484+01:00[Europe/Warsaw]
+- Build date: 2026-11-06T19:31:18.460851+02:00[Europe/Riga]
 
-- Generator version: 7.14.0
+- Generator version: 7.25.0
 
 Components and profiles registry for the Component Metadata Infrastructure
 
@@ -125,6 +125,8 @@ Class | Method | HTTP request | Description
 *ItemsApi* | [**getItem**](docs/ItemsApi.md#getItem) | **GET** /registry/items/{componentId} | Get the description of a profile or component
 *ItemsApi* | [**getItemSpec**](docs/ItemsApi.md#getItemSpec) | **GET** /registry/items/{componentId}/spec | Get the specification for the profile or component
 *ItemsApi* | [**getItems**](docs/ItemsApi.md#getItems) | **GET** /registry/items | Get a filtered list of descriptions of profiles and/or components
+*UserApi* | [**getInfo**](docs/UserApi.md#getInfo) | **GET** /user | Info for a user, normally the current user
+*UserApi* | [**getTeams**](docs/UserApi.md#getTeams) | **GET** /user/teams | Get a user&#39;s teams
 
 
 ## Documentation for Models
@@ -143,6 +145,8 @@ Class | Method | HTTP request | Description
  - [ItemType](docs/ItemType.md)
  - [ProfileDescription](docs/ProfileDescription.md)
  - [ProfilesList](docs/ProfilesList.md)
+ - [RegistryUser](docs/RegistryUser.md)
+ - [UserGroup](docs/UserGroup.md)
  - [ValueSchemeType](docs/ValueSchemeType.md)
  - [VocabularyType](docs/VocabularyType.md)
 

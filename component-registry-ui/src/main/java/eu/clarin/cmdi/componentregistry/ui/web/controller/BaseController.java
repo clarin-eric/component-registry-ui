@@ -19,6 +19,9 @@ package eu.clarin.cmdi.componentregistry.ui.web.controller;
 import com.google.common.base.Strings;
 import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsApi;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.BaseDescription;
+import static eu.clarin.cmdi.componentregistry.ui.web.controller.ComponentBrowserController.ITEM_GROUP_QUERY_PARAM;
+import static eu.clarin.cmdi.componentregistry.ui.web.controller.ComponentBrowserController.ITEM_SPACE_DEFAULT;
+import static eu.clarin.cmdi.componentregistry.ui.web.controller.ComponentBrowserController.ITEM_SPACE_QUERY_PARAM;
 import static eu.clarin.cmdi.componentregistry.ui.web.controller.ComponentBrowserController.ITEM_STATUS_DEFAULT;
 import static eu.clarin.cmdi.componentregistry.ui.web.controller.ComponentBrowserController.ITEM_STATUS_QUERY_PARAM;
 import static eu.clarin.cmdi.componentregistry.ui.web.controller.ComponentBrowserController.ITEM_TYPE_COMPONENT;
@@ -63,10 +66,15 @@ public abstract class BaseController {
         model.addAttribute("fields", ITEM_TABLE_FIELDS);
         model.addAttribute("selectedItems", params.get(SELECTED_ITEM_QUERY_PARAM));
         model.addAttribute("textFilter", params.getFirst(TEXT_FILTER_QUERY_PARAM));
+        model.addAttribute("space", getFirstOrDefault(params, ITEM_SPACE_QUERY_PARAM, ITEM_SPACE_DEFAULT));
         model.addAttribute("type", getFirstOrDefault(params, ITEM_TYPE_QUERY_PARAM, ITEM_TYPE_DEFAULT));
         model.addAttribute("status", params.getOrDefault(ITEM_STATUS_QUERY_PARAM, ITEM_STATUS_DEFAULT));
         model.addAttribute("sortedBy", getFirstOrDefault(params, SORT_BY_QUERY_PARAM, SORT_BY_DEFAULT));
         model.addAttribute("sortedDirection", getFirstOrDefault(params, SORT_DIRECTION_QUERY_PARAM, SORT_DIRECTION_DEFAULT));
+
+        //no default for group
+        model.addAttribute("group", getFirstOrDefault(params, ITEM_GROUP_QUERY_PARAM, null));
+
     }
 
     protected List<BaseDescription> getItemsForRequest(ItemsApi api, MultiValueMap<String, String> params) {
@@ -79,11 +87,12 @@ public abstract class BaseController {
         final List<String> status = params.getOrDefault(ITEM_STATUS_QUERY_PARAM, ITEM_STATUS_DEFAULT);
         final String sortBy = getFirstOrDefault(params, SORT_BY_QUERY_PARAM, SORT_BY_DEFAULT);
         final String sortDirection = getFirstOrDefault(params, SORT_DIRECTION_QUERY_PARAM, SORT_DIRECTION_DEFAULT);
+        final Long groupId = Optional.ofNullable(params.getFirst(ITEM_GROUP_QUERY_PARAM)).map(Long::parseLong).orElse(null);
         return switch (type) {
             case ITEM_TYPE_COMPONENT ->
-                api.getItems("component", status, sortBy, sortDirection); //TODO: pass text filter
+                api.getItems("component", groupId, status, sortBy, sortDirection); //TODO: pass text filter
             case ITEM_TYPE_PROFILE ->
-                api.getItems("profile", status, sortBy, sortDirection); //TODO: pass text filter
+                api.getItems("profile", groupId, status, sortBy, sortDirection); //TODO: pass text filter
             default ->
                 Collections.emptyList();
         };
