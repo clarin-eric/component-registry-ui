@@ -16,7 +16,6 @@
  */
 package eu.clarin.cmdi.componentregistry.ui.web.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.common.base.Strings;
 import com.google.common.collect.ImmutableMap;
 import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsApi;
@@ -57,6 +56,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import tools.jackson.core.JacksonException;
 
 /**
  *
@@ -117,7 +117,7 @@ public class EditorController extends BaseController {
             @RequestParam String operation,
             @RequestParam String path,
             @RequestParam Map<String, String> params,
-            Model model) throws JsonProcessingException, ComponentSpecTransformationException {
+            Model model) throws JacksonException, ComponentSpecTransformationException {
         final ComponentSpec transformedSpec = transform(operation, spec, path, params);
 
         model.addAttribute("componentId", spec.getHeader().getId());
@@ -170,7 +170,7 @@ public class EditorController extends BaseController {
             }
 
             return "/editor/fragments/valueScheme :: valueSchemeEditor";
-        } catch (ComponentSpecTransformationException | JsonProcessingException ex) {
+        } catch (ComponentSpecTransformationException | JacksonException ex) {
             log.error("Error while extracting element from spec at path " + path);
             throw new RuntimeException(ex);
         }
@@ -313,11 +313,11 @@ public class EditorController extends BaseController {
         return "/editor/fragments/valueScheme :: valueScheme";
     }
 
-    private ComponentSpec transform(String operation, ComponentSpec spec, String path) throws ComponentSpecTransformationException, JsonProcessingException {
+    private ComponentSpec transform(String operation, ComponentSpec spec, String path) throws ComponentSpecTransformationException, JacksonException {
         return transform(operation, spec, path, Collections.emptyMap());
     }
 
-    private ComponentSpec transform(String operation, ComponentSpec spec, String path, Map<String, String> params) throws ComponentSpecTransformationException, JsonProcessingException {
+    private ComponentSpec transform(String operation, ComponentSpec spec, String path, Map<String, String> params) throws ComponentSpecTransformationException, JacksonException {
         return switch (operation) {
             case NOOP ->
                 spec;

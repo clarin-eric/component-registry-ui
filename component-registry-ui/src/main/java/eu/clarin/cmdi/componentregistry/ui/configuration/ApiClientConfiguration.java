@@ -19,10 +19,17 @@ package eu.clarin.cmdi.componentregistry.ui.configuration;
 import eu.clarin.cmdi.componentregistry.openapi.client.ApiClient;
 import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsApi;
 import eu.clarin.cmdi.componentregistry.openapi.client.api.UserApi;
+import eu.clarin.cmdi.componentregistry.openapi.client.auth.HttpBasicAuth;
+import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.util.MultiValueMap;
 
 /**
  *
@@ -34,10 +41,14 @@ public class ApiClientConfiguration {
 
     @Autowired
     ApiClientConfigurationProperties clientConfig;
+    
+    public ApiClient apiClient() {
+        return new ApiClient();
+    }
 
     @Bean
     public ItemsApi itemsApi() {
-        final ItemsApi api = new ItemsApi();
+        final ItemsApi api = new ItemsApi(apiClient());
 
         log.info("Applying configuration to API client");
         api.getApiClient().setBasePath(clientConfig.getBasePath());
@@ -47,17 +58,12 @@ public class ApiClientConfiguration {
 
     @Bean
     public UserApi userApi() {
-        final UserApi api = new UserApi();
+        final UserApi api = new UserApi(apiClient());
 
         log.info("Applying configuration to API client");
         api.getApiClient().setBasePath(clientConfig.getBasePath());
         //TODO: apply addutional (optional) configuration properties – username, password, user agent...
         return api;
-    }
-
-    @Bean
-    public ApiClient apiClient() {
-        return itemsApi().getApiClient();
     }
 
 }
