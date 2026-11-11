@@ -18,14 +18,13 @@ import java.util.Arrays;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.ComponentType;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.Header;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.dataformat.xml.annotation.*;
+import tools.jackson.dataformat.xml.annotation.*;
 import jakarta.xml.bind.annotation.*;
 import jakarta.xml.bind.annotation.adapters.*;
 import io.github.threetenjaxb.core.*;
@@ -37,10 +36,10 @@ import io.github.threetenjaxb.core.*;
   ComponentSpec.JSON_PROPERTY_HEADER,
   ComponentSpec.JSON_PROPERTY_COMPONENT,
   ComponentSpec.JSON_PROPERTY_IS_PROFILE,
-  ComponentSpec.JSON_PROPERTY_CMDORIGINAL_VERSION,
-  ComponentSpec.JSON_PROPERTY_CMDVERSION
+  ComponentSpec.JSON_PROPERTY_CMDVERSION,
+  ComponentSpec.JSON_PROPERTY_CMDORIGINAL_VERSION
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-11T17:46:06.664270+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
 @XmlRootElement(name = "ComponentSpec")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ComponentSpec")
@@ -60,15 +59,15 @@ public class ComponentSpec {
   @jakarta.annotation.Nullable
   private Boolean isProfile;
 
-  public static final String JSON_PROPERTY_CMDORIGINAL_VERSION = "cmdoriginalVersion";
-  @XmlElement(name = "cmdoriginalVersion")
-  @jakarta.annotation.Nullable
-  private String cmdoriginalVersion;
-
   public static final String JSON_PROPERTY_CMDVERSION = "cmdversion";
   @XmlElement(name = "cmdversion")
   @jakarta.annotation.Nullable
   private String cmdversion;
+
+  public static final String JSON_PROPERTY_CMDORIGINAL_VERSION = "cmdoriginalVersion";
+  @XmlElement(name = "cmdoriginalVersion")
+  @jakarta.annotation.Nullable
+  private String cmdoriginalVersion;
 
   public ComponentSpec() {
   }
@@ -154,33 +153,6 @@ public class ComponentSpec {
     this.isProfile = isProfile;
   }
 
-  public ComponentSpec cmdoriginalVersion(@jakarta.annotation.Nullable String cmdoriginalVersion) {
-    
-    this.cmdoriginalVersion = cmdoriginalVersion;
-    return this;
-  }
-
-  /**
-   * Get cmdoriginalVersion
-   * @return cmdoriginalVersion
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_CMDORIGINAL_VERSION, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  @JacksonXmlProperty(localName = "cmdoriginalVersion")
-
-  public String getCmdoriginalVersion() {
-    return cmdoriginalVersion;
-  }
-
-
-  @JsonProperty(value = JSON_PROPERTY_CMDORIGINAL_VERSION, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  @JacksonXmlProperty(localName = "cmdoriginalVersion")
-  public void setCmdoriginalVersion(@jakarta.annotation.Nullable String cmdoriginalVersion) {
-    this.cmdoriginalVersion = cmdoriginalVersion;
-  }
-
   public ComponentSpec cmdversion(@jakarta.annotation.Nullable String cmdversion) {
     
     this.cmdversion = cmdversion;
@@ -208,6 +180,33 @@ public class ComponentSpec {
     this.cmdversion = cmdversion;
   }
 
+  public ComponentSpec cmdoriginalVersion(@jakarta.annotation.Nullable String cmdoriginalVersion) {
+    
+    this.cmdoriginalVersion = cmdoriginalVersion;
+    return this;
+  }
+
+  /**
+   * Get cmdoriginalVersion
+   * @return cmdoriginalVersion
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_CMDORIGINAL_VERSION, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JacksonXmlProperty(localName = "cmdoriginalVersion")
+
+  public String getCmdoriginalVersion() {
+    return cmdoriginalVersion;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_CMDORIGINAL_VERSION, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JacksonXmlProperty(localName = "cmdoriginalVersion")
+  public void setCmdoriginalVersion(@jakarta.annotation.Nullable String cmdoriginalVersion) {
+    this.cmdoriginalVersion = cmdoriginalVersion;
+  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -221,13 +220,13 @@ public class ComponentSpec {
     return Objects.equals(this.header, componentSpec.header) &&
         Objects.equals(this.component, componentSpec.component) &&
         Objects.equals(this.isProfile, componentSpec.isProfile) &&
-        Objects.equals(this.cmdoriginalVersion, componentSpec.cmdoriginalVersion) &&
-        Objects.equals(this.cmdversion, componentSpec.cmdversion);
+        Objects.equals(this.cmdversion, componentSpec.cmdversion) &&
+        Objects.equals(this.cmdoriginalVersion, componentSpec.cmdoriginalVersion);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(header, component, isProfile, cmdoriginalVersion, cmdversion);
+    return Objects.hash(header, component, isProfile, cmdversion, cmdoriginalVersion);
   }
 
   @Override
@@ -237,8 +236,8 @@ public class ComponentSpec {
     sb.append("    header: ").append(toIndentedString(header)).append("\n");
     sb.append("    component: ").append(toIndentedString(component)).append("\n");
     sb.append("    isProfile: ").append(toIndentedString(isProfile)).append("\n");
-    sb.append("    cmdoriginalVersion: ").append(toIndentedString(cmdoriginalVersion)).append("\n");
     sb.append("    cmdversion: ").append(toIndentedString(cmdversion)).append("\n");
+    sb.append("    cmdoriginalVersion: ").append(toIndentedString(cmdoriginalVersion)).append("\n");
     sb.append("}");
     return sb.toString();
   }

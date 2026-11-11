@@ -1119,8 +1119,8 @@ components:
           otherAttributes:
             key: otherAttributes
         isProfile: true
-        cmdoriginalVersion: cmdoriginalVersion
         cmdversion: cmdversion
+        cmdoriginalVersion: cmdoriginalVersion
       properties:
         header:
           $ref: "#/components/schemas/Header"
@@ -1130,9 +1130,9 @@ components:
           type: boolean
           xml:
             attribute: true
-        cmdoriginalVersion:
-          type: string
         cmdversion:
+          type: string
+        cmdoriginalVersion:
           type: string
       required:
       - component

@@ -13,19 +13,19 @@
 
 package eu.clarin.cmdi.componentregistry.openapi.client;
 
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
+import tools.jackson.dataformat.xml.XmlMapper;
+import tools.jackson.dataformat.xml.XmlWriteFeature;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import tools.jackson.databind.DeserializationFeature;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.json.JsonMapper;
+import org.springframework.http.converter.HttpMessageConverters;
+import org.springframework.http.converter.json.JacksonJsonHttpMessageConverter;
+import org.springframework.http.converter.xml.JacksonXmlHttpMessageConverter;
 
 import java.util.function.Consumer;
-import org.openapitools.jackson.nullable.JsonNullableModule;
+import org.openapitools.jackson.nullable.JsonNullableJackson3Module;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -66,17 +66,17 @@ import eu.clarin.cmdi.componentregistry.openapi.client.auth.HttpBasicAuth;
 import eu.clarin.cmdi.componentregistry.openapi.client.auth.HttpBearerAuth;
 import eu.clarin.cmdi.componentregistry.openapi.client.auth.ApiKeyAuth;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-11T17:46:06.664270+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
 public class ApiClient extends JavaTimeFormatter {
     public enum CollectionFormat {
         CSV(","), TSV("\t"), SSV(" "), PIPES("|"), MULTI(null);
 
-        protected final String separator;
+        private final String separator;
         CollectionFormat(String separator) {
             this.separator = separator;
         }
 
-        protected String collectionToString(Collection<?> collection) {
+        public String collectionToString(Collection<?> collection) {
             return StringUtils.collectionToDelimitedString(collection, separator);
         }
     }
@@ -97,7 +97,7 @@ public class ApiClient extends JavaTimeFormatter {
 
     protected final RestClient restClient;
     protected final DateFormat dateFormat;
-    protected final ObjectMapper mapper;
+    protected final JsonMapper mapper;
     protected Map<String, Authentication> authentications;
 
     /**
@@ -116,12 +116,12 @@ public class ApiClient extends JavaTimeFormatter {
         this(restClient, createDefaultDateFormat());
     }
 
-    public ApiClient(ObjectMapper mapper, DateFormat format) {
+    public ApiClient(JsonMapper mapper, DateFormat format) {
         this(null, mapper, format);
     }
 
-    public ApiClient(RestClient restClient, ObjectMapper mapper, DateFormat format) {
-        this.mapper = mapper.copy();
+    public ApiClient(RestClient restClient, JsonMapper mapper, DateFormat format) {
+        this.mapper = mapper;
         this.restClient = Optional.ofNullable(restClient).orElseGet(() -> buildRestClient(this.mapper));
         this.dateFormat = format;
         this.init();
@@ -137,17 +137,15 @@ public class ApiClient extends JavaTimeFormatter {
         return dateFormat;
     }
 
-    public static ObjectMapper createDefaultMapper(@Nullable DateFormat dateFormat) {
+    public static JsonMapper createDefaultMapper(@Nullable DateFormat dateFormat) {
         if (null == dateFormat) {
             dateFormat = createDefaultDateFormat();
         }
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.setDateFormat(dateFormat);
-        mapper.registerModule(new JavaTimeModule());
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        JsonNullableModule jnm = new JsonNullableModule();
-        mapper.registerModule(jnm);
-        return mapper;
+        return JsonMapper.builder()
+            .defaultDateFormat(dateFormat)
+            .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
+            .addModule(new JsonNullableJackson3Module())
+            .build();
     }
 
     protected void init() {
@@ -159,20 +157,21 @@ public class ApiClient extends JavaTimeFormatter {
 
     /**
     * Build the RestClientBuilder used to make RestClient.
-    * @param mapper ObjectMapper used for serialize/deserialize
+    * @param mapper JsonMapper used for serialize/deserialize
     * @return RestClient
     */
-    public static RestClient.Builder buildRestClientBuilder(ObjectMapper mapper) {
-        XmlMapper xmlMapper = new XmlMapper();
-        xmlMapper.configure(ToXmlGenerator.Feature.WRITE_XML_DECLARATION, true);
-        xmlMapper.registerModule(new JsonNullableModule());
+    public static RestClient.Builder buildRestClientBuilder(JsonMapper mapper) {
+        XmlMapper xmlMapper = XmlMapper.builder()
+                .enable(XmlWriteFeature.WRITE_XML_DECLARATION)
+                .addModule(new JsonNullableJackson3Module())
+                .build();
 
-        Consumer<List<HttpMessageConverter<?>>> messageConverters = converters -> {
-            converters.add(0, new MappingJackson2HttpMessageConverter(mapper));
-            converters.add(0, new MappingJackson2XmlHttpMessageConverter(xmlMapper));
+        Consumer<HttpMessageConverters.ClientBuilder> messageConverters = builder -> {
+            builder.registerDefaults().withJsonConverter(new JacksonJsonHttpMessageConverter(mapper));
+            builder.withXmlConverter(new JacksonXmlHttpMessageConverter(xmlMapper));
         };
 
-        return RestClient.builder().messageConverters(messageConverters);
+        return RestClient.builder().configureMessageConverters(messageConverters);
     }
 
     /**
@@ -185,10 +184,10 @@ public class ApiClient extends JavaTimeFormatter {
 
     /**
      * Build the RestClient used to make HTTP requests.
-     * @param mapper ObjectMapper used for serialize/deserialize
+     * @param mapper JsonMapper used for serialize/deserialize
      * @return RestClient
      */
-    public static RestClient buildRestClient(ObjectMapper mapper) {
+    public static RestClient buildRestClient(JsonMapper mapper) {
         return buildRestClientBuilder(mapper).build();
     }
 
@@ -432,10 +431,10 @@ public class ApiClient extends JavaTimeFormatter {
     }
 
     /**
-     * Get the ObjectMapper used to make HTTP requests.
-     * @return ObjectMapper mapper
+     * Get the JsonMapper used to make HTTP requests.
+     * @return JsonMapper mapper
      */
-    public ObjectMapper getObjectMapper() {
+    public JsonMapper getJsonMapper() {
         return mapper;
     }
 
@@ -487,7 +486,7 @@ public class ApiClient extends JavaTimeFormatter {
         } else {
             try {
                 return parameterToMultiValueMap(collectionFormat, name, mapper.writeValueAsString(value));
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 throw exceptionProvider.jacksonException(e);
             }
         }
@@ -496,11 +495,11 @@ public class ApiClient extends JavaTimeFormatter {
         for(Object o : valueCollection) {
             try {
                 values.add(mapper.writeValueAsString(o));
-            } catch (JsonProcessingException e) {
+            } catch (JacksonException e) {
                 throw exceptionProvider.jacksonException(e);
             }
         }
-        return parameterToMultiValueMap(collectionFormat, name, "[" + StringUtils.collectionToDelimitedString(values, collectionFormat.separator) + "]");
+        return parameterToMultiValueMap(collectionFormat, name, "[" + collectionFormat.collectionToString(values) + "]");
     }
 
     /**

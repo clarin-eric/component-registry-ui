@@ -16,7 +16,7 @@ package eu.clarin.cmdi.componentregistry.openapi.client.auth;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.MultiValueMap;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-06T19:31:18.460851+02:00[Europe/Riga]", comments = "Generator version: 7.25.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-11T17:46:06.664270+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
 public interface Authentication {
     /**
      * Apply authentication settings to header and / or query parameters.

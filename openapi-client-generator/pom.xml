@@ -31,7 +31,7 @@
                 <!-- See https://github.com/OpenAPITools/openapi-generator -->
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
-                <version>7.25.0</version>
+                <version>7.26.0</version>
                 <executions>
                     <execution>
                         <phase>initialize</phase>
@@ -53,6 +53,7 @@
                                 <library>restclient</library>
                                 <useJakartaEe>true</useJakartaEe>
                                 <useSpringBoot4>true</useSpringBoot4>
+                                <useJackson3>true</useJackson3>
                                 <withXml>true</withXml>
                             </configOptions>
                         </configuration>
