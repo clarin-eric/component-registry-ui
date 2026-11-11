@@ -67,10 +67,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     Public
                 </a>
 
-                <ul class="dropdown-menu">
+                <ul class="dropdown-menu" sec:authorize="!isAuthenticated()">
                     <li><a class="dropdown-item disabled" href="#">Private</a></li>
-                    <li><a class="dropdown-item disabled" href="#">My team</a></li>
-                    <li><a class="dropdown-item disabled" href="#">Another team</a></li>
+                </ul>
+
+                <ul class="dropdown-menu" sec:authorize="isAuthenticated()">
+                    <li>
+                        <a th:href="@{/browser/(type=${type}, space='private')}"
+                           class="dropdown-item">Private</a>
+                    </li>
+                    <li th:each="team : ${teams}">
+                        <a class="dropdown-item" href="#">My team</a>
+                    </li>
                 </ul>
             </div>
         </th:block>

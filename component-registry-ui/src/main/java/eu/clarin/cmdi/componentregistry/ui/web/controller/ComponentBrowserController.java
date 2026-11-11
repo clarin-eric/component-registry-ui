@@ -18,13 +18,18 @@ package eu.clarin.cmdi.componentregistry.ui.web.controller;
 
 import com.google.common.collect.ImmutableList;
 import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsApi;
+import eu.clarin.cmdi.componentregistry.openapi.client.api.UserApi;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.BaseDescription;
 import eu.clarin.cmdi.componentregistry.openapi.client.model.ComponentSpec;
+import eu.clarin.cmdi.componentregistry.openapi.client.model.RegistryUser;
+import eu.clarin.cmdi.componentregistry.openapi.client.model.UserGroup;
 import static eu.clarin.cmdi.componentregistry.ui.HtmxUtils.isHtmxRequest;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
@@ -76,20 +81,23 @@ public class ComponentBrowserController extends BaseController {
     public static final String SELECTED_ITEM_QUERY_PARAM = "item";
 
     private final ItemsApi api;
+    private final UserApi users;
 
     @Autowired
-    public ComponentBrowserController(ItemsApi api) {
+    public ComponentBrowserController(ItemsApi api, UserApi users) {
         this.api = api;
+        this.users = users;
     }
 
     @GetMapping(path = "/")
-    public String browser(@RequestParam MultiValueMap<String, String> params, Model model) {
+    public String browser(@RequestParam MultiValueMap<String, String> params, @AuthenticationPrincipal User principal, Model model) {
         setCommonItemModelAttributes(params, model);
+        setUserTeamsInModel(principal, model);
         return "browser/browser";
     }
 
     @GetMapping(path = "/items")
-    public String items(@RequestParam MultiValueMap<String, String> params, Model model) {
+    public String items(@RequestParam MultiValueMap<String, String> params, @AuthenticationPrincipal User principal, Model model) {
         List<BaseDescription> items = getItemsForRequest(api, params);
 
         setCommonItemModelAttributes(params, model);
@@ -104,8 +112,8 @@ public class ComponentBrowserController extends BaseController {
     }
 
     @GetMapping(path = "/items/{id}")
-    public List<ModelAndView> itemDetails(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model,
-            @PathVariable String id) {
+    public List<ModelAndView> itemDetails(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers,
+            @AuthenticationPrincipal User principal, Model model, @PathVariable String id) {
         //get item description from API
         final BaseDescription item = api.getItem(id);
         //get spec from API
@@ -121,10 +129,10 @@ public class ComponentBrowserController extends BaseController {
         if (isHtmxRequest(headers)) {
             // return item preview + item actions
             return ImmutableList.of(
-                    partialResponse(headers, params, model, "browser/browserItemsOptions :: #selected-item-actions"),
-                    partialResponse(headers, params, model, "browser/items/itemPreview :: preview"));
+                    partialResponse(headers, params, principal, model, "browser/browserItemsOptions :: #selected-item-actions"),
+                    partialResponse(headers, params, principal, model, "browser/items/itemPreview :: preview"));
         } else {
-            return ImmutableList.of(partialResponse(headers, params, model, "browser/items/itemPreview :: preview", true));
+            return ImmutableList.of(partialResponse(headers, params, principal, model, "browser/items/itemPreview :: preview", true));
         }
     }
 
@@ -155,12 +163,13 @@ public class ComponentBrowserController extends BaseController {
      *
      * @param params
      * @param headers
+     * @param principal
      * @param model
      * @return
      */
     @GetMapping(path = "/main")
-    public ModelAndView main(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model) {
-        return partialResponse(headers, params, model, "browser/browser :: #browser-main", false);
+    public ModelAndView main(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, @AuthenticationPrincipal User principal, Model model) {
+        return partialResponse(headers, params, principal, model, "browser/browser :: #browser-main", false);
     }
 
     /**
@@ -168,12 +177,13 @@ public class ComponentBrowserController extends BaseController {
      *
      * @param params
      * @param headers
+     * @param principal
      * @param model
      * @return
      */
     @GetMapping(path = "/itemsContainer")
-    public ModelAndView itemsContainer(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model) {
-        return partialResponse(headers, params, model, "browser/browserItemsContainer :: #items-container");
+    public ModelAndView itemsContainer(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, @AuthenticationPrincipal User principal, Model model) {
+        return partialResponse(headers, params, principal, model, "browser/browserItemsContainer :: #items-container");
     }
 
     /**
@@ -181,16 +191,17 @@ public class ComponentBrowserController extends BaseController {
      *
      * @param params
      * @param headers
+     * @param principal
      * @param model
      * @return
      */
     @GetMapping(path = "/itemActions")
-    public ModelAndView itemActions(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, Model model) {
-        return partialResponse(headers, params, model, "browser/browserItemsOptions :: #selected-item-actions");
+    public ModelAndView itemActions(@RequestParam MultiValueMap<String, String> params, @RequestHeader Map<String, String> headers, @AuthenticationPrincipal User principal, Model model) {
+        return partialResponse(headers, params, principal, model, "browser/browserItemsOptions :: #selected-item-actions");
     }
 
-    private ModelAndView partialResponse(Map<String, String> headers, MultiValueMap<String, String> params, Model model, final String fragment) {
-        return partialResponse(headers, params, model, fragment, false);
+    private ModelAndView partialResponse(Map<String, String> headers, MultiValueMap<String, String> params, @AuthenticationPrincipal User authPrincipal, Model model, final String fragment) {
+        return partialResponse(headers, params, authPrincipal, model, fragment, false);
     }
 
     /**
@@ -204,13 +215,24 @@ public class ComponentBrowserController extends BaseController {
      * @return
      * @throws RestClientResponseException
      */
-    private ModelAndView partialResponse(Map<String, String> headers, MultiValueMap<String, String> params, Model model, final String fragment, boolean forcePartial) {
+    private ModelAndView partialResponse(Map<String, String> headers, MultiValueMap<String, String> params, Object authPrincipal, Model model, final String fragment, boolean forcePartial) {
         if (forcePartial || isHtmxRequest(headers)) {
             setCommonItemModelAttributes(params, model);
+            setUserTeamsInModel(authPrincipal, model);
             return new ModelAndView(fragment, model.asMap());
         } else {
             // not an HTMX request 
             return new ModelAndView("redirect:/", params);
+        }
+    }
+    
+    private void setUserTeamsInModel(Object authPrincipal, Model model) {
+        if(authPrincipal instanceof User user) {
+            RegistryUser userInfo = users.getInfo(null, user.getUsername());
+            if(userInfo != null) {
+                final List<UserGroup> teams = users.getTeams(userInfo.getId());
+                model.addAttribute("userTeams", teams);
+            }
         }
     }
 

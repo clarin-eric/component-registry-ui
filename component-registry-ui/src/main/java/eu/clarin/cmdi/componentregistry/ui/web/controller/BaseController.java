@@ -41,6 +41,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 
@@ -74,7 +75,6 @@ public abstract class BaseController {
 
         //no default for group
         model.addAttribute("group", getFirstOrDefault(params, ITEM_GROUP_QUERY_PARAM, null));
-
     }
 
     protected List<BaseDescription> getItemsForRequest(ItemsApi api, MultiValueMap<String, String> params) {

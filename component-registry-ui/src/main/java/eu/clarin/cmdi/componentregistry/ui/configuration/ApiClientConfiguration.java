@@ -18,6 +18,7 @@ package eu.clarin.cmdi.componentregistry.ui.configuration;
 
 import eu.clarin.cmdi.componentregistry.openapi.client.ApiClient;
 import eu.clarin.cmdi.componentregistry.openapi.client.api.ItemsApi;
+import eu.clarin.cmdi.componentregistry.openapi.client.api.UserApi;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -37,6 +38,16 @@ public class ApiClientConfiguration {
     @Bean
     public ItemsApi itemsApi() {
         final ItemsApi api = new ItemsApi();
+
+        log.info("Applying configuration to API client");
+        api.getApiClient().setBasePath(clientConfig.getBasePath());
+        //TODO: apply addutional (optional) configuration properties – username, password, user agent...
+        return api;
+    }
+
+    @Bean
+    public UserApi userApi() {
+        final UserApi api = new UserApi();
 
         log.info("Applying configuration to API client");
         api.getApiClient().setBasePath(clientConfig.getBasePath());
