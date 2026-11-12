@@ -30,5 +30,7 @@ import org.springframework.context.annotation.Configuration;
 public class ApiClientConfigurationProperties {
 
     private String basePath = "http://localhost:8080";
+    
+    private String authForwardPassword = "";
 
 }
