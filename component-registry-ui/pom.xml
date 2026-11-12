@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>4.1.2</version>
+        <version>4.2.0-M2</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     
@@ -22,7 +22,12 @@
         <start-class>eu.clarin.cmdi.componentregistry.ui.ComponentRegistryUiApplication</start-class>
         <java.version>21</java.version>
         <netbeans.hint.license>gpl30</netbeans.hint.license>                                              
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>      
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- WebJAR versions (these need to be properties so that they can be filtered into the markup) -->
+        <bootstrap.version>5.3.8</bootstrap.version>
+        <font-awesome.version>7.0.1</font-awesome.version>
+        <htmx.version>2.0.11</htmx.version>
+        <alpinejs.version>3.17.4</alpinejs.version> 
     </properties>
     
     <dependencies>
@@ -83,40 +88,40 @@
             <version>1.14.1</version>
         </dependency>
         
-        <!-- Web -->
-        
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>webjars-locator</artifactId>
-            <version>0.52</version>
-        </dependency>
-        
+        <!-- Web -->        
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>bootstrap</artifactId>
-            <version>5.3.8</version>
+            <version>${bootstrap.version}</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>font-awesome</artifactId>
-            <version>7.0.1</version>
+            <version>${font-awesome.version}</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>htmx.org</artifactId>
-            <version>2.0.11</version>
+            <version>${htmx.version}</version>
         </dependency>
         
         <dependency>
             <groupId>org.webjars.npm</groupId>
             <artifactId>alpinejs</artifactId>
-            <version>3.17.4</version>
+            <version>${alpinejs.version}</version>
         </dependency>
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -158,6 +163,16 @@
                                 <version>${lombok.version}</version>
                             </path>
                         </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-resources-plugin</artifactId>
+                    <configuration>
+                        <delimiters>
+                            <!-- Override default delimiter because it doesn't work well in Thymeleaf templates -->
+                            <delimiter>[[[[*]]]]</delimiter>
+                        </delimiters>
                     </configuration>
                 </plugin>
             </plugins>

@@ -16,9 +16,9 @@
  */
 package eu.clarin.cmdi.componentregistry.ui.configuration;
 
-import com.jayway.jsonpath.spi.json.JacksonJsonProvider;
+import com.jayway.jsonpath.spi.json.Jackson3JsonProvider;
 import com.jayway.jsonpath.spi.json.JsonProvider;
-import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
+import com.jayway.jsonpath.spi.mapper.Jackson3MappingProvider;
 import com.jayway.jsonpath.spi.mapper.MappingProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,12 +40,12 @@ public class JsonPathConfiguration {
 
     @Bean
     public JsonProvider jsonProvider() {
-        return new JacksonJsonProvider();
+        return new Jackson3JsonProvider();
     }
 
     @Bean
     public MappingProvider mappingProvider() {
-        return new JacksonMappingProvider();
+        return new Jackson3MappingProvider();
     }
 
 }
