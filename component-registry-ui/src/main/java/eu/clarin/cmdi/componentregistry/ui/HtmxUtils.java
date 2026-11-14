@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class HtmxUtils {
 
-    public final static String HEADER_HX_REQUEST = "hx-request";
+    public final static String HEADER_HX_REQUEST = "HX-Request";
     
     public static boolean isHtmxRequest(Map<String, String> headers) {
         return "true".equalsIgnoreCase(headers.getOrDefault(HEADER_HX_REQUEST, "false"));
