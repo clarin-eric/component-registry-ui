@@ -64,20 +64,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
             <div th:fragment="spacesDropdown" class="dropdown">
                 <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-globe"></i>
                     Public
                 </a>
 
                 <ul class="dropdown-menu" sec:authorize="!isAuthenticated()">
-                    <li><a class="dropdown-item disabled" href="#">Private</a></li>
+                    <li><a class="dropdown-item disabled" href="#">
+                            <i class="fa-solid fa-lock"></i>
+                            Private</a></li>
                 </ul>
 
                 <ul class="dropdown-menu" sec:authorize="isAuthenticated()">
                     <li>
                         <a th:href="@{/browser/(type=${type}, space='private')}"
-                           class="dropdown-item">Private</a>
+                           class="dropdown-item">
+                            <i class="fa-solid fa-user"></i>
+                            Private</a>
                     </li>
-                    <li th:each="team : ${teams}">
-                        <a class="dropdown-item" href="#">My team</a>
+                    <li th:each="team : ${userTeams}">
+                        <a class="dropdown-item" 
+                           th:href="@{/browser/(type=${type}, space='group', groupId=${team.id})}">
+                            <i class="fa-solid fa-user-group"></i>
+                            [[${team.name}]]</a>
                     </li>
                 </ul>
             </div>
