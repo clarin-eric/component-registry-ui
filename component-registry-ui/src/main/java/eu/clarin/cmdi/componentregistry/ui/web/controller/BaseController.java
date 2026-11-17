@@ -74,7 +74,7 @@ public abstract class BaseController {
         model.addAttribute("sortedDirection", getFirstOrDefault(params, SORT_DIRECTION_QUERY_PARAM, SORT_DIRECTION_DEFAULT));
 
         //no default for group
-        model.addAttribute("group", getFirstOrDefault(params, ITEM_GROUP_QUERY_PARAM, null));
+        model.addAttribute("groupId", getFirstOrDefault(params, ITEM_GROUP_QUERY_PARAM, null));
     }
 
     protected List<BaseDescription> getItemsForRequest(ItemsApi api, MultiValueMap<String, String> params) {
@@ -88,7 +88,9 @@ public abstract class BaseController {
         final String sortBy = getFirstOrDefault(params, SORT_BY_QUERY_PARAM, SORT_BY_DEFAULT);
         final String sortDirection = getFirstOrDefault(params, SORT_DIRECTION_QUERY_PARAM, SORT_DIRECTION_DEFAULT);
         final String space = getFirstOrDefault(params, ITEM_SPACE_QUERY_PARAM, ITEM_SPACE_DEFAULT);
-        final Long groupId = Optional.ofNullable(params.getFirst(ITEM_GROUP_QUERY_PARAM)).map(Long::parseLong).orElse(null);
+        final Long groupId = Optional.ofNullable(params.getFirst(ITEM_GROUP_QUERY_PARAM))
+                .flatMap(p -> Strings.isNullOrEmpty(p) ? Optional.empty() : Optional.of(p))
+                .map(Long::parseLong).orElse(null);
         return switch (type) {
             case ITEM_TYPE_COMPONENT ->
                 api.getItems("component", space, groupId, status, sortBy, sortDirection); //TODO: pass text filter

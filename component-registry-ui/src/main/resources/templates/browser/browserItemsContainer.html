@@ -59,13 +59,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                         </div>
                     </div>
                     <div class="pb-1">
-                        <div th:replace="~{browser/browserItemsOptions :: browserItemsOptions(type=${type}, space=${space}, status=${status}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
+                        <div th:replace="~{browser/browserItemsOptions :: browserItemsOptions(type=${type}, registrySpace=${space}, groupId=${groupId}, status=${status}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}">
                             [Options]
                         </div>
                     </div>
                     <div class="p-2 flex-grow-1 overflow-y-auto">
                         <div hx-trigger="load"
-                             th:hx-get="@{/browser/items(type=${type},status=${status}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}"
+                             th:hx-get="@{/browser/items(type=${type}, registrySpace=${space}, groupId=${groupId}, status=${status}, textFilter=${textFilter}, sortBy=${sortedBy}, sortDirection=${sortedDirection})}"
                              hx-select="#items-table-wrapper"
                              hx-swap="innerHTML"
                              hx-indicator="#items-container">
