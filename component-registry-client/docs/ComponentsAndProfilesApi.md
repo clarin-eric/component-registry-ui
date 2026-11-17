@@ -77,7 +77,7 @@ No authorization required
 
 ## getComponents
 
-> ComponentsList getComponents(status, registrySpace, sortBy, sortDirection, groupId)
+> ComponentsList getComponents(registrySpace, status, sortBy, sortDirection, groupId)
 
 
 
@@ -97,13 +97,13 @@ public class Example {
         defaultClient.setBasePath("http://localhost:8080/rest");
 
         ComponentsAndProfilesApi apiInstance = new ComponentsAndProfilesApi(defaultClient);
+        String registrySpace = "PUBLIC"; // String | 
         List<String> status = Arrays.asList(); // List<String> | 
-        String registrySpace = "published"; // String | 
         String sortBy = "name"; // String | 
         String sortDirection = "ASC"; // String | 
         Long groupId = 56L; // Long | 
         try {
-            ComponentsList result = apiInstance.getComponents(status, registrySpace, sortBy, sortDirection, groupId);
+            ComponentsList result = apiInstance.getComponents(registrySpace, status, sortBy, sortDirection, groupId);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ComponentsAndProfilesApi#getComponents");
@@ -121,8 +121,8 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **status** | [**List&lt;String&gt;**](String.md)|  | [enum: development, production, deprecated] |
-| **registrySpace** | **String**|  | [optional] [default to published] |
+| **registrySpace** | **String**|  | [optional] [default to PUBLIC] [enum: PUBLIC, PRIVATE, GROUP] |
+| **status** | [**List&lt;String&gt;**](String.md)|  | [optional] [enum: development, production, deprecated] |
 | **sortBy** | **String**|  | [optional] [default to name] |
 | **sortDirection** | **String**|  | [optional] [default to ASC] [enum: ASC, DESC] |
 | **groupId** | **Long**|  | [optional] |
@@ -233,7 +233,7 @@ public class Example {
         defaultClient.setBasePath("http://localhost:8080/rest");
 
         ComponentsAndProfilesApi apiInstance = new ComponentsAndProfilesApi(defaultClient);
-        String registrySpace = "published"; // String | 
+        String registrySpace = "PUBLIC"; // String | 
         List<String> status = Arrays.asList(); // List<String> | 
         String sortBy = "name"; // String | 
         String sortDirection = "ASC"; // String | 
@@ -257,7 +257,7 @@ public class Example {
 
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
-| **registrySpace** | **String**|  | [optional] [default to published] |
+| **registrySpace** | **String**|  | [optional] [enum: PUBLIC, PRIVATE, GROUP] |
 | **status** | [**List&lt;String&gt;**](String.md)|  | [optional] [enum: development, production, deprecated] |
 | **sortBy** | **String**|  | [optional] [default to name] |
 | **sortDirection** | **String**|  | [optional] [default to ASC] [enum: ASC, DESC] |

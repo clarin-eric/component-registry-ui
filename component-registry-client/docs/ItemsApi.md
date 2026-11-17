@@ -144,7 +144,7 @@ No authorization required
 
 ## getItems
 
-> List&lt;BaseDescription&gt; getItems(type, groupId, status, sortBy, sortDirection)
+> List&lt;BaseDescription&gt; getItems(type, registrySpace, groupId, status, sortBy, sortDirection)
 
 Get a filtered list of descriptions of profiles and/or components
 
@@ -165,12 +165,13 @@ public class Example {
 
         ItemsApi apiInstance = new ItemsApi(defaultClient);
         String type = "COMPONENT"; // String | 
+        String registrySpace = "PUBLIC"; // String | 
         Long groupId = 56L; // Long | 
         List<String> status = Arrays.asList(); // List<String> | 
         String sortBy = "name"; // String | 
         String sortDirection = "ASC"; // String | 
         try {
-            List<BaseDescription> result = apiInstance.getItems(type, groupId, status, sortBy, sortDirection);
+            List<BaseDescription> result = apiInstance.getItems(type, registrySpace, groupId, status, sortBy, sortDirection);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling ItemsApi#getItems");
@@ -189,6 +190,7 @@ public class Example {
 | Name | Type | Description  | Notes |
 |------------- | ------------- | ------------- | -------------|
 | **type** | **String**|  | [optional] [enum: COMPONENT, PROFILE] |
+| **registrySpace** | **String**|  | [optional] [enum: PUBLIC, PRIVATE, GROUP] |
 | **groupId** | **Long**|  | [optional] |
 | **status** | [**List&lt;String&gt;**](String.md)|  | [optional] [enum: development, production, deprecated] |
 | **sortBy** | **String**|  | [optional] [default to name] |

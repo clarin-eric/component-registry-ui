@@ -27,7 +27,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient.ResponseSpec;
 import org.springframework.web.client.RestClientResponseException;
 
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-11T17:46:06.664270+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-17T19:49:24.253262+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
 public class ComponentsAndProfilesApi {
     private ApiClient apiClient;
 
@@ -126,20 +126,16 @@ public class ComponentsAndProfilesApi {
      * 
      * 
      * <p><b>200</b> - OK
-     * @param status The status parameter
      * @param registrySpace The registrySpace parameter
+     * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
      * @param groupId The groupId parameter
      * @return ComponentsList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    private ResponseSpec getComponentsRequestCreation(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
+    private ResponseSpec getComponentsRequestCreation(@jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         Object postBody = null;
-        // verify the required parameter 'status' is set
-        if (status == null) {
-            throw new RestClientResponseException("Missing the required parameter 'status' when calling getComponents", HttpStatus.BAD_REQUEST.value(), HttpStatus.BAD_REQUEST.getReasonPhrase(), null, null, null);
-        }
         // create path and map variables
         final Map<String, Object> pathParams = new HashMap<>();
 
@@ -171,50 +167,50 @@ public class ComponentsAndProfilesApi {
      * 
      * 
      * <p><b>200</b> - OK
-     * @param status The status parameter
      * @param registrySpace The registrySpace parameter
+     * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
      * @param groupId The groupId parameter
      * @return ComponentsList
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ComponentsList getComponents(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
+    public ComponentsList getComponents(@jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentsList> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getComponentsRequestCreation(status, registrySpace, sortBy, sortDirection, groupId).body(localVarReturnType);
+        return getComponentsRequestCreation(registrySpace, status, sortBy, sortDirection, groupId).body(localVarReturnType);
     }
 
     /**
      * 
      * 
      * <p><b>200</b> - OK
-     * @param status The status parameter
      * @param registrySpace The registrySpace parameter
+     * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
      * @param groupId The groupId parameter
      * @return ResponseEntity&lt;ComponentsList&gt;
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseEntity<ComponentsList> getComponentsWithHttpInfo(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
+    public ResponseEntity<ComponentsList> getComponentsWithHttpInfo(@jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
         ParameterizedTypeReference<ComponentsList> localVarReturnType = new ParameterizedTypeReference<>() {};
-        return getComponentsRequestCreation(status, registrySpace, sortBy, sortDirection, groupId).toEntity(localVarReturnType);
+        return getComponentsRequestCreation(registrySpace, status, sortBy, sortDirection, groupId).toEntity(localVarReturnType);
     }
 
     /**
      * 
      * 
      * <p><b>200</b> - OK
-     * @param status The status parameter
      * @param registrySpace The registrySpace parameter
+     * @param status The status parameter
      * @param sortBy The sortBy parameter
      * @param sortDirection The sortDirection parameter
      * @param groupId The groupId parameter
      * @return ResponseSpec
      * @throws RestClientResponseException if an error occurs while attempting to invoke the API
      */
-    public ResponseSpec getComponentsWithResponseSpec(@jakarta.annotation.Nonnull List<String> status, @jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
-        return getComponentsRequestCreation(status, registrySpace, sortBy, sortDirection, groupId);
+    public ResponseSpec getComponentsWithResponseSpec(@jakarta.annotation.Nullable String registrySpace, @jakarta.annotation.Nullable List<String> status, @jakarta.annotation.Nullable String sortBy, @jakarta.annotation.Nullable String sortDirection, @jakarta.annotation.Nullable Long groupId) throws RestClientResponseException {
+        return getComponentsRequestCreation(registrySpace, status, sortBy, sortDirection, groupId);
     }
 
     /**

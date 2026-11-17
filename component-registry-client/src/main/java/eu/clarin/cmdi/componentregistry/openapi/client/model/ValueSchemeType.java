@@ -35,7 +35,7 @@ import io.github.threetenjaxb.core.*;
   ValueSchemeType.JSON_PROPERTY_PATTERN,
   ValueSchemeType.JSON_PROPERTY_VOCABULARY
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-11T17:46:06.664270+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-17T19:49:24.253262+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
 @XmlRootElement(name = "ValueSchemeType")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "ValueSchemeType")

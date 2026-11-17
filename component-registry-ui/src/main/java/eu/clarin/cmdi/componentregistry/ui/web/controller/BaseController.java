@@ -87,12 +87,13 @@ public abstract class BaseController {
         final List<String> status = params.getOrDefault(ITEM_STATUS_QUERY_PARAM, ITEM_STATUS_DEFAULT);
         final String sortBy = getFirstOrDefault(params, SORT_BY_QUERY_PARAM, SORT_BY_DEFAULT);
         final String sortDirection = getFirstOrDefault(params, SORT_DIRECTION_QUERY_PARAM, SORT_DIRECTION_DEFAULT);
+        final String space = getFirstOrDefault(params, ITEM_SPACE_QUERY_PARAM, ITEM_SPACE_DEFAULT);
         final Long groupId = Optional.ofNullable(params.getFirst(ITEM_GROUP_QUERY_PARAM)).map(Long::parseLong).orElse(null);
         return switch (type) {
             case ITEM_TYPE_COMPONENT ->
-                api.getItems("component", groupId, status, sortBy, sortDirection); //TODO: pass text filter
+                api.getItems("component", space, groupId, status, sortBy, sortDirection); //TODO: pass text filter
             case ITEM_TYPE_PROFILE ->
-                api.getItems("profile", groupId, status, sortBy, sortDirection); //TODO: pass text filter
+                api.getItems("profile", space, groupId, status, sortBy, sortDirection); //TODO: pass text filter
             default ->
                 Collections.emptyList();
         };

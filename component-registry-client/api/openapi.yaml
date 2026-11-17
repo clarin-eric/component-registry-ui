@@ -96,7 +96,10 @@ paths:
         name: registrySpace
         required: false
         schema:
-          default: published
+          enum:
+          - PUBLIC
+          - PRIVATE
+          - GROUP
           type: string
         style: form
       - explode: true
@@ -193,6 +196,17 @@ paths:
           enum:
           - COMPONENT
           - PROFILE
+          type: string
+        style: form
+      - explode: true
+        in: query
+        name: registrySpace
+        required: false
+        schema:
+          enum:
+          - PUBLIC
+          - PRIVATE
+          - GROUP
           type: string
         style: form
       - explode: true
@@ -335,13 +349,17 @@ paths:
         name: registrySpace
         required: false
         schema:
-          default: published
+          default: PUBLIC
+          enum:
+          - PUBLIC
+          - PRIVATE
+          - GROUP
           type: string
         style: form
       - explode: true
         in: query
         name: status
-        required: true
+        required: false
         schema:
           items:
             enum:
@@ -587,8 +605,8 @@ components:
         commentsCount: 0
         recommended: true
         public: true
-        id: id
         showInEditor: true
+        id: id
         isPublic: true
       properties:
         name:
@@ -627,10 +645,10 @@ components:
           type: boolean
         public:
           type: boolean
-        id:
-          type: string
         showInEditor:
           type: boolean
+        id:
+          type: string
         isPublic:
           type: boolean
       xml:
@@ -1119,8 +1137,8 @@ components:
           otherAttributes:
             key: otherAttributes
         isProfile: true
-        cmdversion: cmdversion
         cmdoriginalVersion: cmdoriginalVersion
+        cmdversion: cmdversion
       properties:
         header:
           $ref: "#/components/schemas/Header"
@@ -1130,9 +1148,9 @@ components:
           type: boolean
           xml:
             attribute: true
-        cmdversion:
-          type: string
         cmdoriginalVersion:
+          type: string
+        cmdversion:
           type: string
       required:
       - component
@@ -1868,8 +1886,8 @@ components:
         commentsCount: 0
         recommended: true
         public: true
-        id: id
         showInEditor: true
+        id: id
         isPublic: true
       properties:
         name:
@@ -1908,10 +1926,10 @@ components:
           type: boolean
         public:
           type: boolean
-        id:
-          type: string
         showInEditor:
           type: boolean
+        id:
+          type: string
         isPublic:
           type: boolean
       xml:
@@ -1933,8 +1951,8 @@ components:
           commentsCount: 0
           recommended: true
           public: true
-          id: id
           showInEditor: true
+          id: id
           isPublic: true
         - name: name
           description: description
@@ -1950,8 +1968,8 @@ components:
           commentsCount: 0
           recommended: true
           public: true
-          id: id
           showInEditor: true
+          id: id
           isPublic: true
       properties:
         components:

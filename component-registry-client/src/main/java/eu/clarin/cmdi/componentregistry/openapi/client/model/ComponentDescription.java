@@ -46,11 +46,11 @@ import io.github.threetenjaxb.core.*;
   ComponentDescription.JSON_PROPERTY_COMMENTS_COUNT,
   ComponentDescription.JSON_PROPERTY_RECOMMENDED,
   ComponentDescription.JSON_PROPERTY_PUBLIC,
-  ComponentDescription.JSON_PROPERTY_ID,
   ComponentDescription.JSON_PROPERTY_SHOW_IN_EDITOR,
+  ComponentDescription.JSON_PROPERTY_ID,
   ComponentDescription.JSON_PROPERTY_IS_PUBLIC
 })
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-11T17:46:06.664270+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2026-11-17T19:49:24.253262+02:00[Europe/Riga]", comments = "Generator version: 7.26.0")
 @XmlRootElement(name = "componentDescription")
 @XmlAccessorType(XmlAccessType.FIELD)
 @JacksonXmlRootElement(localName = "componentDescription")
@@ -168,15 +168,15 @@ public class ComponentDescription {
   @jakarta.annotation.Nullable
   private Boolean _public;
 
-  public static final String JSON_PROPERTY_ID = "id";
-  @XmlElement(name = "id")
-  @jakarta.annotation.Nullable
-  private String id;
-
   public static final String JSON_PROPERTY_SHOW_IN_EDITOR = "showInEditor";
   @XmlElement(name = "showInEditor")
   @jakarta.annotation.Nullable
   private Boolean showInEditor;
+
+  public static final String JSON_PROPERTY_ID = "id";
+  @XmlElement(name = "id")
+  @jakarta.annotation.Nullable
+  private String id;
 
   public static final String JSON_PROPERTY_IS_PUBLIC = "isPublic";
   @XmlElement(name = "isPublic")
@@ -564,33 +564,6 @@ public class ComponentDescription {
     this._public = _public;
   }
 
-  public ComponentDescription id(@jakarta.annotation.Nullable String id) {
-    
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-   */
-  @jakarta.annotation.Nullable
-  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  @JacksonXmlProperty(localName = "id")
-
-  public String getId() {
-    return id;
-  }
-
-
-  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
-  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
-  @JacksonXmlProperty(localName = "id")
-  public void setId(@jakarta.annotation.Nullable String id) {
-    this.id = id;
-  }
-
   public ComponentDescription showInEditor(@jakarta.annotation.Nullable Boolean showInEditor) {
     
     this.showInEditor = showInEditor;
@@ -616,6 +589,33 @@ public class ComponentDescription {
   @JacksonXmlProperty(localName = "showInEditor")
   public void setShowInEditor(@jakarta.annotation.Nullable Boolean showInEditor) {
     this.showInEditor = showInEditor;
+  }
+
+  public ComponentDescription id(@jakarta.annotation.Nullable String id) {
+    
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+   */
+  @jakarta.annotation.Nullable
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JacksonXmlProperty(localName = "id")
+
+  public String getId() {
+    return id;
+  }
+
+
+  @JsonProperty(value = JSON_PROPERTY_ID, required = false)
+  @JsonInclude(value = JsonInclude.Include.USE_DEFAULTS)
+  @JacksonXmlProperty(localName = "id")
+  public void setId(@jakarta.annotation.Nullable String id) {
+    this.id = id;
   }
 
   public ComponentDescription isPublic(@jakarta.annotation.Nullable Boolean isPublic) {
@@ -669,14 +669,14 @@ public class ComponentDescription {
         Objects.equals(this.commentsCount, componentDescription.commentsCount) &&
         Objects.equals(this.recommended, componentDescription.recommended) &&
         Objects.equals(this._public, componentDescription._public) &&
-        Objects.equals(this.id, componentDescription.id) &&
         Objects.equals(this.showInEditor, componentDescription.showInEditor) &&
+        Objects.equals(this.id, componentDescription.id) &&
         Objects.equals(this.isPublic, componentDescription.isPublic);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, description, registrationDate, creatorName, userId, domainName, href, groupName, status, derivedfrom, successor, commentsCount, recommended, _public, id, showInEditor, isPublic);
+    return Objects.hash(name, description, registrationDate, creatorName, userId, domainName, href, groupName, status, derivedfrom, successor, commentsCount, recommended, _public, showInEditor, id, isPublic);
   }
 
   @Override
@@ -697,8 +697,8 @@ public class ComponentDescription {
     sb.append("    commentsCount: ").append(toIndentedString(commentsCount)).append("\n");
     sb.append("    recommended: ").append(toIndentedString(recommended)).append("\n");
     sb.append("    _public: ").append(toIndentedString(_public)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    showInEditor: ").append(toIndentedString(showInEditor)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    isPublic: ").append(toIndentedString(isPublic)).append("\n");
     sb.append("}");
     return sb.toString();

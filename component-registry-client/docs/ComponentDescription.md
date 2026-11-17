@@ -21,8 +21,8 @@
 |**commentsCount** | **Integer** |  |  [optional] |
 |**recommended** | **Boolean** |  |  [optional] |
 |**_public** | **Boolean** |  |  [optional] |
-|**id** | **String** |  |  [optional] |
 |**showInEditor** | **Boolean** |  |  [optional] |
+|**id** | **String** |  |  [optional] |
 |**isPublic** | **Boolean** |  |  [optional] |
 
 
